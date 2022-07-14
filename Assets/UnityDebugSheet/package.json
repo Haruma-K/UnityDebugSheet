@@ -1,0 +1,15 @@
+{
+  "name": "com.harumak.unitydebugsheet",
+  "displayName": "Unity Debug Sheet",
+  "version": "0.9.0",
+  "unity": "2020.3",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "author": {
+    "name": "Haruki Yano",
+    "url": "https://github.com/Haruma-K"
+  },
+  "type": "tool",
+  "description": ""
+}
