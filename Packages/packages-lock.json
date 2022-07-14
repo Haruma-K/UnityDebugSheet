@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.tayx.graphy": {
+      "version": "https://github.com/Tayx94/graphy.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e571e3a23306f56f39782f70aeeaf28a18419646"
+    },
     "com.unity.collab-proxy": {
       "version": "1.15.17",
       "depth": 0,
@@ -39,6 +46,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.postprocessing": {
+      "version": "3.2.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
@@ -90,6 +106,13 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "com.yasirkula.ingamedebugconsole": {
+      "version": "https://github.com/yasirkula/UnityIngameDebugConsole.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ef9dc42a669bb37089065c8f5f18167d14e139a0"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
