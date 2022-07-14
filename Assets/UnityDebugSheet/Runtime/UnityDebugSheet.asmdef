@@ -1,0 +1,16 @@
+{
+    "name": "UnityDebugSheet",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "!EXCLUDE_UNITY_DEBUG_SHEET"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
