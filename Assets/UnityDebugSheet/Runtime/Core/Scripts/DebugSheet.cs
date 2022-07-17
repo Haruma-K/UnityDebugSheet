@@ -13,6 +13,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         private static readonly Dictionary<int, DebugSheet> InstanceCacheByTransform =
             new Dictionary<int, DebugSheet>();
 
+        private static DebugSheet _instance;
+
+        [SerializeField] private bool _singleton;
         [SerializeField] private StatefulDrawerController _drawerController;
         [SerializeField] private Button _backButton;
         [SerializeField] private Text _exitTitleText;
@@ -20,18 +23,46 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private Button _closeButton;
         [SerializeField] private PageContainer _pageContainer;
         [SerializeField] private GameObject _pagePrefab;
-
         private bool _isInitialized;
+
+        public static DebugSheet Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    throw new InvalidOperationException("The singleton instance of the DebugSheet does not exits.");
+                return _instance;
+            }
+            private set => _instance = value;
+        }
 
         public DebugPageBase InitialDebugPage { get; private set; }
         public DebugPageBase CurrentDebugPage { get; private set; }
         public DebugPageBase EnteringDebugPage { get; private set; }
         public DebugPageBase ExitingDebugPage { get; private set; }
 
+        private void Awake()
+        {
+            if (_singleton)
+            {
+                if (_instance == null)
+                {
+                    _instance = this;
+                    DontDestroyOnLoad(gameObject);
+                    return;
+                }
+                
+                Destroy(gameObject);
+            }
+        }
+
         private void OnDestroy()
         {
             _backButton.onClick.RemoveListener(OnBackButtonClicked);
             _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
+
+            if (_instance == this)
+                _instance = null;
         }
 
         void IPageContainerCallbackReceiver.BeforePush(Page enterPage, Page exitPage)
@@ -103,7 +134,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return null;
         }
 
-        public TInitialPage Initialize<TInitialPage>(Action<TInitialPage> onLoad = null) where TInitialPage : DebugPageBase
+        public TInitialPage Initialize<TInitialPage>(Action<TInitialPage> onLoad = null)
+            where TInitialPage : DebugPageBase
         {
             if (_isInitialized)
                 throw new InvalidOperationException($"{nameof(DebugSheet)} is already initialized.");
