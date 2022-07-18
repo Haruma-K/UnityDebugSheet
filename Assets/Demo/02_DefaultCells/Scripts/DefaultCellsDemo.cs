@@ -33,7 +33,7 @@ namespace Demo._02_DefaultCells.Scripts
                     page.AddDefaultCells();
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
-                });
+                }, priority: 0);
             _initialPage.Reload();
         }
 
@@ -127,8 +127,8 @@ namespace Demo._02_DefaultCells.Scripts
         {
             Assert.IsNotNull(_demoDebugPage);
 
-            var firstDataId = _demoDebugPage.ItemIds[0];
-            _demoDebugPage.RemoveItem(firstDataId);
+            var firstItemId = _demoDebugPage.ItemInfos[0].ItemId;
+            _demoDebugPage.RemoveItem(firstItemId);
             _demoDebugPage.Reload();
         }
 
@@ -136,8 +136,8 @@ namespace Demo._02_DefaultCells.Scripts
         {
             Assert.IsNotNull(_demoDebugPage);
 
-            var lastDataId = _demoDebugPage.ItemIds[_demoDebugPage.ItemIds.Count - 1];
-            _demoDebugPage.RemoveItem(lastDataId);
+            var lastItemId = _demoDebugPage.ItemInfos[_demoDebugPage.ItemInfos.Count - 1].ItemId;
+            _demoDebugPage.RemoveItem(lastItemId);
             _demoDebugPage.Reload();
         }
     }

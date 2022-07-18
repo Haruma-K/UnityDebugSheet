@@ -25,7 +25,8 @@ namespace Demo._01_CharacterViewer.Scripts
             _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
             _linkButtonId = _initialPage.AddPageLinkButton<CharacterViewerPage>("Character Viewer",
                 icon: DemoSprites.Icon.CharacterViewer,
-                onLoad: page => page.Setup(_spawner, _standController));
+                onLoad: page => page.Setup(_spawner, _standController),
+                priority: 0);
             _initialPage.Reload();
         }
 

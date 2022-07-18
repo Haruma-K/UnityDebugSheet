@@ -5,6 +5,7 @@ using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityDebugSheet.Runtime.Foundation.ObjectPooling;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
+using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityDebugSheet.Runtime.Foundation.TinyRecyclerView;
 using UnityEngine;
 
@@ -12,16 +13,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 {
     public abstract class DebugPageBase : Page, IRecyclerViewCellProvider, IRecyclerViewDataProvider
     {
-        private readonly List<CellModel> _dataList = new List<CellModel>();
-        private readonly List<int> _itemIds = new List<int>();
-
+        private readonly PriorityList<int> _itemIds = new PriorityList<int>();
+        private readonly List<ItemInfo> _itemInfos = new List<ItemInfo>();
         private readonly Dictionary<int, string> _objIdToPrefabKeyMap = new Dictionary<int, string>();
-        private readonly List<string> _prefabKeys = new List<string>();
 
         private readonly Dictionary<string, ObjectPool<GameObject>> _prefabPools =
             new Dictionary<string, ObjectPool<GameObject>>();
 
-        private int _itemId;
+        private int _currentItemId;
         private string _overrideTitle;
         private GameObject _poolRoot;
         private PrefabContainer _prefabContainer;
@@ -29,9 +28,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         protected abstract string Title { get; }
 
-        public IReadOnlyList<CellModel> DataList => _dataList;
-        public IReadOnlyList<int> ItemIds => _itemIds;
-        public IReadOnlyList<string> PrefabKeys => _prefabKeys;
+        public IReadOnlyList<ItemInfo> ItemInfos => _itemInfos;
 
         private RecyclerView RecyclerView
         {
@@ -56,10 +53,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _prefabContainer = GetComponent<PrefabContainer>();
         }
 
-        protected virtual void Start()
-        {
-        }
-
         protected virtual void OnDestroy()
         {
             foreach (var pool in _prefabPools.Values)
@@ -68,7 +61,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         GameObject IRecyclerViewCellProvider.GetCell(int dataIndex)
         {
-            var prefabKey = _prefabKeys[dataIndex];
+            var prefabKey = _itemInfos[dataIndex].PrefabKey;
             if (!_prefabPools.TryGetValue(prefabKey, out var pool))
             {
                 pool = new ObjectPool<GameObject>(() =>
@@ -96,7 +89,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         void IRecyclerViewDataProvider.SetupCell(int dataIndex, GameObject cell)
         {
-            var data = _dataList[dataIndex];
+            var data = _itemInfos[dataIndex].CellModel;
             cell.GetComponent<ICell>().Setup(data);
         }
 
@@ -108,33 +101,18 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// </remarks>
         /// <param name="prefabKey"></param>
         /// <param name="model"></param>
-        /// <returns>Item ID</returns>
-        public int AddItem(string prefabKey, CellModel model)
-        {
-            var itemId = _itemId++;
-            _prefabKeys.Add(prefabKey);
-            _dataList.Add(model);
-            _itemIds.Add(itemId);
-            RecyclerView.DataCount++;
-            return itemId;
-        }
-
-        /// <summary>
-        ///     Insert a item at <see cref="index" />.
-        /// </summary>
-        /// <remarks>
-        ///     You need to call <see cref="Reload" /> after this.
-        /// </remarks>
-        /// <param name="prefabKey"></param>
-        /// <param name="model"></param>
-        /// <param name="index"></param>
+        /// <param name="priority"></param>
         /// <returns></returns>
-        public int InsertItem(string prefabKey, CellModel model, int index)
+        public int AddItem(string prefabKey, CellModel model, int priority = int.MaxValue)
         {
-            var itemId = _itemId++;
-            _prefabKeys.Insert(index, prefabKey);
-            _dataList.Insert(index, model);
-            _itemIds.Insert(index, itemId);
+            var itemId = _currentItemId++;
+            var node = _itemIds.Add(itemId, priority);
+            var previousItemId = node.Previous?.Value.Item;
+            var index = previousItemId.HasValue
+                ? _itemInfos.FindIndex(x => x.ItemId == previousItemId.Value) + 1
+                : 0;
+
+            _itemInfos.Insert(index, new ItemInfo(itemId, prefabKey, model));
             RecyclerView.DataCount++;
             return itemId;
         }
@@ -148,10 +126,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// <param name="itemId"></param>
         public void RemoveItem(int itemId)
         {
-            var index = _itemIds.IndexOf(itemId);
-            _dataList.RemoveAt(index);
-            _prefabKeys.RemoveAt(index);
-            _itemIds.RemoveAt(index);
+            var info = _itemInfos.Find(x => x.ItemId == itemId);
+            _itemIds.Remove(info.ItemId);
+            _itemInfos.Remove(info);
             RecyclerView.DataCount--;
         }
 
@@ -160,9 +137,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// </summary>
         public void ClearItems()
         {
-            _dataList.Clear();
-            _prefabKeys.Clear();
             _itemIds.Clear();
+            _itemInfos.Clear();
             RecyclerView.DataCount = 0;
         }
 
@@ -201,54 +177,54 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return string.IsNullOrEmpty(_overrideTitle) ? Title : _overrideTitle;
         }
 
-        public int AddLabel(LabelCellModel model, int index = -1)
+        public int AddLabel(LabelCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.LabelCell, model, index);
+            return AddItem(AssetKeys.LabelCell, model, priority);
         }
 
-        public int AddButton(ButtonCellModel model, int index = -1)
+        public int AddButton(ButtonCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.ButtonCell, model, index);
+            return AddItem(AssetKeys.ButtonCell, model, priority);
         }
 
-        public int AddSwitch(SwitchCellModel model, int index = -1)
+        public int AddSwitch(SwitchCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.SwitchCell, model, index);
+            return AddItem(AssetKeys.SwitchCell, model, priority);
         }
 
-        public int AddSlider(SliderCellModel model, int index = -1)
+        public int AddSlider(SliderCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.SliderCell, model, index);
+            return AddItem(AssetKeys.SliderCell, model, priority);
         }
 
-        public int AddPicker(PickerCellModel model, int index = -1)
+        public int AddPicker(PickerCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.PickerCell, model, index);
+            return AddItem(AssetKeys.PickerCell, model, priority);
         }
 
-        public int AddEnumPicker(EnumPickerCellModel model, int index = -1)
+        public int AddEnumPicker(EnumPickerCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.EnumPickerCell, model, index);
+            return AddItem(AssetKeys.EnumPickerCell, model, priority);
         }
 
-        public int AddMultiPicker(MultiPickerCellModel model, int index = -1)
+        public int AddMultiPicker(MultiPickerCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.MultiPickerCell, model, index);
+            return AddItem(AssetKeys.MultiPickerCell, model, priority);
         }
 
-        public int AddEnumMultiPicker(EnumMultiPickerCellModel model, int index = -1)
+        public int AddEnumMultiPicker(EnumMultiPickerCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.EnumMultiPickerCell, model, index);
+            return AddItem(AssetKeys.EnumMultiPickerCell, model, priority);
         }
 
-        public int AddPickerOption(PickerOptionCellModel model, int index = -1)
+        public int AddPickerOption(PickerOptionCellModel model, int priority = int.MaxValue)
         {
-            return AddSeparatedItem(AssetKeys.PickerOption, model, index);
+            return AddItem(AssetKeys.PickerOption, model, priority);
         }
 
         public int AddPageLinkButton<TPage>(string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<TPage> onLoad = null,
-            int index = -1) where TPage : DebugPageBase
+            int priority = int.MaxValue) where TPage : DebugPageBase
         {
             var textModel = new CellTextsModel();
             textModel.Text = text;
@@ -258,11 +234,11 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var iconModel = new CellIconModel();
             iconModel.Sprite = icon;
             if (iconColor != null) iconModel.Color = iconColor.Value;
-            return AddPageLinkButton(textModel, iconModel, onLoad, index);
+            return AddPageLinkButton(textModel, iconModel, onLoad, priority);
         }
 
         public int AddPageLinkButton<TPage>(CellTextsModel textModel, CellIconModel iconModel = null,
-            Action<TPage> onLoad = null, int index = -1) where TPage : DebugPageBase
+            Action<TPage> onLoad = null, int priority = int.MaxValue) where TPage : DebugPageBase
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
             var buttonModel = new ButtonCellModel(useSubText);
@@ -286,23 +262,21 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
             buttonModel.Clicked += () => DebugSheet.Of(transform).PushPage(true, onLoad: onLoad);
             buttonModel.ShowArrow = true;
-            return AddButton(buttonModel, index);
+            return AddButton(buttonModel, priority);
         }
 
-        /// <summary>
-        ///     Add a item. Also add a separator before if it is not the first item.
-        /// </summary>
-        /// <param name="prefabKey"></param>
-        /// <param name="model"></param>
-        /// <param name="index"></param>
-        /// <returns>Item ID</returns>
-        protected int AddSeparatedItem(string prefabKey, CellModel model, int index = -1)
+        public sealed class ItemInfo
         {
-            var isLastItem = index == -1 || index == DataList.Count - 1;
+            public readonly CellModel CellModel;
+            public readonly int ItemId;
+            public readonly string PrefabKey;
 
-            return isLastItem
-                ? AddItem(prefabKey, model)
-                : InsertItem(prefabKey, model, index);
+            public ItemInfo(int itemId, string prefabKey, CellModel cellModel)
+            {
+                ItemId = itemId;
+                PrefabKey = prefabKey;
+                CellModel = cellModel;
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Demo._03_CustomCells.Scripts
 
         public int AddCustomText(CustomTextCellModel model)
         {
-            return AddSeparatedItem(CustomTextCellKey, model);
+            return AddItem(CustomTextCellKey, model);
         }
 
         public void Setup(int cellCount)
