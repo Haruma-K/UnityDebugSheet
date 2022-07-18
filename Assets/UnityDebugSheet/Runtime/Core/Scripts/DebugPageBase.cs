@@ -177,9 +177,40 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return string.IsNullOrEmpty(_overrideTitle) ? Title : _overrideTitle;
         }
 
+        public int AddLabel(string text, string subText = null, Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, int priority = int.MaxValue)
+        {
+            var labelCellModel = new LabelCellModel(!string.IsNullOrEmpty(subText));
+            labelCellModel.CellTexts.Text = text;
+            labelCellModel.CellTexts.SubText = subText;
+            if (textColor != null) labelCellModel.CellTexts.TextColor = textColor.Value;
+            if (subTextColor != null) labelCellModel.CellTexts.SubTextColor = subTextColor.Value;
+            labelCellModel.Icon.Sprite = icon;
+            if (iconColor != null) labelCellModel.Icon.Color = iconColor.Value;
+
+            return AddLabel(labelCellModel, priority);
+        }
+
         public int AddLabel(LabelCellModel model, int priority = int.MaxValue)
         {
             return AddItem(AssetKeys.LabelCell, model, priority);
+        }
+
+        public int AddButton(string text, string subText = null, Color? textColor = null, Color? subTextColor = null,
+            Sprite icon = null, Color? iconColor = null, bool showAllow = false, Action clicked = null,
+            int priority = int.MaxValue)
+        {
+            var buttonCellModel = new ButtonCellModel(!string.IsNullOrEmpty(subText));
+            buttonCellModel.CellTexts.Text = text;
+            buttonCellModel.CellTexts.SubText = subText;
+            if (textColor != null) buttonCellModel.CellTexts.TextColor = textColor.Value;
+            if (subTextColor != null) buttonCellModel.CellTexts.SubTextColor = subTextColor.Value;
+            buttonCellModel.Icon.Sprite = icon;
+            if (iconColor != null) buttonCellModel.Icon.Color = iconColor.Value;
+            buttonCellModel.ShowArrow = showAllow;
+            if (clicked != null) buttonCellModel.Clicked += clicked;
+
+            return AddButton(buttonCellModel, priority);
         }
 
         public int AddButton(ButtonCellModel model, int priority = int.MaxValue)
@@ -187,9 +218,46 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddItem(AssetKeys.ButtonCell, model, priority);
         }
 
+        public int AddSwitch(bool value, string text, string subText = null, Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<bool> valueChanged = null,
+            int priority = int.MaxValue)
+        {
+            var switchCellModel = new SwitchCellModel(!string.IsNullOrEmpty(subText));
+            switchCellModel.CellTexts.Text = text;
+            switchCellModel.CellTexts.SubText = subText;
+            if (textColor != null) switchCellModel.CellTexts.TextColor = textColor.Value;
+            if (subTextColor != null) switchCellModel.CellTexts.SubTextColor = subTextColor.Value;
+            switchCellModel.Icon.Sprite = icon;
+            if (iconColor != null) switchCellModel.Icon.Color = iconColor.Value;
+            switchCellModel.Value = value;
+            if (valueChanged != null) switchCellModel.ValueChanged += valueChanged;
+
+            return AddSwitch(switchCellModel, priority);
+        }
+
         public int AddSwitch(SwitchCellModel model, int priority = int.MaxValue)
         {
             return AddItem(AssetKeys.SwitchCell, model, priority);
+        }
+
+        public int AddSlider(float minValue, float maxValue, float value, string text, string subText = null,
+            Color? textColor = null, Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
+            bool showValueText = true, string valueTextFormat = null, Action<float> valueChanged = null,
+            int priority = int.MaxValue)
+        {
+            var sliderCellModel = new SliderCellModel(!string.IsNullOrEmpty(subText), minValue, maxValue);
+            sliderCellModel.CellTexts.Text = text;
+            sliderCellModel.CellTexts.SubText = subText;
+            if (textColor != null) sliderCellModel.CellTexts.TextColor = textColor.Value;
+            if (subTextColor != null) sliderCellModel.CellTexts.SubTextColor = subTextColor.Value;
+            sliderCellModel.Icon.Sprite = icon;
+            if (iconColor != null) sliderCellModel.Icon.Color = iconColor.Value;
+            sliderCellModel.Value = value;
+            sliderCellModel.ShowValueText = showValueText;
+            sliderCellModel.ValueTextFormat = valueTextFormat;
+            if (valueChanged != null) sliderCellModel.ValueChanged += valueChanged;
+
+            return AddSlider(sliderCellModel, priority);
         }
 
         public int AddSlider(SliderCellModel model, int priority = int.MaxValue)
@@ -197,9 +265,45 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddItem(AssetKeys.SliderCell, model, priority);
         }
 
+        public int AddPicker(IEnumerable<string> options, int activeOptionIndex, string text, Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
+            Action<int> activeOptionChanged = null, Action clicked = null, Action confirmed = null,
+            int priority = int.MaxValue)
+        {
+            var pickerCellModel = new PickerCellModel();
+            pickerCellModel.Text = text;
+            if (textColor != null) pickerCellModel.TextColor = textColor.Value;
+            if (subTextColor != null) pickerCellModel.SubTextColor = subTextColor.Value;
+            pickerCellModel.Icon.Sprite = icon;
+            if (iconColor != null) pickerCellModel.Icon.Color = iconColor.Value;
+            pickerCellModel.SetOptions(options, activeOptionIndex);
+            if (activeOptionChanged != null) pickerCellModel.ActiveOptionChanged += activeOptionChanged;
+            if (clicked != null) pickerCellModel.Clicked += clicked;
+            if (confirmed != null) pickerCellModel.Confirmed += confirmed;
+
+            return AddPicker(pickerCellModel, priority);
+        }
+
         public int AddPicker(PickerCellModel model, int priority = int.MaxValue)
         {
             return AddItem(AssetKeys.PickerCell, model, priority);
+        }
+
+        public int AddEnumPicker(Enum activeValue, string text, Color? textColor = null, Color? subTextColor = null,
+            Sprite icon = null, Color? iconColor = null, Action<Enum> activeValueChanged = null, Action clicked = null,
+            Action confirmed = null, int priority = int.MaxValue)
+        {
+            var pickerCellModel = new EnumPickerCellModel(activeValue);
+            pickerCellModel.Text = text;
+            if (textColor != null) pickerCellModel.TextColor = textColor.Value;
+            if (subTextColor != null) pickerCellModel.SubTextColor = subTextColor.Value;
+            pickerCellModel.Icon.Sprite = icon;
+            if (iconColor != null) pickerCellModel.Icon.Color = iconColor.Value;
+            if (activeValueChanged != null) pickerCellModel.ActiveValueChanged += activeValueChanged;
+            if (clicked != null) pickerCellModel.Clicked += clicked;
+            if (confirmed != null) pickerCellModel.Confirmed += confirmed;
+
+            return AddEnumPicker(pickerCellModel, priority);
         }
 
         public int AddEnumPicker(EnumPickerCellModel model, int priority = int.MaxValue)
@@ -207,14 +311,68 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddItem(AssetKeys.EnumPickerCell, model, priority);
         }
 
+        public int AddMultiPicker(IEnumerable<string> options, IEnumerable<int> activeOptionIndices, string text,
+            Color? textColor = null, Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
+            Action<int, bool> optionStateChanged = null, Action clicked = null, Action confirmed = null,
+            int priority = int.MaxValue)
+        {
+            var pickerCellModel = new MultiPickerCellModel();
+            pickerCellModel.Text = text;
+            if (textColor != null) pickerCellModel.TextColor = textColor.Value;
+            if (subTextColor != null) pickerCellModel.SubTextColor = subTextColor.Value;
+            pickerCellModel.Icon.Sprite = icon;
+            if (iconColor != null) pickerCellModel.Icon.Color = iconColor.Value;
+            pickerCellModel.SetOptions(options, activeOptionIndices);
+            if (optionStateChanged != null) pickerCellModel.OptionStateChanged += optionStateChanged;
+            if (clicked != null) pickerCellModel.Clicked += clicked;
+            if (confirmed != null) pickerCellModel.Confirmed += confirmed;
+
+            return AddMultiPicker(pickerCellModel, priority);
+        }
+
         public int AddMultiPicker(MultiPickerCellModel model, int priority = int.MaxValue)
         {
             return AddItem(AssetKeys.MultiPickerCell, model, priority);
         }
 
+        public int AddEnumMultiPicker(Enum activeValue, string text, Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
+            Action<Enum> activeValueChanged = null, Action clicked = null, Action confirmed = null,
+            int priority = int.MaxValue)
+        {
+            var pickerCellModel = new EnumMultiPickerCellModel(activeValue);
+            pickerCellModel.Text = text;
+            if (textColor != null) pickerCellModel.TextColor = textColor.Value;
+            if (subTextColor != null) pickerCellModel.SubTextColor = subTextColor.Value;
+            pickerCellModel.Icon.Sprite = icon;
+            if (iconColor != null) pickerCellModel.Icon.Color = iconColor.Value;
+            if (activeValueChanged != null) pickerCellModel.ActiveValueChanged += activeValueChanged;
+            if (clicked != null) pickerCellModel.Clicked += clicked;
+            if (confirmed != null) pickerCellModel.Confirmed += confirmed;
+
+            return AddEnumMultiPicker(pickerCellModel, priority);
+        }
+
         public int AddEnumMultiPicker(EnumMultiPickerCellModel model, int priority = int.MaxValue)
         {
             return AddItem(AssetKeys.EnumMultiPickerCell, model, priority);
+        }
+
+        public int AddPickerOption(bool isOn, string text, string subText = null, Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<bool> toggled = null,
+            int priority = int.MaxValue)
+        {
+            var pickerOptionModel = new PickerOptionCellModel(!string.IsNullOrEmpty(subText));
+            pickerOptionModel.IsOn = isOn;
+            pickerOptionModel.CellTexts.Text = text;
+            pickerOptionModel.CellTexts.SubText = subText;
+            if (textColor != null) pickerOptionModel.CellTexts.TextColor = textColor.Value;
+            if (subTextColor != null) pickerOptionModel.CellTexts.SubTextColor = subTextColor.Value;
+            pickerOptionModel.Icon.Sprite = icon;
+            if (iconColor != null) pickerOptionModel.Icon.Color = iconColor.Value;
+            if (toggled != null) pickerOptionModel.Toggled += toggled;
+
+            return AddPickerOption(pickerOptionModel, priority);
         }
 
         public int AddPickerOption(PickerOptionCellModel model, int priority = int.MaxValue)
