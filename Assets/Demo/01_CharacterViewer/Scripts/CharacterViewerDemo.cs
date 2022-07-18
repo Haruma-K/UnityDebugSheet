@@ -1,7 +1,6 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using Demo._01_CharacterViewer.Scripts.Viewer;
-using IngameDebugConsole;
-using Tayx.Graphy;
+using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -10,22 +9,33 @@ namespace Demo._01_CharacterViewer.Scripts
 {
     public sealed class CharacterViewerDemo : MonoBehaviour
     {
-        [SerializeField] private DebugSheet _sheet;
         [SerializeField] private CharacterSpawner _spawner;
         [SerializeField] private StandController _standController;
+        private DebugPageBase _initialPage;
+
+        private int _linkButtonId = -1;
 
         private void Start()
         {
-            Assert.IsNotNull(_sheet);
             Assert.IsNotNull(_spawner);
             Assert.IsNotNull(_standController);
-            
+
             _spawner.Initialize();
 
-            _sheet.Initialize<CharacterViewerDemoDebugPage>(page =>
+            _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
+            _linkButtonId = _initialPage.AddPageLinkButton<CharacterViewerPage>("Character Viewer",
+                icon: DemoSprites.Icon.CharacterViewer,
+                onLoad: page => page.Setup(_spawner, _standController));
+            _initialPage.Reload();
+        }
+
+        private void OnDestroy()
+        {
+            if (_linkButtonId != -1 && _initialPage != null)
             {
-                page.Setup(_spawner, _standController, GraphyManager.Instance, DebugLogManager.Instance);
-            });
+                _initialPage.RemoveItem(_linkButtonId);
+                _initialPage.Reload();
+            }
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
+using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Demo._03_CustomCells.Scripts
 {
-    public sealed class CustomCellsDemoDebugPage : DefaultDebugPageBase
+    public sealed class CustomCellsDemoDebugPage : DebugPageBase
     {
         private const string CustomTextCellKey = "CustomTextCell";
         private const string SourceCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

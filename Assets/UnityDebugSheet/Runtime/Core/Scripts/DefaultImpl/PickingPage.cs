@@ -4,7 +4,7 @@ using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 {
-    public sealed class PickingPage : DefaultDebugPageBase
+    public sealed class PickingPage : DebugPageBase
     {
         private readonly List<PickerOptionCellModel> _optionDataList = new List<PickerOptionCellModel>();
 

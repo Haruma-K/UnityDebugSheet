@@ -1,5 +1,5 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
-namespace Demo._00_Shared.Scripts
+namespace Demo._99_Shared.Scripts
 {
     public static class AssetKeys
     {

@@ -3,7 +3,14 @@ guid: 2e8881c41cf8aa34cbaac690a6e56432
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _drawerController: {instanceID: 0}
+  - _backButton: {instanceID: 0}
+  - _exitTitleText: {instanceID: 0}
+  - _enterTitleText: {instanceID: 0}
+  - _closeButton: {instanceID: 0}
+  - _pageContainer: {instanceID: 0}
+  - _pagePrefab: {fileID: 142348689908593602, guid: 070bba3aeaed22242a4d3a576eba733e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -1,13 +1,13 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
-using Demo._00_Shared.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
+using Demo._99_Shared.Scripts;
+using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 
 namespace Demo._02_DefaultCells.Scripts
 {
-    public sealed class DefaultCellsDemoDebugPage : DefaultDebugPageBase
+    public sealed class DefaultCellsDemoDebugPage : DebugPageBase
     {
         protected override string Title => "DemoPage";
 

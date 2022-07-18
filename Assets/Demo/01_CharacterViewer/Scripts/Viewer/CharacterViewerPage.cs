@@ -1,25 +1,25 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using System.Collections;
 using System.Linq;
-using Demo._00_Shared.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
+using Demo._99_Shared.Scripts;
+using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 
 namespace Demo._01_CharacterViewer.Scripts.Viewer
 {
-    public sealed class CharacterViewerPage : DefaultDebugPageBase
+    public sealed class CharacterViewerPage : DebugPageBase
     {
         private SwitchCellModel _autoRotateSwitchModel;
         private CharacterSpawner _characterSpawner;
         private PickerCellModel _modelPickerModel;
+        private int _motionPickerId;
         private PickerCellModel _motionPickerModel;
         private SliderCellModel _positionXSliderModel;
+        private int _rotationPickerId;
         private SliderCellModel _rotationSliderModel;
         private StandController _standController;
-        private int _motionPickerId;
-        private int _rotationPickerId;
-        
+
         protected override string Title => "Character Viewer";
 
         private void Update()
@@ -131,7 +131,8 @@ namespace Demo._01_CharacterViewer.Scripts.Viewer
 
         private void OnCharacterChanged(CharacterAnimationController characterAnimationController)
         {
-            _motionPickerModel.SetOptions(characterAnimationController.Clips.Select(x => x.name).ToArray(), characterAnimationController.GetActiveClipIndex());
+            _motionPickerModel.SetOptions(characterAnimationController.Clips.Select(x => x.name).ToArray(),
+                characterAnimationController.GetActiveClipIndex());
 
             RefreshDataAt(_motionPickerId);
         }

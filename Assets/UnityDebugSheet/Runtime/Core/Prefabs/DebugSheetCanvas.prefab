@@ -915,14 +915,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8881c41cf8aa34cbaac690a6e56432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _singleton: 1
   _drawerController: {fileID: 6564643837970611227}
   _backButton: {fileID: 6564643838881343406}
   _exitTitleText: {fileID: 6564643838401478400}
   _enterTitleText: {fileID: 2369960981478535915}
   _closeButton: {fileID: 6564643839419038253}
   _pageContainer: {fileID: 6564643838503227470}
-  _pagePrefab: {fileID: 142348689908593602, guid: 070bba3aeaed22242a4d3a576eba733e,
-    type: 3}
+  _pagePrefab: {fileID: 142348689908593602, guid: 070bba3aeaed22242a4d3a576eba733e, type: 3}
 --- !u!114 &6564643838517370656
 MonoBehaviour:
   m_ObjectHideFlags: 0

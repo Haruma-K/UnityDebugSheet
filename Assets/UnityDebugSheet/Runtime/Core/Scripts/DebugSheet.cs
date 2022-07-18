@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Foundation.Drawer;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
+using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,44 +14,40 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         private static readonly Dictionary<int, DebugSheet> InstanceCacheByTransform =
             new Dictionary<int, DebugSheet>();
 
-        private static DebugSheet _instance;
-
-        [SerializeField] private bool _singleton;
+        [SerializeField] private bool _singleton = true;
         [SerializeField] private StatefulDrawerController _drawerController;
         [SerializeField] private Button _backButton;
         [SerializeField] private Text _exitTitleText;
         [SerializeField] private Text _enterTitleText;
         [SerializeField] private Button _closeButton;
         [SerializeField] private PageContainer _pageContainer;
-        [SerializeField] private GameObject _pagePrefab;
+        [SerializeField] [HideInInspector] private GameObject _pagePrefab;
+        [SerializeField] private List<GameObject> _cellPrefabs = new List<GameObject>();
         private bool _isInitialized;
 
-        public static DebugSheet Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    throw new InvalidOperationException("The singleton instance of the DebugSheet does not exits.");
-                return _instance;
-            }
-            private set => _instance = value;
-        }
+        public static DebugSheet Instance { get; private set; }
 
         public DebugPageBase InitialDebugPage { get; private set; }
         public DebugPageBase CurrentDebugPage { get; private set; }
         public DebugPageBase EnteringDebugPage { get; private set; }
         public DebugPageBase ExitingDebugPage { get; private set; }
+        public IReadOnlyList<Page> Pages => _pageContainer.Pages;
+        public IList<GameObject> CellPrefabs => _cellPrefabs;
 
         private void Awake()
         {
             if (_singleton)
             {
-                if (_instance == null)
+                if (Instance == null)
                 {
-                    _instance = this;
+                    Instance = this;
                     DontDestroyOnLoad(gameObject);
                     return;
                 }
+
+                foreach (var cellPrefab in _cellPrefabs)
+                    if (!Instance.CellPrefabs.Contains(cellPrefab))
+                        Instance.CellPrefabs.Add(cellPrefab);
                 
                 Destroy(gameObject);
             }
@@ -61,8 +58,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _backButton.onClick.RemoveListener(OnBackButtonClicked);
             _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
 
-            if (_instance == this)
-                _instance = null;
+            if (Instance == this)
+                Instance = null;
         }
 
         void IPageContainerCallbackReceiver.BeforePush(Page enterPage, Page exitPage)
@@ -134,7 +131,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return null;
         }
 
-        public TInitialPage Initialize<TInitialPage>(Action<TInitialPage> onLoad = null)
+        public TInitialPage Initialize<TInitialPage>(string titleOverride = null, Action<TInitialPage> onLoad = null)
             where TInitialPage : DebugPageBase
         {
             if (_isInitialized)
@@ -149,30 +146,60 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             preloadedAssetLoader.AddObject(_pagePrefab.gameObject);
             _pageContainer.AssetLoader = preloadedAssetLoader;
 
-            var page = PushPage(false, onLoad: onLoad);
-            InitialDebugPage = page;
+            PushPage<TInitialPage>(false, titleOverride, x =>
+            {
+                InitialDebugPage = x;
+                onLoad?.Invoke(x);
+            });
             _isInitialized = true;
-            return page;
+            return (TInitialPage)InitialDebugPage;
         }
 
-        public TPage PushPage<TPage>(bool playAnimation, string titleOverride = null, Action<TPage> onLoad = null)
+        /// <summary>
+        /// </summary>
+        /// <param name="titleOverride"></param>
+        /// <param name="onLoad"></param>
+        /// <typeparam name="TInitialPage"></typeparam>
+        /// <returns>If initial page type is not <see cref="TInitialPage" />, return null.</returns>
+        public TInitialPage GetOrCreateInitialPage<TInitialPage>(string titleOverride = null,
+            Action<TInitialPage> onLoad = null)
+            where TInitialPage : DebugPageBase
+        {
+            if (_isInitialized)
+                return InitialDebugPage as TInitialPage;
+
+            return Initialize(titleOverride, onLoad);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="titleOverride"></param>
+        /// <param name="onLoad"></param>
+        /// <returns></returns>
+        public DebugPage GetOrCreateInitialPage(string titleOverride = null, Action<DebugPage> onLoad = null)
+        {
+            return GetOrCreateInitialPage<DebugPage>();
+        }
+
+        public AsyncProcessHandle PushPage<TPage>(bool playAnimation, string titleOverride = null,
+            Action<TPage> onLoad = null)
             where TPage : DebugPageBase
         {
-            TPage debugPage = null;
-            _pageContainer.Push<TPage>(_pagePrefab.gameObject.name, playAnimation, onLoad: x =>
+            return _pageContainer.Push<TPage>(_pagePrefab.gameObject.name, playAnimation, onLoad: x =>
             {
-                debugPage = x;
                 if (titleOverride != null)
-                    debugPage.SetTitle(titleOverride);
+                    x.SetTitle(titleOverride);
 
-                onLoad?.Invoke(debugPage);
+                var prefabContainer = x.GetComponent<PrefabContainer>();
+                prefabContainer.Prefabs.AddRange(_cellPrefabs);
+
+                onLoad?.Invoke(x);
             }, loadAsync: false);
-            return debugPage;
         }
 
-        public void PopPage(bool playAnimation)
+        public AsyncProcessHandle PopPage(bool playAnimation)
         {
-            _pageContainer.Pop(playAnimation);
+            return _pageContainer.Pop(playAnimation);
         }
 
         public void Show()

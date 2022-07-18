@@ -1,6 +1,8 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
+using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -9,7 +11,6 @@ namespace Demo._02_DefaultCells.Scripts
 {
     public sealed class DefaultCellsDemo : MonoBehaviour
     {
-        [SerializeField] private DebugSheet _sheet;
         [SerializeField] private Button _clearCellsButton;
         [SerializeField] private Button _addDefaultCellsButton;
         [SerializeField] private Button _addLabelCellAtFirstButton;
@@ -18,12 +19,22 @@ namespace Demo._02_DefaultCells.Scripts
         [SerializeField] private Button _removeLastCellButton;
 
         private DefaultCellsDemoDebugPage _demoDebugPage;
+        private DebugPageBase _initialPage;
+        private int _linkButtonId = -1;
 
         private void Start()
         {
-            var demoPage = _sheet.Initialize<DefaultCellsDemoDebugPage>();
-            demoPage.AddDefaultCells();
-            _demoDebugPage = demoPage;
+            SetAllButtonsInteractable(false);
+
+            _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
+            _linkButtonId = _initialPage.AddPageLinkButton<DefaultCellsDemoDebugPage>("Default Cells Demo",
+                onLoad: page =>
+                {
+                    page.AddDefaultCells();
+                    _demoDebugPage = page;
+                    page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
+                });
+            _initialPage.Reload();
         }
 
         private void OnEnable()
@@ -44,6 +55,36 @@ namespace Demo._02_DefaultCells.Scripts
             _addLabelCellAtLastButton.onClick.RemoveListener(OnAddLabelCellAtLastButtonClicked);
             _removeFirstCellButton.onClick.RemoveListener(OnRemoveFirstCellButtonClicked);
             _removeLastCellButton.onClick.RemoveListener(OnRemoveLastCellButtonClicked);
+        }
+
+        private void OnDestroy()
+        {
+            if (_linkButtonId != -1 && _initialPage != null)
+            {
+                _initialPage.RemoveItem(_linkButtonId);
+                _initialPage.Reload();
+            }
+        }
+
+        private void OnDidPushEnter()
+        {
+            SetAllButtonsInteractable(true);
+        }
+
+        private IEnumerator OnWillPopExit()
+        {
+            SetAllButtonsInteractable(false);
+            yield break;
+        }
+
+        private void SetAllButtonsInteractable(bool interactable)
+        {
+            _clearCellsButton.interactable = interactable;
+            _addDefaultCellsButton.interactable = interactable;
+            _addLabelCellAtFirstButton.interactable = interactable;
+            _addLabelCellAtLastButton.interactable = interactable;
+            _removeFirstCellButton.interactable = interactable;
+            _removeLastCellButton.interactable = interactable;
         }
 
         private void OnClearCellsButtonClicked()

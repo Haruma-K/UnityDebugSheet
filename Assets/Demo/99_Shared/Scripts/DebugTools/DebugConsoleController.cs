@@ -2,7 +2,7 @@
 using System;
 using IngameDebugConsole;
 
-namespace Demo._01_CharacterViewer.Scripts.DebugTools
+namespace Demo._99_Shared.Scripts.DebugTools
 {
     /// <summary>
     ///     Controls the <see cref="IngameDebugConsole" />, which is used to display debug logs.

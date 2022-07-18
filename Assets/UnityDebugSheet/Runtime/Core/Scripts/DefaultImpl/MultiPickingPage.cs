@@ -5,7 +5,7 @@ using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 {
-    public sealed class MultiPickingPage : DefaultDebugPageBase
+    public sealed class MultiPickingPage : DebugPageBase
     {
         private readonly List<int> _activeOptionIndices = new List<int>();
 

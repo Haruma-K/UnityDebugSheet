@@ -1,16 +1,15 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
 using System.Collections;
-using Demo._00_Shared.Scripts;
 using IngameDebugConsole;
 using Tayx.Graphy;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
+using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 
-namespace Demo._01_CharacterViewer.Scripts.DebugTools
+namespace Demo._99_Shared.Scripts.DebugTools
 {
-    public sealed class DebugToolsPage : DefaultDebugPageBase
+    public sealed class DebugToolsPage : DebugPageBase
     {
         private EnumPickerCellModel _consoleStatePickerModel;
         private DebugConsoleController _debugConsoleController;
@@ -63,6 +62,7 @@ namespace Demo._01_CharacterViewer.Scripts.DebugTools
         public override void DidPopExit()
         {
             _fpsStatePickerModel.ActiveValueChanged -= OnFPSStatePickerValueChanged;
+            _ramStatePickerModel.ActiveValueChanged -= OnRAMStatePickerValueChanged;
             _consoleStatePickerModel.ActiveValueChanged -= OnConsoleStatePickerValueChanged;
             _debugConsoleController.StateChanged -= OnDebugConsoleStateChanged;
         }

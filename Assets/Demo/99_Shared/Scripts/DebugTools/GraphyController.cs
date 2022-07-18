@@ -2,7 +2,7 @@
 using System;
 using Tayx.Graphy;
 
-namespace Demo._01_CharacterViewer.Scripts.DebugTools
+namespace Demo._99_Shared.Scripts.DebugTools
 {
     public sealed class GraphyController
     {
