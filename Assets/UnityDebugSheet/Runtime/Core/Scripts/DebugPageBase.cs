@@ -240,7 +240,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddItem(AssetKeys.SwitchCell, model, priority);
         }
 
-        public int AddSlider(float minValue, float maxValue, float value, string text, string subText = null,
+        public int AddSlider(float value, float minValue, float maxValue, string text, string subText = null,
             Color? textColor = null, Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
             bool showValueText = true, string valueTextFormat = null, Action<float> valueChanged = null,
             int priority = int.MaxValue)
