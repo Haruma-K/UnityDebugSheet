@@ -423,6 +423,49 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddButton(buttonModel, priority);
         }
 
+        public int AddPageLinkButton<TPage>(TPage prefab, string text, string subText = null, Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<TPage> onLoad = null,
+            int priority = int.MaxValue) where TPage : DebugPageBase
+        {
+            var textModel = new CellTextsModel();
+            textModel.Text = text;
+            textModel.SubText = subText;
+            if (textColor != null) textModel.TextColor = textColor.Value;
+            if (subTextColor != null) textModel.SubTextColor = subTextColor.Value;
+            var iconModel = new CellIconModel();
+            iconModel.Sprite = icon;
+            if (iconColor != null) iconModel.Color = iconColor.Value;
+            return AddPageLinkButton(prefab, textModel, iconModel, onLoad, priority);
+        }
+
+        public int AddPageLinkButton<TPage>(TPage prefab, CellTextsModel textModel, CellIconModel iconModel = null,
+            Action<TPage> onLoad = null, int priority = int.MaxValue) where TPage : DebugPageBase
+        {
+            var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
+            var buttonModel = new ButtonCellModel(useSubText);
+            if (textModel != null)
+            {
+                buttonModel.CellTexts.Text = textModel.Text;
+                buttonModel.CellTexts.TextColor = textModel.TextColor;
+                buttonModel.CellTexts.SubText = textModel.SubText;
+                buttonModel.CellTexts.SubTextColor = textModel.SubTextColor;
+            }
+            else
+            {
+                buttonModel.CellTexts.Text = nameof(TPage);
+            }
+
+            if (iconModel != null)
+            {
+                buttonModel.Icon.Sprite = iconModel.Sprite;
+                buttonModel.Icon.Color = iconModel.Color;
+            }
+
+            buttonModel.Clicked += () => DebugSheet.Of(transform).PushPage(prefab, true, onLoad: onLoad);
+            buttonModel.ShowArrow = true;
+            return AddButton(buttonModel, priority);
+        }
+
         public sealed class ItemInfo
         {
             public readonly CellModel CellModel;
