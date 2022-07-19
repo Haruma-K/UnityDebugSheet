@@ -171,6 +171,11 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return Initialize(titleOverride, onLoad);
         }
 
+        public DebugPageBase GetOrCreateInitialPage(string titleOverride = null, Action<DebugPage> onLoad = null)
+        {
+            return GetOrCreateInitialPage<DebugPage>(titleOverride, onLoad);
+        }
+
         public AsyncProcessHandle PushPage<TPage>(TPage prefab, bool playAnimation, string titleOverride = null,
             Action<TPage> onLoad = null) where TPage : DebugPageBase
         {
