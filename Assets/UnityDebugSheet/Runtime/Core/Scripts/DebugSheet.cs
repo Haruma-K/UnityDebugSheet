@@ -179,8 +179,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public AsyncProcessHandle PushPage<TPage>(TPage prefab, bool playAnimation, string titleOverride = null,
             Action<TPage> onLoad = null) where TPage : DebugPageBase
         {
-            if (!_preloadedAssetLoader.PreloadedObjects.ContainsValue(prefab))
-                _preloadedAssetLoader.AddObject(prefab);
+            if (!_preloadedAssetLoader.PreloadedObjects.ContainsValue(prefab.gameObject))
+                _preloadedAssetLoader.AddObject(prefab.gameObject);
 
             return PushPage(prefab.gameObject.name, playAnimation, titleOverride, onLoad);
         }
