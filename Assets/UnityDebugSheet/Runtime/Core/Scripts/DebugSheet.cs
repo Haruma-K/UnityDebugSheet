@@ -161,26 +161,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// </summary>
         /// <param name="titleOverride"></param>
         /// <param name="onLoad"></param>
-        /// <typeparam name="TInitialPage"></typeparam>
-        /// <returns>If initial page type is not <see cref="TInitialPage" />, return null.</returns>
-        public TInitialPage GetOrCreateInitialPage<TInitialPage>(string titleOverride = null,
-            Action<TInitialPage> onLoad = null)
-            where TInitialPage : DebugPageBase
+        /// <returns></returns>
+        public DebugPageBase GetOrCreateInitialPage<TInitialPage>(string titleOverride = null,
+            Action<TInitialPage> onLoad = null) where TInitialPage : DebugPageBase
         {
             if (_isInitialized)
-                return InitialDebugPage as TInitialPage;
+                return InitialDebugPage;
 
             return Initialize(titleOverride, onLoad);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="titleOverride"></param>
-        /// <param name="onLoad"></param>
-        /// <returns></returns>
-        public DebugPage GetOrCreateInitialPage(string titleOverride = null, Action<DebugPage> onLoad = null)
-        {
-            return GetOrCreateInitialPage<DebugPage>(titleOverride, onLoad);
         }
 
         public AsyncProcessHandle PushPage<TPage>(TPage prefab, bool playAnimation, string titleOverride = null,
@@ -197,7 +185,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         {
             return PushPage(_pagePrefab.gameObject.name, playAnimation, titleOverride, onLoad);
         }
-        
+
         private AsyncProcessHandle PushPage<TPage>(string prefabName, bool playAnimation, string titleOverride = null,
             Action<TPage> onLoad = null) where TPage : DebugPageBase
         {
