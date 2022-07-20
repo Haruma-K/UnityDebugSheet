@@ -103,7 +103,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// <param name="model"></param>
         /// <param name="priority"></param>
         /// <returns></returns>
-        public int AddItem(string prefabKey, CellModel model, int priority = int.MaxValue)
+        public int AddItem(string prefabKey, CellModel model, int priority = 0)
         {
             var itemId = _currentItemId++;
             var node = _itemIds.Add(itemId, priority);
@@ -178,7 +178,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         }
 
         public int AddLabel(string text, string subText = null, Color? textColor = null,
-            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, int priority = int.MaxValue)
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, int priority = 0)
         {
             var labelCellModel = new LabelCellModel(!string.IsNullOrEmpty(subText));
             labelCellModel.CellTexts.Text = text;
@@ -191,14 +191,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddLabel(labelCellModel, priority);
         }
 
-        public int AddLabel(LabelCellModel model, int priority = int.MaxValue)
+        public int AddLabel(LabelCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.LabelCell, model, priority);
         }
 
         public int AddButton(string text, string subText = null, Color? textColor = null, Color? subTextColor = null,
             Sprite icon = null, Color? iconColor = null, bool showAllow = false, Action clicked = null,
-            int priority = int.MaxValue)
+            int priority = 0)
         {
             var buttonCellModel = new ButtonCellModel(!string.IsNullOrEmpty(subText));
             buttonCellModel.CellTexts.Text = text;
@@ -213,14 +213,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddButton(buttonCellModel, priority);
         }
 
-        public int AddButton(ButtonCellModel model, int priority = int.MaxValue)
+        public int AddButton(ButtonCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.ButtonCell, model, priority);
         }
 
         public int AddSwitch(bool value, string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<bool> valueChanged = null,
-            int priority = int.MaxValue)
+            int priority = 0)
         {
             var switchCellModel = new SwitchCellModel(!string.IsNullOrEmpty(subText));
             switchCellModel.CellTexts.Text = text;
@@ -235,7 +235,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddSwitch(switchCellModel, priority);
         }
 
-        public int AddSwitch(SwitchCellModel model, int priority = int.MaxValue)
+        public int AddSwitch(SwitchCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.SwitchCell, model, priority);
         }
@@ -243,7 +243,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public int AddSlider(float value, float minValue, float maxValue, string text, string subText = null,
             Color? textColor = null, Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
             bool showValueText = true, string valueTextFormat = null, Action<float> valueChanged = null,
-            int priority = int.MaxValue)
+            int priority = 0)
         {
             var sliderCellModel = new SliderCellModel(!string.IsNullOrEmpty(subText), minValue, maxValue);
             sliderCellModel.CellTexts.Text = text;
@@ -260,7 +260,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddSlider(sliderCellModel, priority);
         }
 
-        public int AddSlider(SliderCellModel model, int priority = int.MaxValue)
+        public int AddSlider(SliderCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.SliderCell, model, priority);
         }
@@ -268,7 +268,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public int AddPicker(IEnumerable<string> options, int activeOptionIndex, string text, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
             Action<int> activeOptionChanged = null, Action clicked = null, Action confirmed = null,
-            int priority = int.MaxValue)
+            int priority = 0)
         {
             var pickerCellModel = new PickerCellModel();
             pickerCellModel.Text = text;
@@ -284,14 +284,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddPicker(pickerCellModel, priority);
         }
 
-        public int AddPicker(PickerCellModel model, int priority = int.MaxValue)
+        public int AddPicker(PickerCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.PickerCell, model, priority);
         }
 
         public int AddEnumPicker(Enum activeValue, string text, Color? textColor = null, Color? subTextColor = null,
             Sprite icon = null, Color? iconColor = null, Action<Enum> activeValueChanged = null, Action clicked = null,
-            Action confirmed = null, int priority = int.MaxValue)
+            Action confirmed = null, int priority = 0)
         {
             var pickerCellModel = new EnumPickerCellModel(activeValue);
             pickerCellModel.Text = text;
@@ -306,7 +306,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddEnumPicker(pickerCellModel, priority);
         }
 
-        public int AddEnumPicker(EnumPickerCellModel model, int priority = int.MaxValue)
+        public int AddEnumPicker(EnumPickerCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.EnumPickerCell, model, priority);
         }
@@ -314,7 +314,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public int AddMultiPicker(IEnumerable<string> options, IEnumerable<int> activeOptionIndices, string text,
             Color? textColor = null, Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
             Action<int, bool> optionStateChanged = null, Action clicked = null, Action confirmed = null,
-            int priority = int.MaxValue)
+            int priority = 0)
         {
             var pickerCellModel = new MultiPickerCellModel();
             pickerCellModel.Text = text;
@@ -330,7 +330,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddMultiPicker(pickerCellModel, priority);
         }
 
-        public int AddMultiPicker(MultiPickerCellModel model, int priority = int.MaxValue)
+        public int AddMultiPicker(MultiPickerCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.MultiPickerCell, model, priority);
         }
@@ -338,7 +338,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public int AddEnumMultiPicker(Enum activeValue, string text, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
             Action<Enum> activeValueChanged = null, Action clicked = null, Action confirmed = null,
-            int priority = int.MaxValue)
+            int priority = 0)
         {
             var pickerCellModel = new EnumMultiPickerCellModel(activeValue);
             pickerCellModel.Text = text;
@@ -353,14 +353,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddEnumMultiPicker(pickerCellModel, priority);
         }
 
-        public int AddEnumMultiPicker(EnumMultiPickerCellModel model, int priority = int.MaxValue)
+        public int AddEnumMultiPicker(EnumMultiPickerCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.EnumMultiPickerCell, model, priority);
         }
 
         public int AddPickerOption(bool isOn, string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<bool> toggled = null,
-            int priority = int.MaxValue)
+            int priority = 0)
         {
             var pickerOptionModel = new PickerOptionCellModel(!string.IsNullOrEmpty(subText));
             pickerOptionModel.IsOn = isOn;
@@ -375,14 +375,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return AddPickerOption(pickerOptionModel, priority);
         }
 
-        public int AddPickerOption(PickerOptionCellModel model, int priority = int.MaxValue)
+        public int AddPickerOption(PickerOptionCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.PickerOption, model, priority);
         }
 
         public int AddPageLinkButton<TPage>(string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<TPage> onLoad = null,
-            int priority = int.MaxValue) where TPage : DebugPageBase
+            int priority = 0) where TPage : DebugPageBase
         {
             var textModel = new CellTextsModel();
             textModel.Text = text;
@@ -396,7 +396,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         }
 
         public int AddPageLinkButton<TPage>(CellTextsModel textModel, CellIconModel iconModel = null,
-            Action<TPage> onLoad = null, int priority = int.MaxValue) where TPage : DebugPageBase
+            Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
             var buttonModel = new ButtonCellModel(useSubText);
@@ -425,7 +425,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public int AddPageLinkButton<TPage>(TPage prefab, string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<TPage> onLoad = null,
-            int priority = int.MaxValue) where TPage : DebugPageBase
+            int priority = 0) where TPage : DebugPageBase
         {
             var textModel = new CellTextsModel();
             textModel.Text = text;
@@ -439,7 +439,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         }
 
         public int AddPageLinkButton<TPage>(TPage prefab, CellTextsModel textModel, CellIconModel iconModel = null,
-            Action<TPage> onLoad = null, int priority = int.MaxValue) where TPage : DebugPageBase
+            Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
             var buttonModel = new ButtonCellModel(useSubText);
