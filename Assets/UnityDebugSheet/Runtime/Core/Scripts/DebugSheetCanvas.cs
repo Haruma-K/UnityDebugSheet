@@ -37,7 +37,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             _canvasScaler.referenceResolution = referenceResolution;
             _canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            _canvasScaler.matchWidthOrHeight = isPortrait ? 1.0f : 0.0f;
+            _canvasScaler.matchWidthOrHeight = isPortrait ? 0.0f : 1.0f;
 
             _isPortrait = isPortrait;
         }
