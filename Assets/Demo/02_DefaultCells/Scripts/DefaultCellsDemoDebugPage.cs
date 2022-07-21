@@ -1,5 +1,6 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
+using System.Collections;
 using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
@@ -10,6 +11,13 @@ namespace Demo._02_DefaultCells.Scripts
     public sealed class DefaultCellsDemoDebugPage : DebugPageBase
     {
         protected override string Title => "DemoPage";
+
+        public override IEnumerator Initialize()
+        {
+            AddDefaultCells();
+            Reload();
+            yield break;
+        }
 
         public void AddDefaultCells()
         {
@@ -172,10 +180,6 @@ namespace Demo._02_DefaultCells.Scripts
             enumMultiPickerData1.ActiveValueChanged +=
                 value => Debug.Log($"Selected Option Changed: {(ExampleEnum)value}");
             AddEnumMultiPicker(enumMultiPickerData1);
-
-
-            // Generate cells.
-            Reload();
         }
 
         [Flags]

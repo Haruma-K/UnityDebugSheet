@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 
@@ -15,16 +16,25 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 
         public event Action<int> ValueChanged;
 
+        private IReadOnlyList<string> _options;
+
         public void Setup(IReadOnlyList<string> options, int selectedIndex)
         {
+            _options = options;
+            ActiveIndex = selectedIndex;
+            
             ClearItems();
+        }
+
+        public override IEnumerator Initialize()
+        {
             _optionDataList.Clear();
 
             var index = 0;
-            foreach (var option in options)
+            foreach (var option in _options)
             {
                 var indexCache = index;
-                var isOn = index == selectedIndex;
+                var isOn = index == ActiveIndex;
                 var pickerOptionModel = new PickerOptionCellModel(false);
                 pickerOptionModel.CellTexts.Text = option;
                 pickerOptionModel.IsOn = isOn;
@@ -47,6 +57,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
             }
 
             Reload();
+            
+            yield break;
         }
 
         private void OnSelectionChanged(int selectedIndex)

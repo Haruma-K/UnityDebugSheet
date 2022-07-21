@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
@@ -9,6 +9,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
     {
         private readonly List<int> _activeOptionIndices = new List<int>();
 
+        private IReadOnlyList<string> _options;
+
         public IReadOnlyList<int> ActiveOptionIndices => _activeOptionIndices;
 
         protected override string Title => "Select";
@@ -16,15 +18,19 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 
         public void Setup(IReadOnlyList<string> options, IReadOnlyList<int> activeOptionIndices)
         {
-            ClearItems();
+            _options = options;
             _activeOptionIndices.Clear();
             _activeOptionIndices.AddRange(activeOptionIndices);
+        }
 
-            for (var i = 0; i < options.Count; i++)
+        public override IEnumerator Initialize()
+        {
+            ClearItems();
+            for (var i = 0; i < _options.Count; i++)
             {
-                var option = options[i];
+                var option = _options[i];
                 var index = i;
-                var isActive = activeOptionIndices.Contains(index);
+                var isActive = _activeOptionIndices.Contains(index);
 
                 var pickerOptionData = new PickerOptionCellModel(false);
                 pickerOptionData.CellTexts.Text = option;
@@ -38,6 +44,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
             }
 
             Reload();
+
+            yield break;
         }
 
         public void SetOptionState(int optionIndex, bool isActive)

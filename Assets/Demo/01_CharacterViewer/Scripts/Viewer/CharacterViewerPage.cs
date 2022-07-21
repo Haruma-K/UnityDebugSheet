@@ -38,7 +38,7 @@ namespace Demo._01_CharacterViewer.Scripts.Viewer
             _standController = standController;
         }
 
-        public override IEnumerator WillPushEnter()
+        public override IEnumerator Initialize()
         {
             var activeCharacterController = _characterSpawner.ActiveCharacterAnimationController;
             var modelNames = _characterSpawner.Prefabs.Select(x => x.name).ToArray();
@@ -91,16 +91,20 @@ namespace Demo._01_CharacterViewer.Scripts.Viewer
             autoRotationSwitchModel.ValueChanged += OnAutoRotationSwitchValueChanged;
             AddSwitch(autoRotationSwitchModel);
 
+            Reload();
+
             yield break;
         }
 
-        public override void DidPopExit()
+        public override IEnumerator Cleanup()
         {
             _modelPickerModel.ActiveOptionChanged -= OnModelPickerValueChanged;
             _motionPickerModel.ActiveOptionChanged -= OnMotionPickerValueChanged;
             _positionXSliderModel.ValueChanged -= OnPositionSliderValueChanged;
             _rotationSliderModel.ValueChanged -= OnRotationSliderValueChanged;
             _autoRotateSwitchModel.ValueChanged -= OnAutoRotationSwitchValueChanged;
+
+            yield break;
         }
 
         private void OnModelPickerValueChanged(int value)

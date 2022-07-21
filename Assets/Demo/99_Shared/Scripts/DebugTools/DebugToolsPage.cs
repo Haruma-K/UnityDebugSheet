@@ -26,7 +26,7 @@ namespace Demo._99_Shared.Scripts.DebugTools
             _debugConsoleController = new DebugConsoleController(debugLogManager);
         }
 
-        public override IEnumerator WillPushEnter()
+        public override IEnumerator Initialize()
         {
             // FPS
             var fpsState = _graphyController.GetModuleState(GraphyController.ModuleType.FPS);
@@ -56,15 +56,19 @@ namespace Demo._99_Shared.Scripts.DebugTools
             _debugConsoleController.StateChanged += OnDebugConsoleStateChanged;
             AddEnumPicker(consoleStatePickerModel);
 
+            Reload();
+            
             yield break;
         }
 
-        public override void DidPopExit()
+        public override IEnumerator Cleanup()
         {
             _fpsStatePickerModel.ActiveValueChanged -= OnFPSStatePickerValueChanged;
             _ramStatePickerModel.ActiveValueChanged -= OnRAMStatePickerValueChanged;
             _consoleStatePickerModel.ActiveValueChanged -= OnConsoleStatePickerValueChanged;
             _debugConsoleController.StateChanged -= OnDebugConsoleStateChanged;
+            
+            yield break;
         }
 
         private void OnFPSStatePickerValueChanged(Enum value)

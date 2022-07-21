@@ -30,7 +30,6 @@ namespace Demo._02_DefaultCells.Scripts
             _linkButtonId = _initialPage.AddPageLinkButton<DefaultCellsDemoDebugPage>("Default Cells Demo",
                 onLoad: page =>
                 {
-                    page.AddDefaultCells();
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);

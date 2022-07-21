@@ -1,5 +1,6 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
@@ -26,6 +27,10 @@ namespace Demo._03_CustomCells.Scripts
         public void Setup(int cellCount)
         {
             _cellCount = cellCount;
+        }
+
+        public override IEnumerator Initialize()
+        {
             for (var i = 0; i < _cellCount; i++)
             {
                 var model = new CustomTextCellModel();
@@ -36,6 +41,8 @@ namespace Demo._03_CustomCells.Scripts
             }
 
             Reload();
+            
+            yield break;
         }
 
         public void ChangeData()
