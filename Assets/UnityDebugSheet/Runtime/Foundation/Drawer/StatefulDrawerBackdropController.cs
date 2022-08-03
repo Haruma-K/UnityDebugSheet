@@ -57,7 +57,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
 
         private void OnBackdropClicked()
         {
-            if (_closeWhenBackdropClicked)
+            if (_closeWhenBackdropClicked && !_drawer.IsInAnimation)
                 _drawerController.SetStateWithAnimation(DrawerState.Min);
         }
     }

@@ -1,4 +1,4 @@
-namespace TouchAdapter
+namespace UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters
 {
     public enum TouchPhase
     {

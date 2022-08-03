@@ -9,85 +9,113 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
     [RequireComponent(typeof(StatefulDrawer))]
     public sealed class StatefulDrawerController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private const float FlickTimeThreshold = 0.1f;
-        private const float FlickDeltaThreshold = 10.0f;
+        private const int MaxPositionListSize = 3;
+        private const float FlickDistanceThresholdInchPerSec = 0.025f;
+
         [SerializeField] private float _animationDuration = 0.25f;
         [SerializeField] private EaseType _animationType = EaseType.ExponentialEaseOut;
-        private readonly Queue<DragData> _dragDataList = new Queue<DragData>(100);
+
+        private readonly List<(Vector2 screenPosition, float deltaTime)> _dragPositions =
+            new List<(Vector2 screenPosition, float deltaTime)>(MaxPositionListSize + 1);
 
         private Canvas _canvas;
         private StatefulDrawer _drawer;
+        private float Dpi { get; set; }
 
         private void Start()
         {
             _drawer = GetComponent<StatefulDrawer>();
             _canvas = GetComponentInParent<Canvas>();
 
+            var dpi = Screen.dpi;
+            if (dpi == 0)
+                dpi = 326;
+            Dpi = dpi;
+
             Assert.IsNotNull(_canvas);
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
+        void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
-            _dragDataList.Clear();
+            _dragPositions.Clear();
         }
 
-        public void OnDrag(PointerEventData eventData)
+        void IDragHandler.OnDrag(PointerEventData eventData)
         {
+            var deltaScreenPos = eventData.delta;
+            var deltaPos = deltaScreenPos / _canvas.scaleFactor;
             if (_drawer.IsInAnimation)
                 _drawer.StopProgressAnimation();
 
-            var deltaPos = eventData.delta / _canvas.scaleFactor;
             var isHorizontal = _drawer.Direction == DrawerDirection.LeftToRight
                                || _drawer.Direction == DrawerDirection.RightToLeft;
             var isInverse = _drawer.Direction == DrawerDirection.RightToLeft
                             || _drawer.Direction == DrawerDirection.TopToBottom;
             var delta = isHorizontal ? deltaPos.x : deltaPos.y;
             _drawer.Progress += _drawer.GetProgressFromDistance(delta) * (isInverse ? -1.0f : 1.0f);
-            _dragDataList.Enqueue(new DragData { Time = Time.time, Delta = delta });
-            while (_dragDataList.Count > 100)
-                _dragDataList.Dequeue();
+
+            _dragPositions.Add((eventData.position, Time.deltaTime));
+            if (_dragPositions.Count > MaxPositionListSize)
+                _dragPositions.RemoveAt(0);
+
+            Assert.IsTrue(_dragPositions.Count <= MaxPositionListSize);
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+        void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
             if (_drawer.IsInAnimation)
                 _drawer.StopProgressAnimation();
 
-            var delta = 0.0f;
-            while (true)
-            {
-                if (_dragDataList.Count == 0)
-                    break;
+            if (_dragPositions.Count <= 1)
+                SetStateWithAnimation(_drawer.GetNearestState());
 
-                var dragData = _dragDataList.Dequeue();
+            var startScreenPos = _dragPositions[0].screenPosition;
+            var endScreenPos = _dragPositions[_dragPositions.Count - 1].screenPosition;
 
-                if (Time.time - dragData.Time >= FlickTimeThreshold)
-                    break;
+            // Check whether flicked or not.
+            var totalTime = 0f;
+            for (var i = 0; i < _dragPositions.Count; i++)
+                totalTime += _dragPositions[i].deltaTime;
+            var deltaPosInch = (endScreenPos - startScreenPos) / Dpi;
+            var deltaInchPerSec = deltaPosInch / totalTime;
+            var flicked = deltaInchPerSec.magnitude >= FlickDistanceThresholdInchPerSec;
 
-                delta += dragData.Delta;
-            }
-
-            var isInverse = _drawer.Direction == DrawerDirection.RightToLeft
-                            || _drawer.Direction == DrawerDirection.TopToBottom;
-            delta *= isInverse ? -1.0f : 1.0f;
-
-            if (delta > FlickDeltaThreshold)
-                SetStateWithAnimation(_drawer.GetUpperState());
-            else if (delta < -FlickDeltaThreshold)
-                SetStateWithAnimation(_drawer.GetLowerState());
+            if (flicked)
+                OnFlicked(startScreenPos, endScreenPos, deltaPosInch);
             else
                 SetStateWithAnimation(_drawer.GetNearestState());
         }
 
-        public void SetStateWithAnimation(DrawerState state)
+        private void OnFlicked(Vector2 startScreenPosition, Vector2 endScreenPosition, Vector2 deltaInchPosition)
         {
-            _drawer.SetStateWithAnimation(state, _animationDuration, _animationType);
+            var horizontalFlick = Mathf.Abs(deltaInchPosition.x) > Mathf.Abs(deltaInchPosition.y);
+            var positiveFlick = horizontalFlick ? deltaInchPosition.x >= 0 : deltaInchPosition.y >= 0;
+            var drawerIsHorizontal = _drawer.Direction == DrawerDirection.LeftToRight
+                                     || _drawer.Direction == DrawerDirection.RightToLeft;
+            var drawerIsVertical = _drawer.Direction == DrawerDirection.BottomToTop
+                                   || _drawer.Direction == DrawerDirection.TopToBottom;
+
+            // If flick direction is not same as drawer direction, transition to the nearest state.
+            if ((horizontalFlick && drawerIsVertical) || (!horizontalFlick && drawerIsHorizontal))
+            {
+                SetStateWithAnimation(_drawer.GetNearestState());
+                return;
+            }
+
+            // Transition to the upper or lower state if flick direction is same as drawer direction.
+            var drawerDirectionIsInversed = _drawer.Direction == DrawerDirection.RightToLeft
+                                            || _drawer.Direction == DrawerDirection.TopToBottom;
+
+            var positiveTransition = drawerDirectionIsInversed ? !positiveFlick : positiveFlick;
+            var targetState = positiveTransition ? _drawer.GetUpperState() : _drawer.GetLowerState();
+            SetStateWithAnimation(targetState);
         }
 
-        private struct DragData
+        public void SetStateWithAnimation(DrawerState state)
         {
-            public float Time { get; set; }
-            public float Delta { get; set; }
+            if (_drawer.IsInAnimation)
+                return;
+            _drawer.SetStateWithAnimation(state, _animationDuration, _animationType);
         }
     }
 }
