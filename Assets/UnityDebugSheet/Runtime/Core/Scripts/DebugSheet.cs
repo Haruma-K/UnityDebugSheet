@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Foundation.Drawer;
+using UnityDebugSheet.Runtime.Foundation.Gestures.Flicks;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
@@ -11,10 +12,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 {
     public sealed class DebugSheet : MonoBehaviour, IPageContainerCallbackReceiver
     {
+        private const float ThresholdInch = 0.24f;
+
         private static readonly Dictionary<int, DebugSheet> InstanceCacheByTransform =
             new Dictionary<int, DebugSheet>();
 
         [SerializeField] private bool _singleton = true;
+        [SerializeField] private GlobalControlMode _globalControlMode = GlobalControlMode.FlickEdge;
+        [SerializeField] private List<GameObject> _cellPrefabs = new List<GameObject>();
+        [SerializeField] private StatefulDrawer _drawer;
         [SerializeField] private StatefulDrawerController _drawerController;
         [SerializeField] private Button _backButton;
         [SerializeField] private Text _exitTitleText;
@@ -22,7 +28,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private Button _closeButton;
         [SerializeField] private PageContainer _pageContainer;
         [SerializeField] [HideInInspector] private GameObject _pagePrefab;
-        [SerializeField] private List<GameObject> _cellPrefabs = new List<GameObject>();
+        [SerializeField] private InputBasedFlickEvent _flickEvent;
+        [SerializeField] private Canvas _canvas;
+        private float _dpi;
         private bool _isInitialized;
         private PreloadedAssetLoader _preloadedAssetLoader;
 
@@ -35,8 +43,19 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public IReadOnlyList<Page> Pages => _pageContainer.Pages;
         public IList<GameObject> CellPrefabs => _cellPrefabs;
 
+        public GlobalControlMode GlobalControlMode
+        {
+            get => _globalControlMode;
+            set => _globalControlMode = value;
+        }
+
         private void Awake()
         {
+            var dpi = Screen.dpi;
+            if (dpi == 0)
+                dpi = 326;
+            _dpi = dpi;
+
             if (_singleton)
             {
                 if (Instance == null)
@@ -52,6 +71,16 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
                 Destroy(gameObject);
             }
+        }
+
+        private void OnEnable()
+        {
+            _flickEvent.flicked.AddListener(OnFlicked);
+        }
+
+        private void OnDisable()
+        {
+            _flickEvent.flicked.RemoveListener(OnFlicked);
         }
 
         private void OnDestroy()
@@ -255,6 +284,50 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var color = _backButton.image.color;
             color.a = visibility;
             _backButton.image.color = color;
+        }
+
+        private void OnFlicked(Flick flick)
+        {
+            if (_globalControlMode == GlobalControlMode.None)
+                return;
+            
+            // If it is horizontal flick, ignore it.
+            var isVertical = Mathf.Abs(flick.DeltaInchPosition.y) > Mathf.Abs(flick.DeltaInchPosition.x);
+            if (!isVertical)
+                return;
+
+            // Determines whether flicking is valid or not by the global control mode.
+            var startPosXInch = flick.StartScreenPosition.x / _dpi;
+            var totalInch = Screen.width / _dpi;
+            var leftSafeAreaInch = Screen.safeArea.xMin / _dpi;
+            var isLeftEdge = startPosXInch <= ThresholdInch + leftSafeAreaInch;
+            var rightSafeAreaInch = (Screen.width - Screen.safeArea.xMax) / _dpi;
+            var isRightEdge = startPosXInch >= totalInch - (ThresholdInch + rightSafeAreaInch);
+            var isValid = false;
+            switch (_globalControlMode)
+            {
+                case GlobalControlMode.FlickEdge:
+                    isValid = isLeftEdge || isRightEdge;
+                    break;
+                case GlobalControlMode.FlickLeftEdge:
+                    isValid = isLeftEdge;
+                    break;
+                case GlobalControlMode.FlickRightEdge:
+                    isValid = isRightEdge;
+                    break;
+                case GlobalControlMode.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (!isValid)
+                return;
+
+            // Apply the flick.
+            var isUp = flick.DeltaInchPosition.y >= 0;
+            var state = isUp ? _drawer.GetUpperState() : _drawer.GetLowerState();
+            _drawerController.SetStateWithAnimation(state);
         }
     }
 }

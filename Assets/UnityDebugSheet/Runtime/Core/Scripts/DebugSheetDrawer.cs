@@ -11,8 +11,12 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         protected override void Update()
         {
             base.Update();
-
-            var isPortrait = Screen.height > Screen.width;
+            
+            var scaleFactor = Canvas.scaleFactor;
+            var safeArea = Screen.safeArea;
+            safeArea.position /= scaleFactor;
+            safeArea.size /= scaleFactor;
+            var isPortrait = safeArea.height > safeArea.width;
             var rectTrans = (RectTransform)transform;
             
             if (!_didFirstUpdate || _isPortrait != isPortrait)
@@ -31,6 +35,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
                 var anchoredPosition = rectTrans.anchoredPosition;
                 anchoredPosition.x = isPortrait ? 0.0f : 60.0f;
+                anchoredPosition.x += safeArea.xMin;
                 rectTrans.anchoredPosition = anchoredPosition;
                 
                 UseMiddleState = isPortrait;

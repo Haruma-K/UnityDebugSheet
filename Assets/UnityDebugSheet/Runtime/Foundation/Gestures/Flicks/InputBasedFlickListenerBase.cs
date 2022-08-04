@@ -6,7 +6,7 @@
 using UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters;
 using UnityEngine;
 #if IS_SMARTPHONE
-using TouchPhase = UnityDebugSheet.Runtime.Foundation.Gesture.InputAdapters.TouchPhase;
+using TouchPhase = UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters.TouchPhase;
 #endif
 
 namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks

@@ -20,6 +20,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
             _dragStarted = true;
+            _dragPosition = eventData.position;
         }
 
         void IDragHandler.OnDrag(PointerEventData eventData)
@@ -30,6 +31,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
             _dragFinished = true;
+            _dragPosition = eventData.position;
         }
 
         protected override bool ClickStarted()

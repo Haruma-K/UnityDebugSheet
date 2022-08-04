@@ -21,7 +21,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
 
         [SerializeField] private bool _openOnStart;
 
-        private Canvas _canvas;
+        protected Canvas Canvas;
         private bool _isProgressDirty;
         private bool _isTransformDirty;
         private Vector2 _lastFullSize;
@@ -89,15 +89,15 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
         {
             if (!Application.isPlaying)
             {
-                _canvas = GetComponentInParent<Canvas>();
+                Canvas = GetComponentInParent<Canvas>();
             }
             else
             {
-                if (_canvas == null)
-                    _canvas = GetComponentInParent<Canvas>();
+                if (Canvas == null)
+                    Canvas = GetComponentInParent<Canvas>();
             }
 
-            var scaleFactor = _canvas.scaleFactor;
+            var scaleFactor = Canvas.scaleFactor;
             var fullSize = new Vector2(Screen.width, Screen.height) / scaleFactor;
             var safeArea = Screen.safeArea;
             safeArea.position /= scaleFactor;
@@ -197,7 +197,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
 
         public float GetProgressFromDistance(float distance)
         {
-            var scaleFactor = _canvas.scaleFactor;
+            var scaleFactor = Canvas.scaleFactor;
             var fullSize = new Vector2(Screen.width, Screen.height) / scaleFactor;
             var safeArea = Screen.safeArea;
             safeArea.position /= scaleFactor;
