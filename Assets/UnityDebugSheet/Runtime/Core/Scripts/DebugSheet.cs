@@ -29,7 +29,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private PageContainer _pageContainer;
         [SerializeField] [HideInInspector] private GameObject _pagePrefab;
         [SerializeField] private InputBasedFlickEvent _flickEvent;
-        [SerializeField] private Canvas _canvas;
         private float _dpi;
         private bool _isInitialized;
         private PreloadedAssetLoader _preloadedAssetLoader;

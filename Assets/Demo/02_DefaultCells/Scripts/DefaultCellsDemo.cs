@@ -108,7 +108,7 @@ namespace Demo._02_DefaultCells.Scripts
 
             var model = new LabelCellModel(false);
             model.CellTexts.Text = "Additional Label";
-            _demoDebugPage.AddLabel(model, 0);
+            _demoDebugPage.AddLabel(model, -1);
             _demoDebugPage.Reload();
         }
 

@@ -8,6 +8,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
     public sealed class SliderCell : Cell<SliderCellModel>
     {
         [SerializeField] private LayoutElement _layoutElement;
+        [SerializeField] private RectTransform _contents;
         [SerializeField] private RectTransform _containerTrans;
         [SerializeField] private RectTransform _topTrans;
 
@@ -27,8 +28,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             icon.gameObject.SetActive(model.Icon.Sprite != null);
 
             // Texts
-            if (!model.UseSubText)
-                model.CellTexts.SubText = null;
             cellTexts.Setup(model.CellTexts);
 
             var value = Mathf.Clamp(model.Value, model.MinValue, model.MaxValue);
@@ -62,26 +61,30 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             });
 
             // Height
-            var height = ((RectTransform)cellTexts.transform).rect.height + 36;
+            //var height = ((RectTransform)cellTexts.transform).rect.height + 36;
+            var height = model.UseSubTextOrIcon ? 68 : 42; // Texts
+            height += 36; // Padding
             _topTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
             height += 65; // Bottom is fixed size.
             _containerTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-            _layoutElement.preferredHeight = height;
+            height += 1; // Border
+            _contents.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            _layoutElement.preferredHeight = height; // Set the preferred height for the recycler view.
         }
     }
 
     public sealed class SliderCellModel : CellModel
     {
-        public SliderCellModel(bool useSubText, float minValue, float maxValue)
+        public SliderCellModel(bool useSubTextOrIcon, float minValue, float maxValue)
         {
-            UseSubText = useSubText;
+            UseSubTextOrIcon = useSubTextOrIcon;
             MinValue = minValue;
             MaxValue = maxValue;
         }
 
         public CellIconModel Icon { get; } = new CellIconModel();
 
-        public bool UseSubText { get; }
+        public bool UseSubTextOrIcon { get; }
 
         public CellTextsModel CellTexts { get; } = new CellTextsModel();
 

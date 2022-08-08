@@ -180,7 +180,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public int AddLabel(string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, int priority = 0)
         {
-            var labelCellModel = new LabelCellModel(!string.IsNullOrEmpty(subText));
+            var useSubTextOrIcon = !string.IsNullOrEmpty(subText) || icon != null;
+            var labelCellModel = new LabelCellModel(useSubTextOrIcon);
             labelCellModel.CellTexts.Text = text;
             labelCellModel.CellTexts.SubText = subText;
             if (textColor != null) labelCellModel.CellTexts.TextColor = textColor.Value;
@@ -200,7 +201,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             Sprite icon = null, Color? iconColor = null, bool showAllow = false, Action clicked = null,
             int priority = 0)
         {
-            var buttonCellModel = new ButtonCellModel(!string.IsNullOrEmpty(subText));
+            var useSubTextOrIcon = !string.IsNullOrEmpty(subText) || icon != null;
+            var buttonCellModel = new ButtonCellModel(useSubTextOrIcon);
             buttonCellModel.CellTexts.Text = text;
             buttonCellModel.CellTexts.SubText = subText;
             if (textColor != null) buttonCellModel.CellTexts.TextColor = textColor.Value;
@@ -222,7 +224,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<bool> valueChanged = null,
             int priority = 0)
         {
-            var switchCellModel = new SwitchCellModel(!string.IsNullOrEmpty(subText));
+            var useSubTextOrIcon = !string.IsNullOrEmpty(subText) || icon != null;
+            var switchCellModel = new SwitchCellModel(useSubTextOrIcon);
             switchCellModel.CellTexts.Text = text;
             switchCellModel.CellTexts.SubText = subText;
             if (textColor != null) switchCellModel.CellTexts.TextColor = textColor.Value;
@@ -245,7 +248,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             bool showValueText = true, string valueTextFormat = null, Action<float> valueChanged = null,
             int priority = 0)
         {
-            var sliderCellModel = new SliderCellModel(!string.IsNullOrEmpty(subText), minValue, maxValue);
+            var useSubTextOrIcon = !string.IsNullOrEmpty(subText) || icon != null;
+            var sliderCellModel = new SliderCellModel(useSubTextOrIcon, minValue, maxValue);
             sliderCellModel.CellTexts.Text = text;
             sliderCellModel.CellTexts.SubText = subText;
             if (textColor != null) sliderCellModel.CellTexts.TextColor = textColor.Value;
@@ -362,7 +366,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<bool> toggled = null,
             int priority = 0)
         {
-            var pickerOptionModel = new PickerOptionCellModel(!string.IsNullOrEmpty(subText));
+            var useSubTextOrIcon = !string.IsNullOrEmpty(subText) || icon != null;
+            var pickerOptionModel = new PickerOptionCellModel(useSubTextOrIcon);
             pickerOptionModel.IsOn = isOn;
             pickerOptionModel.CellTexts.Text = text;
             pickerOptionModel.CellTexts.SubText = subText;
@@ -399,7 +404,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
-            var buttonModel = new ButtonCellModel(useSubText);
+            var useIcon = iconModel != null && iconModel.Sprite != null;
+            var useSubTextOrIcon = useSubText || useIcon;
+            var buttonModel = new ButtonCellModel(useSubTextOrIcon);
             if (textModel != null)
             {
                 buttonModel.CellTexts.Text = textModel.Text;
@@ -442,7 +449,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
-            var buttonModel = new ButtonCellModel(useSubText);
+            var useIcon = iconModel != null && iconModel.Sprite != null;
+            var useSubTextOrIcon = useSubText || useIcon;
+            var buttonModel = new ButtonCellModel(useSubTextOrIcon);
             if (textModel != null)
             {
                 buttonModel.CellTexts.Text = textModel.Text;

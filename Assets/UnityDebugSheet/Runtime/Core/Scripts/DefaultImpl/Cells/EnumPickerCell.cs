@@ -10,8 +10,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 {
     public sealed class EnumPickerCell : Cell<EnumPickerCellModel>
     {
-        [SerializeField] private LayoutElement _layoutElement;
-
         public CellIcon icon;
         public CellTexts cellTexts;
         public Button button;
@@ -49,9 +47,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             // Click Event
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => OnClicked(model));
-
-            // Height
-            _layoutElement.preferredHeight = 114;
 
             // Refresh the picking page if needed.
             var activeIndex = _values.IndexOf(model.ActiveValue);

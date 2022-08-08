@@ -83,7 +83,7 @@ namespace Demo._01_CharacterViewer.Scripts.Viewer
             _rotationPickerId = AddSlider(rotationSliderModel);
 
             // Auto Rotation
-            var autoRotationSwitchModel = new SwitchCellModel(false);
+            var autoRotationSwitchModel = new SwitchCellModel(true);
             _autoRotateSwitchModel = autoRotationSwitchModel;
             autoRotationSwitchModel.CellTexts.Text = "Auto Rotation";
             autoRotationSwitchModel.Value = _standController.AutoRotation;

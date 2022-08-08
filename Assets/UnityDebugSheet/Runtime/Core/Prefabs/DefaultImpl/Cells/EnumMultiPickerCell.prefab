@@ -206,7 +206,7 @@ MonoBehaviour:
   m_MinWidth: -1
   m_MinHeight: -1
   m_PreferredWidth: -1
-  m_PreferredHeight: 114
+  m_PreferredHeight: 115
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
@@ -222,7 +222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde86eb0ee2e04ed692476999c1db2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layoutElement: {fileID: 6122857739422552588}
   icon: {fileID: 1636640826183388297}
   cellTexts: {fileID: 7761884426781006260}
   button: {fileID: 464877905510454550}

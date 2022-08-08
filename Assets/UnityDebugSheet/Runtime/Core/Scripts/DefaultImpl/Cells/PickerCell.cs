@@ -10,8 +10,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 {
     public sealed class PickerCell : Cell<PickerCellModel>
     {
-        [SerializeField] private LayoutElement _layoutElement;
-
         public CellIcon icon;
         public CellTexts cellTexts;
         public Button button;
@@ -34,9 +32,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             // Click Event
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => OnClicked(model));
-
-            // Height
-            _layoutElement.preferredHeight = 114;
 
             // Refresh the picking page if needed.
             if (_pickingPage != null && _pickingPage.ActiveIndex != model.ActiveOptionIndex)

@@ -26,7 +26,7 @@ namespace Demo._02_DefaultCells.Scripts
             labelData1.CellTexts.Text = "Text";
             AddLabel(labelData1);
 
-            var labelData2 = new LabelCellModel(false);
+            var labelData2 = new LabelCellModel(true);
             labelData2.Icon.Sprite = DemoSprites.Icon.Settings;
             labelData2.CellTexts.Text = "Label With Icon";
             AddLabel(labelData2);

@@ -8,6 +8,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
     public sealed class ButtonCell : Cell<ButtonCellModel>
     {
         [SerializeField] private LayoutElement _layoutElement;
+        [SerializeField] private RectTransform _contents;
 
         public CellIcon icon;
         public CellTexts cellTexts;
@@ -21,8 +22,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             icon.gameObject.SetActive(model.Icon.Sprite != null);
 
             //Texts
-            if (!model.UseSubText)
-                model.CellTexts.SubText = null;
             cellTexts.Setup(model.CellTexts);
 
             // Arrow
@@ -33,21 +32,24 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             button.onClick.AddListener(model.InvokeClicked);
 
             // Height
-            var height = ((RectTransform)cellTexts.transform).rect.height + 36;
-            _layoutElement.preferredHeight = height;
+            var height = model.UseSubTextOrIcon ? 68 : 42; // Texts
+            height += 36; // Padding
+            height += 1; // Border
+            _contents.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+            _layoutElement.preferredHeight = height; // Set the preferred height for the recycler view.
         }
     }
 
     public sealed class ButtonCellModel : CellModel
     {
-        public ButtonCellModel(bool useSubText)
+        public ButtonCellModel(bool useSubTextOrIcon)
         {
-            UseSubText = useSubText;
+            UseSubTextOrIcon = useSubTextOrIcon;
         }
 
         public CellIconModel Icon { get; } = new CellIconModel();
 
-        public bool UseSubText { get; }
+        public bool UseSubTextOrIcon { get; }
 
         public CellTextsModel CellTexts { get; } = new CellTextsModel();
 
