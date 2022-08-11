@@ -156,5 +156,32 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters
             return Input.mousePosition;
 #endif
         }
+
+        public static bool GetKeyDown(KeyCode keyCode)
+        {
+#if ENABLE_INPUT_SYSTEM
+        return Keyboard.current[keyCode.ToInputSystemKey()].wasPressedThisFrame;
+#else
+            return Input.GetKeyDown(keyCode);
+#endif
+        }
+
+        public static bool GetKey(KeyCode keyCode)
+        {
+#if ENABLE_INPUT_SYSTEM
+        return Keyboard.current[keyCode.ToInputSystemKey()].isPressed;
+#else
+            return Input.GetKey(keyCode);
+#endif
+        }
+
+        public static bool GetMouseButtonUp(KeyCode keyCode)
+        {
+#if ENABLE_INPUT_SYSTEM
+        return Keyboard.current[keyCode.ToInputSystemKey()].wasReleasedThisFrame;
+#else
+            return Input.GetKeyUp(keyCode);
+#endif
+        }
     }
 }
