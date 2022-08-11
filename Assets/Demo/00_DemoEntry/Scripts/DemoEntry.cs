@@ -1,3 +1,4 @@
+#if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
 using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
@@ -84,3 +85,4 @@ namespace Demo._00_DemoEntry.Scripts
         }
     }
 }
+#endif

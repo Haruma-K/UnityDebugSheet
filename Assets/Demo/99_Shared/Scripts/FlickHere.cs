@@ -1,3 +1,4 @@
+#if !EXCLUDE_UNITY_DEBUG_SHEET
 using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
@@ -68,3 +69,4 @@ namespace Demo._99_Shared.Scripts
         }
     }
 }
+#endif
