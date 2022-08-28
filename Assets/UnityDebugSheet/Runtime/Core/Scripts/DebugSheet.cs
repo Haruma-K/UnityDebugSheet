@@ -19,6 +19,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         [SerializeField] private bool _singleton = true;
         [SerializeField] private GlobalControlMode _globalControlMode = GlobalControlMode.FlickEdge;
+        [SerializeField] private KeyboardShortcut _keyboardShortcut = new KeyboardShortcut();
         [SerializeField] private List<GameObject> _cellPrefabs = new List<GameObject>();
         [SerializeField] private StatefulDrawer _drawer;
         [SerializeField] private StatefulDrawerController _drawerController;
@@ -48,6 +49,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             set => _globalControlMode = value;
         }
 
+        public KeyboardShortcut KeyboardShortcut => _keyboardShortcut;
+
         private void Awake()
         {
             var dpi = Screen.dpi;
@@ -69,6 +72,16 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                         Instance.CellPrefabs.Add(cellPrefab);
 
                 Destroy(gameObject);
+            }
+        }
+
+        private void Update()
+        {
+            if (_keyboardShortcut.Evaluate())
+            {
+                var isClosed = Mathf.Approximately(_drawer.Progress, _drawer.MinProgress);
+                var targetState = isClosed ? DrawerState.Max : DrawerState.Min;
+                _drawerController.SetStateWithAnimation(targetState);
             }
         }
 
@@ -289,7 +302,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         {
             if (_globalControlMode == GlobalControlMode.None)
                 return;
-            
+
             // If it is horizontal flick, ignore it.
             var isVertical = Mathf.Abs(flick.DeltaInchPosition.y) > Mathf.Abs(flick.DeltaInchPosition.x);
             if (!isVertical)

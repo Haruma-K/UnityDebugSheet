@@ -194,8 +194,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 150.38461, y: 706.50006}
-  m_SizeDelta: {x: 750, y: 706.50006}
+  m_AnchoredPosition: {x: 96.83035, y: 706.5}
+  m_SizeDelta: {x: 750, y: 706.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6564643837970611220
 MonoBehaviour:
@@ -918,6 +918,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _singleton: 1
   _globalControlMode: 0
+  _keyboardShortcut:
+    _enabled: 1
+    _control: 1
+    _alt: 0
+    _shift: 1
+    _key: 100
   _cellPrefabs: []
   _drawer: {fileID: 6564643837970611220}
   _drawerController: {fileID: 6564643837970611227}
@@ -928,7 +934,6 @@ MonoBehaviour:
   _pageContainer: {fileID: 6564643838503227470}
   _pagePrefab: {fileID: 142348689908593602, guid: 070bba3aeaed22242a4d3a576eba733e, type: 3}
   _flickEvent: {fileID: 3939744926455960819}
-  _canvas: {fileID: 6564643838517370661}
 --- !u!114 &6564643838517370656
 MonoBehaviour:
   m_ObjectHideFlags: 0
