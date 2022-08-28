@@ -22,6 +22,7 @@ namespace UnityDebugSheet.Editor.Core.Scripts
             _property.controlProperty = property.FindPropertyRelative("_control");
             _property.altProperty = property.FindPropertyRelative("_alt");
             _property.shiftProperty = property.FindPropertyRelative("_shift");
+            _property.keyProperty = property.FindPropertyRelative("_key");
             _propertyDataPerPropertyPath.Add(property.propertyPath, _property);
         }
 
@@ -30,7 +31,6 @@ namespace UnityDebugSheet.Editor.Core.Scripts
             Init(property);
 
             var fieldRect = position;
-            //var indentedFieldRect = EditorGUI.IndentedRect(fieldRect);
             fieldRect.height = EditorGUIUtility.singleLineHeight;
 
             using (new EditorGUI.PropertyScope(fieldRect, label, property))
@@ -58,6 +58,11 @@ namespace UnityDebugSheet.Editor.Core.Scripts
                         fieldRect.y += EditorGUIUtility.standardVerticalSpacing;
                         fieldRect.y += EditorGUIUtility.singleLineHeight;
                         EditorGUI.PropertyField(new Rect(fieldRect), _property.shiftProperty);
+
+                        // Key
+                        fieldRect.y += EditorGUIUtility.standardVerticalSpacing;
+                        fieldRect.y += EditorGUIUtility.singleLineHeight;
+                        EditorGUI.PropertyField(new Rect(fieldRect), _property.keyProperty);
                     }
             }
         }
@@ -68,7 +73,7 @@ namespace UnityDebugSheet.Editor.Core.Scripts
 
             var height = EditorGUIUtility.singleLineHeight;
             if (property.isExpanded)
-                height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 4;
+                height += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * 5;
             return height;
         }
 
@@ -78,6 +83,7 @@ namespace UnityDebugSheet.Editor.Core.Scripts
             public SerializedProperty controlProperty;
             public SerializedProperty enabledProperty;
             public SerializedProperty shiftProperty;
+            public SerializedProperty keyProperty;
         }
     }
 }
