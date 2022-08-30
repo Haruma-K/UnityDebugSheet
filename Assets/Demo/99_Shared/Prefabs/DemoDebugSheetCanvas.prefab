@@ -41,15 +41,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6564643838517370660, guid: ca5e6d279e01e413f8bbf07d75aebe7f, type: 3}
       propertyPath: m_MatchWidthOrHeight
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6564643838517370660, guid: ca5e6d279e01e413f8bbf07d75aebe7f, type: 3}
       propertyPath: m_ReferenceResolution.x
-      value: 1334
+      value: 750
       objectReference: {fileID: 0}
     - target: {fileID: 6564643838517370660, guid: ca5e6d279e01e413f8bbf07d75aebe7f, type: 3}
       propertyPath: m_ReferenceResolution.y
-      value: 750
+      value: 1334
       objectReference: {fileID: 0}
     - target: {fileID: 6564643838517370662, guid: ca5e6d279e01e413f8bbf07d75aebe7f, type: 3}
       propertyPath: m_Pivot.x
@@ -145,7 +145,7 @@ PrefabInstance:
       objectReference: {fileID: 8976881049931308439, guid: f72eed99cc3da41dcb11ec367ccb98dd, type: 3}
     - target: {fileID: 6564643838517370666, guid: ca5e6d279e01e413f8bbf07d75aebe7f, type: 3}
       propertyPath: m_Name
-      value: Demo Debug Sheet Canvas
+      value: DemoDebugSheetCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca5e6d279e01e413f8bbf07d75aebe7f, type: 3}

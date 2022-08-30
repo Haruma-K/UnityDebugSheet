@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backdrop: {fileID: 6564643838510006844}
-  _closeWhenBackdropClicked: 0
+  _closeWhenBackdropClicked: 1
 --- !u!1 &6564643838090211390
 GameObject:
   m_ObjectHideFlags: 0
