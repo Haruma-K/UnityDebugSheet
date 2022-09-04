@@ -41,7 +41,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Change the Show/Hide animations](#change-the-showhide-animations)
   - [Work within the safe area](#work-within-the-safe-area)
   - [Change the min/max size of the debug menu](#change-the-minmax-size-of-the-debug-menu)
-  - [Custom design](#custom-design)
+  - [Customize the look](#customize-the-look)
 - [Licenses](#licenses)
 
 </details>
