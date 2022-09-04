@@ -7,7 +7,7 @@
 Hierarchical debug menu system for Unity that makes it easy to create intuitive and organized debug menus.
 
 <p align="center">
-  <img width="100%" src="Documentation/eyecatch.gif" alt="Eyecatch">
+  <img width="90%" src="Documentation/eyecatch.gif" alt="Eyecatch">
 </p>
 
 ## Table of Contents
@@ -54,7 +54,7 @@ In general, many debug commands are created during game development, and the num
 As a result, it becomes difficult to find the desired command, which in turn leads to a decrease in development efficiency.
 
 **Unity Debug Sheet** allows you to easily create a debug menu with a hierarchical structure.
-I aim for a GUI that anyone can easily handle intuitively, especially on mobile platforms.
+Its GUI can be easily and intuitively controlled by anyone, especially on mobile platforms.
 
 <p align="center">
   <img width="80%" src="Documentation/concept_01.gif" alt="Debug Sheet">
@@ -106,15 +106,14 @@ This demo allows you to check the behavior of all the cells (generic name for it
 **Custom Cells: CustomCellsDemo.unity**
 
 In addition to the default cells, you can create your own custom cells.
-This demo shows how to use custom cells.
+This demo shows how to create custom cells.
 
 <p align="center">
   <img width="80%" src="Documentation/demo_03.png" alt="Custom Cells Demo">
 </p>
 
 **Entry Scene: DemoEntry.unity**
-
-The aboce three scenes can also be transitioned from the following scene.
+The above three scenes can also be transitioned from the this scene.
 You can see how the debug sheet placed in each scene behaves as singleton.
 
 ## Setup
@@ -299,7 +298,7 @@ You can also create your own cells.
 See the Custom Cells section for more information about this.
 
 ### Update the cell contents
-Using **CellModel**, you can update the contents of the cell it has been generated.
+Using **CellModel**, you can update the contents of the cell that has been generated.
 The following is an example of renaming a generated button each time the **Space** key is pressed.
 Please refer to the comments for details.
 
@@ -373,8 +372,8 @@ Note that if you do not want to use it as singleton, you can do it by unchecking
 You should exclude **GameObject**, script files, and resources files related to the debug menu from the release builds.
 
 You can exclude all scripts of the **Unity Debug Sheet** by adding **EXCLUDE_UNITY_DEBUG_SHEET** to the **Scripting Define Symbols** in the **Player Settings**.
-Thus, if you enclose all your pwn code that accesses the **Unity Debug Sheet** with `#if EXCLUDE_UNITY_DEBUG_SHEET`, you can exclude all the code from the release builds.
-It may also be a good idea to combine your own code that accesses the **Unity Debug Sheet** into a single assembly and set **Define Constraints** in the **asmdef**.
+Thus, if you enclose all your own code that accesses the **Unity Debug Sheet** with `#if EXCLUDE_UNITY_DEBUG_SHEET`, you can exclude all the code from the release builds.
+It may also be a good idea to combine your own scripts that accesses the **Unity Debug Sheet** into a single assembly and set **Define Constraints** in the **asmdef**.
 
 In addition, you can completely exclude the debug menu from your build by doing the following.
 
@@ -382,7 +381,7 @@ In addition, you can completely exclude the debug menu from your build by doing 
 - Delete the **GameObject** containing the **DebugSheet** component in your scenes.
 
 ### Custom Cells
-To create your own cell, first create a component that inherits from **Cell** and a model that inherits from ** CellModel** to set data to it.
+To create your own cell, first create a component that inherits from **Cell** and a model that inherits from **CellModel** to set data to it.
 
 ```cs
 using UnityDebugSheet.Runtime.Core.Scripts;
@@ -415,10 +414,10 @@ public sealed class CustomTextCellModel : CellModel
 Then, create a GUI, attach this component to it, and make it a prefab.
 Due to the implementation of the cell recycling system, the following points should be taken into account when implementing the cell.
 
-- Attach a **Layout Element** to the root **GameObject** and enter a height in the **Preferred Height** property.
+- Attach a **Layout Element** to the root **GameObject** and input a height in the **Preferred Height** property.
 - Set the width of the cell to a fixed value.
 
-Next, set this cell to **Cell Prefabs** on the **Debug Sheet*.
+Next, set this cell to **Cell Prefabs** on the **Debug Sheet**.
 
 <p align="center">
   <img width="60%" src="Documentation/basic_usage_02.png" alt="Cell Prefabs">
@@ -482,8 +481,8 @@ You can apply and check the size of each state by clicking **Set State** button 
   <img width="60%" src="Documentation/advanced_usage_07.png" alt="Size Debugging">
 </p>
 
-### Custom design
-Unity Debug Sheet consists of uGUI, so you can freely customize the design by adjusting the properties.
+### Customize the look
+Unity Debug Sheet consists of uGUI, so you can freely customize the look by adjusting the properties.
 
 - Color of the back and close buttons
 - Color of the backdrop
