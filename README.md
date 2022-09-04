@@ -7,7 +7,7 @@
 Hierarchical debug menu system for Unity that makes it easy to create intuitive and organized debug menus.
 
 <p align="center">
-  <img width="80%" src="Documentation/eyecatch.gif" alt="Eyecatch">
+  <img width="100%" src="Documentation/eyecatch.gif" alt="Eyecatch">
 </p>
 
 ## Table of Contents

@@ -7,7 +7,7 @@
 直感的で整理されたデバッグメニューを簡単に作成できる、Unityのための階層型デバッグメニューシステムです。
 
 <p align="center">
-  <img width="80%" src="Documentation/eyecatch.gif" alt="Eyecatch">
+  <img width="100%" src="Documentation/eyecatch.gif" alt="Eyecatch">
 </p>
 
 ## 目次
