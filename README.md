@@ -14,7 +14,37 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<details>
+<summary>Details</summary>
 
+- [Overview](#overview)
+  - [Concept and Features](#concept-and-features)
+  - [Demo](#demo)
+- [Setup](#setup)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+- [Quick Start](#quick-start)
+  - [Place the prefab in the scene](#place-the-prefab-in-the-scene)
+  - [Create the debug page](#create-the-debug-page)
+  - [Initialize the debug menu](#initialize-the-debug-menu)
+  - [Open and close the debug menu](#open-and-close-the-debug-menu)
+  - [Result](#result)
+- [Basic Usage](#basic-usage)
+  - [List of Available Cells](#list-of-available-cells)
+  - [Update the cell contents](#update-the-cell-contents)
+  - [Workflow in multiple scenes](#workflow-in-multiple-scenes)
+  - [Exclude from the release builds](#exclude-from-the-release-builds)
+  - [Custom Cells](#custom-cells)
+- [Advanced Usage](#advanced-usage)
+  - [Hide Backdrop](#hide-backdrop)
+  - [Don't close the debug menu when the backdrop is clicked](#dont-close-the-debug-menu-when-the-backdrop-is-clicked)
+  - [Change the Show/Hide animations](#change-the-showhide-animations)
+  - [Work within the safe area](#work-within-the-safe-area)
+  - [Change the min/max size of the debug menu](#change-the-minmax-size-of-the-debug-menu)
+  - [Custom design](#custom-design)
+- [Licenses](#licenses)
+
+</details>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Overview
