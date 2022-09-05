@@ -26,7 +26,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
 - [Quick Start](#quick-start)
   - [Place the prefab in the scene](#place-the-prefab-in-the-scene)
   - [Create the debug page](#create-the-debug-page)
-  - [Initialize the debug menu](#initialize-the-debug-menu)
+  - [Add a link to the debug page.](#add-a-link-to-the-debug-page)
   - [Open and close the debug menu](#open-and-close-the-debug-menu)
   - [Result](#result)
 - [Basic Usage](#basic-usage)
