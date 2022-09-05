@@ -83,8 +83,8 @@ AddSlider(0.5f, 0.0f, 1.0f, "Example Slider", valueChanged: x => Debug.Log($"Val
 ```
 
 ### Demo
-You can try the demo by cloning this repository itself and playing the demo scenes.
-The following demo scenes are available.
+You can try the demo by cloning `this repository itself and playing the demo scenes.
+The following demo scenes are av`ailable.
 
 **Character Viewer: CharacterViewerDemo.unity**
 
@@ -209,9 +209,9 @@ public sealed class ExampleDebugPage : DebugPageBase
 }
 ```
 
-### Initialize the debug menu
-Next, create a script that initializes the debug menu.
-Initialize the **DebugSheet** as follows, using the **ExampleDebugPage** created above.
+### Add a link to the debug page.
+Next, add a link to transition to the debug page created above.  
+Get the root page and add a link button to it as shown below.
 
 ```cs
 using UnityDebugSheet.Runtime.Core.Scripts;
@@ -221,10 +221,20 @@ public sealed class DebugSheetController : MonoBehaviour
 {
     private void Start()
     {
-        DebugSheet.Instance.Initialize<ExampleDebugPage>();
+        // Get or create the root page.
+        var rootPage = DebugSheet.Instance.GetOrCreateInitialPage();
+
+        // Add a link transition to the ExampleDebugPage.
+        rootPage.AddPageLinkButton<ExampleDebugPage>(nameof(ExampleDebugPage));
+
+        // You must call Reload() after adding cells.
+        rootPage.Reload();
     }
 }
 ```
+
+> **NOTE**
+> If you want to use your own page as the root page instead of linking as above, use `Initialize<ExampleDebugPage>()` instead of `GetOrCreateInitialPage().AddPageLinkButton<ExampleDebugPage()`.
 
 ### Open and close the debug menu
 The debug menu can be opened and closed by flicking up and down along the edge of the screen.

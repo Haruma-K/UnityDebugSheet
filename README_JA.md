@@ -206,9 +206,9 @@ public sealed class ExampleDebugPage : DebugPageBase
 }
 ```
 
-### デバッグメニューを初期化する
-次に、デバッグメニューを初期化するスクリプトを作成します。  
-以下のように、前節で作った **ExampleDebugPage** を使って **DebugSheet** を初期化します。
+### デバッグページへのリンクを追加する
+次に、前節で作ったデバッグページに遷移するためのリンクを追加します。  
+以下のように、ルートページを取得して、 **ExampleDebugPage** へのリンクボタンを追加します。
 
 ```cs
 using UnityDebugSheet.Runtime.Core.Scripts;
@@ -218,10 +218,20 @@ public sealed class DebugSheetController : MonoBehaviour
 {
     private void Start()
     {
-        DebugSheet.Instance.Initialize<ExampleDebugPage>();
+        // Get or create the root page.
+        var rootPage = DebugSheet.Instance.GetOrCreateInitialPage();
+
+        // Add a link transition to the ExampleDebugPage.
+        rootPage.AddPageLinkButton<ExampleDebugPage>(nameof(ExampleDebugPage));
+
+        // You must call Reload() after adding cells.
+        rootPage.Reload();
     }
 }
 ```
+
+> **NOTE**
+> 上記のようにページへのリンクをするのではなく、ルートページに自身で作成したページを使いたい場合には、`GetOrCreateInitialPage().AddPageLinkButton<ExampleDebugPage()` の代わりに `Initialize<ExampleDebugPage>()` を使用します。
 
 ### デバッグメニューの開き方と閉じ方
 デバッグメニューは画面の端の方を上下にフリックすることで開いたり閉じたりすることができます。  
