@@ -357,6 +357,7 @@ MonoBehaviour:
   _contents: {fileID: 6099270871521640605}
   _containerTrans: {fileID: 6948172885096436683}
   _topTrans: {fileID: 5731899511493429146}
+  _contentsCanvasGroup: {fileID: 2869777416088541924}
   icon: {fileID: 2946433449950310932}
   cellTexts: {fileID: 927834485168346538}
   valueField: {fileID: 3843569089636158192}
@@ -931,6 +932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6099270871521640605}
   - component: {fileID: 1216188483402694258}
+  - component: {fileID: 2869777416088541924}
   m_Layer: 5
   m_Name: HorizontalLayoutGroup
   m_TagString: Untagged
@@ -985,6 +987,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &2869777416088541924
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6227935228208316300}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1340225814905609019
 PrefabInstance:
   m_ObjectHideFlags: 0

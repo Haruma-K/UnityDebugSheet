@@ -10,6 +10,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 {
     public sealed class EnumPickerCell : Cell<EnumPickerCellModel>
     {
+        [SerializeField] private CanvasGroup _contentsCanvasGroup;
+
         public CellIcon icon;
         public CellTexts cellTexts;
         public Button button;
@@ -34,17 +36,20 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
                 _isInitialized = true;
             }
 
+            _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
 
-            //Texts
+            // Texts
             cellTexts.Text = model.Text;
             cellTexts.SubText = model.ActiveValue.ToString();
             cellTexts.TextColor = model.TextColor;
             cellTexts.SubTextColor = model.SubTextColor;
 
-            // Click Event
+            // Button
+            button.interactable = model.Interactable;
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => OnClicked(model));
 
@@ -114,6 +119,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         public CellIconModel Icon { get; } = new CellIconModel();
 
         public Enum ActiveValue { get; set; }
+
+        public bool Interactable { get; set; } = true;
 
         /// <summary>
         ///     Event when this cell is clicked.

@@ -11,6 +11,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         [SerializeField] private RectTransform _contents;
         [SerializeField] private RectTransform _containerTrans;
         [SerializeField] private RectTransform _topTrans;
+        [SerializeField] private CanvasGroup _contentsCanvasGroup;
 
         public CellIcon icon;
         public CellTexts cellTexts;
@@ -19,10 +20,12 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         protected override void SetModel(SliderCellModel model)
         {
+            _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+
             // Slider
             slider.minValue = model.MinValue;
             slider.maxValue = model.MaxValue;
-            
+
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
@@ -51,6 +54,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             });
 
             // Slider
+            slider.interactable = model.Interactable;
             slider.onValueChanged.RemoveAllListeners();
             slider.SetValueWithoutNotify(value);
             slider.onValueChanged.AddListener(x =>
@@ -97,6 +101,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         public float MaxValue { get; set; }
 
         public string ValueTextFormat { get; set; }
+
+        public bool Interactable { get; set; } = true;
 
         public event Action<float> ValueChanged;
 

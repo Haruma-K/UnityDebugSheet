@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920484b56b1d043d1b9c27f10eb2c6cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layoutElement: {fileID: 5706763040948738410}
+  _contentsCanvasGroup: {fileID: 8280196851502684835}
   icon: {fileID: 971713486529464303}
   cellTexts: {fileID: 8105771997351416530}
   button: {fileID: 2141795399965040240}
@@ -293,6 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 922959105654815410}
   - component: {fileID: 1418368302098207562}
+  - component: {fileID: 8280196851502684835}
   m_Layer: 5
   m_Name: HorizontalLayoutGroup
   m_TagString: Untagged
@@ -348,6 +349,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &8280196851502684835
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7846035422914997878}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &5193120797983491717
 PrefabInstance:
   m_ObjectHideFlags: 0

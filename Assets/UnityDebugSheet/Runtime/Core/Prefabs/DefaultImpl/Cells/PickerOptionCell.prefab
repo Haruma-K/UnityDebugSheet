@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6625840668014631513}
   - component: {fileID: 8888474520850014939}
   - component: {fileID: 3219944557357575266}
+  - component: {fileID: 6790169371429582109}
   m_Layer: 5
   m_Name: HorizontalLayoutGroup
   m_TagString: Untagged
@@ -123,6 +124,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667953093750813985}
   m_CullTransparentMesh: 0
+--- !u!225 &6790169371429582109
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667953093750813985}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4984086124884092962
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _layoutElement: {fileID: 135973643119212497}
   _contents: {fileID: 1178891239023040773}
+  _contentsCanvasGroup: {fileID: 6790169371429582109}
   icon: {fileID: 9180492266993247400}
   cellTexts: {fileID: 173087286804705685}
   toggle: {fileID: 6729168420098149654}

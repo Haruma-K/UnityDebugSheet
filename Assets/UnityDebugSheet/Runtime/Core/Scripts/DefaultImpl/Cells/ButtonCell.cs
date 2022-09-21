@@ -9,6 +9,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
     {
         [SerializeField] private LayoutElement _layoutElement;
         [SerializeField] private RectTransform _contents;
+        [SerializeField] private CanvasGroup _contentsCanvasGroup;
 
         public CellIcon icon;
         public CellTexts cellTexts;
@@ -17,6 +18,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         protected override void SetModel(ButtonCellModel model)
         {
+            _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+            
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
@@ -28,6 +31,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             arrow.gameObject.SetActive(model.ShowArrow);
 
             // Button
+            button.interactable = model.Interactable;
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(model.InvokeClicked);
 
@@ -54,6 +58,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         public CellTextsModel CellTexts { get; } = new CellTextsModel();
 
         public bool ShowArrow { get; set; }
+
+        public bool Interactable { get; set; } = true;
 
         public event Action Clicked;
 

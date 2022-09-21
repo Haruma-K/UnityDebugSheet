@@ -9,6 +9,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
     {
         [SerializeField] private LayoutElement _layoutElement;
         [SerializeField] private RectTransform _contents;
+        [SerializeField] private CanvasGroup _contentsCanvasGroup;
 
         public CellIcon icon;
         public CellTexts cellTexts;
@@ -16,14 +17,17 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         protected override void SetModel(PickerOptionCellModel model)
         {
+            _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
 
-            //Texts
+            // Texts
             cellTexts.Setup(model.CellTexts);
 
             // Toggle
+            toggle.interactable = model.Interactable;
             toggle.SetIsOnWithoutNotify(model.IsOn);
             toggle.onValueChanged.RemoveAllListeners();
             toggle.onValueChanged.AddListener(x =>
@@ -53,6 +57,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         public bool UseSubTextOrIcon { get; }
 
         public bool IsOn { get; set; }
+
+        public bool Interactable { get; set; } = true;
 
         public CellTextsModel CellTexts { get; } = new CellTextsModel();
 

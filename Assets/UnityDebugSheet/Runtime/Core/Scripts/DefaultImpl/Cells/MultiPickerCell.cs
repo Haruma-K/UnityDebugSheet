@@ -11,6 +11,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 {
     public sealed class MultiPickerCell : Cell<MultiPickerCellModel>
     {
+        [SerializeField] private CanvasGroup _contentsCanvasGroup;
+        
         public CellIcon icon;
         public CellTexts cellTexts;
         public Button button;
@@ -19,6 +21,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         protected override void SetModel(MultiPickerCellModel model)
         {
+            _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+            
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
@@ -29,7 +33,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             cellTexts.TextColor = model.TextColor;
             cellTexts.SubTextColor = model.SubTextColor;
 
-            // Click Event
+            // Button
+            button.interactable = model.Interactable;
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => OnClicked(model));
 
@@ -110,6 +115,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         public Color SubTextColor { get; set; } = Color.gray;
 
         public CellIconModel Icon { get; } = new CellIconModel();
+        
+        public bool Interactable { get; set; } = true;
 
         public IReadOnlyList<string> Options => _options;
 
