@@ -1,7 +1,7 @@
 {
   "name": "com.harumak.unitydebugsheet",
   "displayName": "Unity Debug Sheet",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "unity": "2020.3",
   "license": "MIT",
   "dependencies": {
@@ -11,5 +11,5 @@
     "url": "https://github.com/Haruma-K"
   },
   "type": "tool",
-  "description": ""
+  "description": "Hierarchical debug menu system for Unity that makes it easy to create intuitive and organized debug menus."
 }
