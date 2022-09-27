@@ -1,4 +1,4 @@
-<h1 align="center">Unity Screen Navigator</h1>
+<h1 align="center">Unity Debug Sheet</h1>
 
 [![license](https://img.shields.io/badge/LICENSE-MIT-green.svg)](LICENSE.md)
 
