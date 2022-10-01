@@ -262,16 +262,16 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters
                     return Key.RightCtrl;
                 case KeyCode.LeftControl:
                     return Key.LeftCtrl;
+                case KeyCode.RightCommand:
+                    return Key.RightCommand;
+                case KeyCode.LeftCommand:
+                    return Key.LeftCommand;
                 case KeyCode.RightAlt:
                     return Key.RightAlt;
                 case KeyCode.LeftAlt:
                     return Key.LeftAlt;
-                case KeyCode.LeftMeta:
-                    return Key.LeftMeta;
                 case KeyCode.LeftWindows:
                     return Key.LeftWindows;
-                case KeyCode.RightMeta:
-                    return Key.RightMeta;
                 case KeyCode.RightWindows:
                     return Key.RightWindows;
                 case KeyCode.AltGr:

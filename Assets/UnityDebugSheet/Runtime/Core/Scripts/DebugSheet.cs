@@ -58,6 +58,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                 dpi = 326;
             _dpi = dpi;
 
+            _backButton.interactable = false;
+            SetBackButtonVisibility(0.0f);
+
             if (_singleton)
             {
                 if (Instance == null)
@@ -88,18 +91,19 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         private void OnEnable()
         {
             _flickEvent.flicked.AddListener(OnFlicked);
+            _backButton.onClick.AddListener(OnBackButtonClicked);
+            _closeButton.onClick.AddListener(OnCloseButtonClicked);
         }
 
         private void OnDisable()
         {
+            _backButton.onClick.RemoveListener(OnBackButtonClicked);
+            _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
             _flickEvent.flicked.RemoveListener(OnFlicked);
         }
 
         private void OnDestroy()
         {
-            _backButton.onClick.RemoveListener(OnBackButtonClicked);
-            _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
-
             if (Instance == this)
                 Instance = null;
         }
@@ -179,10 +183,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             if (_isInitialized)
                 throw new InvalidOperationException($"{nameof(DebugSheet)} is already initialized.");
 
-            _backButton.onClick.AddListener(OnBackButtonClicked);
             _backButton.interactable = false;
             SetBackButtonVisibility(0.0f);
-            _closeButton.onClick.AddListener(OnCloseButtonClicked);
             _pageContainer.AddCallbackReceiver(this);
             var preloadedAssetLoader = new PreloadedAssetLoader();
             _preloadedAssetLoader = preloadedAssetLoader;
@@ -264,6 +266,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         private void OnBackButtonClicked()
         {
+            if (_pageContainer.IsInTransition)
+                return;
+
             _pageContainer.Pop(true);
         }
 
