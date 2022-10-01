@@ -57,7 +57,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             if (dpi == 0)
                 dpi = 326;
             _dpi = dpi;
-            
+
             _backButton.interactable = false;
             SetBackButtonVisibility(0.0f);
 
@@ -266,6 +266,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         private void OnBackButtonClicked()
         {
+            if (_pageContainer.IsInTransition)
+                return;
+
             _pageContainer.Pop(true);
         }
 
