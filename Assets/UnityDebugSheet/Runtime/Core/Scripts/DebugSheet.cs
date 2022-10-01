@@ -57,6 +57,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             if (dpi == 0)
                 dpi = 326;
             _dpi = dpi;
+            
+            _backButton.interactable = false;
+            SetBackButtonVisibility(0.0f);
 
             if (_singleton)
             {
@@ -73,8 +76,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
                 Destroy(gameObject);
             }
-            
-            _backButton.interactable = false;
         }
 
         private void Update()
