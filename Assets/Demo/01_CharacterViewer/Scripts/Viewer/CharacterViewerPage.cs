@@ -1,10 +1,14 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
-using System.Collections;
 using System.Linq;
 using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace Demo._01_CharacterViewer.Scripts.Viewer
 {
@@ -38,7 +42,11 @@ namespace Demo._01_CharacterViewer.Scripts.Viewer
             _standController = standController;
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             var activeCharacterController = _characterSpawner.ActiveCharacterAnimationController;
             var modelNames = _characterSpawner.Prefabs.Select(x => x.name).ToArray();
@@ -93,10 +101,18 @@ namespace Demo._01_CharacterViewer.Scripts.Viewer
 
             Reload();
 
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Cleanup()
+#else
         public override IEnumerator Cleanup()
+#endif
         {
             _modelPickerModel.ActiveOptionChanged -= OnModelPickerValueChanged;
             _motionPickerModel.ActiveOptionChanged -= OnMotionPickerValueChanged;
@@ -104,7 +120,11 @@ namespace Demo._01_CharacterViewer.Scripts.Viewer
             _rotationSliderModel.ValueChanged -= OnRotationSliderValueChanged;
             _autoRotateSwitchModel.ValueChanged -= OnAutoRotationSwitchValueChanged;
 
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         private void OnModelPickerValueChanged(int value)

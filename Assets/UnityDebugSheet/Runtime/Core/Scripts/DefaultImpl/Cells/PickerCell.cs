@@ -1,10 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.UI;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 {
@@ -50,19 +54,35 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         {
             void OnLoadPickingPage(PickingPage page)
             {
+#if UDS_USE_ASYNC_METHODS
+                Task OnWillPushEnter()
+#else
                 IEnumerator OnWillPushEnter()
+#endif
                 {
                     _pickingPage = page;
+#if UDS_USE_ASYNC_METHODS
+                    return Task.CompletedTask;
+#else
                     yield break;
+#endif
                 }
 
+#if UDS_USE_ASYNC_METHODS
+                Task OnWillPopExit()
+#else
                 IEnumerator OnWillPopExit()
+#endif
                 {
                     cellTexts.Text = model.Text;
                     var option = model.Options[model.ActiveOptionIndex];
                     cellTexts.SubText = option;
                     model.InvokeConfirmed();
+#if UDS_USE_ASYNC_METHODS
+                    return Task.CompletedTask;
+#else
                     yield break;
+#endif
                 }
 
                 void OnDidPopExit()

@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityEngine;
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
-using System;
+#if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
 #endif
 
@@ -57,7 +56,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         /// </summary>
         public event Action<float> TransitionAnimationProgressChanged;
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         public virtual Task Initialize()
         {
             return Task.CompletedTask;
@@ -69,7 +68,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         }
 #endif
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         public virtual Task WillPushEnter()
         {
             return Task.CompletedTask;
@@ -85,7 +84,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         {
         }
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         public virtual Task WillPushExit()
         {
             return Task.CompletedTask;
@@ -101,7 +100,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         {
         }
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         public virtual Task WillPopEnter()
         {
             return Task.CompletedTask;
@@ -117,7 +116,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         {
         }
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         public virtual Task WillPopExit()
         {
             return Task.CompletedTask;
@@ -133,7 +132,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         {
         }
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         public virtual Task Cleanup()
         {
             return Task.CompletedTask;
@@ -318,7 +317,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             return CoroutineManager.Instance.Run(CreateCoroutine(_lifecycleEvents.Select(x => x.Cleanup())));
         }
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         private IEnumerator CreateCoroutine(IEnumerable<Task> targets)
 #else
         private IEnumerator CreateCoroutine(IEnumerable<IEnumerator> targets)
@@ -332,13 +331,13 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             }
         }
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         private IEnumerator CreateCoroutine(Task target)
 #else
         private IEnumerator CreateCoroutine(IEnumerator target)
 #endif
         {
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
             async void WaitTaskAndCallback(Task task, Action callback)
             {
                 await task;

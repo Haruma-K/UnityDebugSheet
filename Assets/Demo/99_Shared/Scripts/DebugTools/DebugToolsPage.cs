@@ -1,11 +1,15 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
-using System.Collections;
 using IngameDebugConsole;
 using Tayx.Graphy;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace Demo._99_Shared.Scripts.DebugTools
 {
@@ -26,7 +30,11 @@ namespace Demo._99_Shared.Scripts.DebugTools
             _debugConsoleController = new DebugConsoleController(debugLogManager);
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             // FPS
             var fpsState = _graphyController.GetModuleState(GraphyController.ModuleType.FPS);
@@ -57,18 +65,30 @@ namespace Demo._99_Shared.Scripts.DebugTools
             AddEnumPicker(consoleStatePickerModel);
 
             Reload();
-            
+
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Cleanup()
+#else
         public override IEnumerator Cleanup()
+#endif
         {
             _fpsStatePickerModel.ActiveValueChanged -= OnFPSStatePickerValueChanged;
             _ramStatePickerModel.ActiveValueChanged -= OnRAMStatePickerValueChanged;
             _consoleStatePickerModel.ActiveValueChanged -= OnConsoleStatePickerValueChanged;
             _debugConsoleController.StateChanged -= OnDebugConsoleStateChanged;
-            
+
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         private void OnFPSStatePickerValueChanged(Enum value)

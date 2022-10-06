@@ -1,10 +1,15 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
+
 using System;
-using System.Collections;
 using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace Demo._02_DefaultCells.Scripts
 {
@@ -12,11 +17,20 @@ namespace Demo._02_DefaultCells.Scripts
     {
         protected override string Title => "DemoPage";
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             AddDefaultCells();
             Reload();
+
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         public void AddDefaultCells()

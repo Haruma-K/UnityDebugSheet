@@ -1,11 +1,16 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
-using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+
+#else
+using System.Collections;
+#endif
 
 namespace Demo._02_DefaultCells.Scripts
 {
@@ -70,10 +75,19 @@ namespace Demo._02_DefaultCells.Scripts
             SetAllButtonsInteractable(true);
         }
 
+#if UDS_USE_ASYNC_METHODS
+        private Task OnWillPopExit()
+#else
         private IEnumerator OnWillPopExit()
+#endif
         {
             SetAllButtonsInteractable(false);
+
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         private void SetAllButtonsInteractable(bool interactable)

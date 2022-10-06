@@ -1,7 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 {
@@ -22,11 +26,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
         {
             _options = options;
             ActiveIndex = selectedIndex;
-            
+
             ClearItems();
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             _optionDataList.Clear();
 
@@ -57,8 +65,12 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
             }
 
             Reload();
-            
+
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         private void OnSelectionChanged(int selectedIndex)

@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
 #endif
 
@@ -8,13 +8,13 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
     public interface IPageLifecycleEvent
     {
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         Task Initialize();
 #else
         IEnumerator Initialize();
 #endif
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         Task WillPushEnter();
 #else
         IEnumerator WillPushEnter();
@@ -22,7 +22,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 
         void DidPushEnter();
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         Task WillPushExit();
 #else
         IEnumerator WillPushExit();
@@ -30,7 +30,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 
         void DidPushExit();
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         Task WillPopEnter();
 #else
         IEnumerator WillPopEnter();
@@ -38,7 +38,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 
         void DidPopEnter();
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         Task WillPopExit();
 #else
         IEnumerator WillPopExit();
@@ -46,7 +46,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 
         void DidPopExit();
 
-#if PAGE_NAVIGATOR_USE_ASYNC_METHODS
+#if UDS_USE_ASYNC_METHODS
         Task Cleanup();
 #else
         IEnumerator Cleanup();

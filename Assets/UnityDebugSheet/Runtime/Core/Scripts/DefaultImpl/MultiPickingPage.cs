@@ -1,7 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 {
@@ -23,7 +27,11 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
             _activeOptionIndices.AddRange(activeOptionIndices);
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             ClearItems();
             for (var i = 0; i < _options.Count; i++)
@@ -45,7 +53,11 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 
             Reload();
 
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         public void SetOptionState(int optionIndex, bool isActive)
