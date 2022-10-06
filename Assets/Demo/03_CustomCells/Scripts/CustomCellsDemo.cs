@@ -1,9 +1,13 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
-using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.UI;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace Demo._03_CustomCells.Scripts
 {
@@ -58,10 +62,19 @@ namespace Demo._03_CustomCells.Scripts
             _refreshButton.interactable = true;
         }
 
+#if UDS_USE_ASYNC_METHODS
+        private Task OnWillPopExit()
+#else
         private IEnumerator OnWillPopExit()
+#endif
         {
             _refreshButton.interactable = false;
+
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
     }
 }

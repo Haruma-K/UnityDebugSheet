@@ -37,6 +37,7 @@
   - [リリースビルドから除外する](#%E3%83%AA%E3%83%AA%E3%83%BC%E3%82%B9%E3%83%93%E3%83%AB%E3%83%89%E3%81%8B%E3%82%89%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B)
   - [カスタムセル](#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%BB%E3%83%AB)
 - [応用的な使い方](#%E5%BF%9C%E7%94%A8%E7%9A%84%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9)
+  - [コルーチンの代わりに非同期メソッドを使う](#%E3%82%B3%E3%83%AB%E3%83%BC%E3%83%81%E3%83%B3%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%AB%E9%9D%9E%E5%90%8C%E6%9C%9F%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86)
   - [背景を非表示にする](#%E8%83%8C%E6%99%AF%E3%82%92%E9%9D%9E%E8%A1%A8%E7%A4%BA%E3%81%AB%E3%81%99%E3%82%8B)
   - [背景をクリックしても閉じない様にする](#%E8%83%8C%E6%99%AF%E3%82%92%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%A6%E3%82%82%E9%96%89%E3%81%98%E3%81%AA%E3%81%84%E6%A7%98%E3%81%AB%E3%81%99%E3%82%8B)
   - [表示・非表示アニメーションを変更する](#%E8%A1%A8%E7%A4%BA%E3%83%BB%E9%9D%9E%E8%A1%A8%E7%A4%BA%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B)
@@ -434,6 +435,33 @@ public sealed class CustomTextCellModel : CellModel
 実際の実装は[カスタムセルのデモシーン](Assets/Demo/03_CustomCells/Scenes/CustomCellsDemo.unity)を参考にしてください。
 
 ## 応用的な使い方
+
+### コルーチンの代わりに非同期メソッドを使う
+デバッグページを作る際、以下のようにコルーチンの代わりに非同期メソッドを使用してライフサイクルイベントを定義することもできます。
+
+```cs
+using UnityDebugSheet.Runtime.Core.Scripts;
+using System.Threading.Tasks;
+
+public class SomePage : DebugPageBase
+{
+    protected override string Title => "Some Page";
+
+    // 非同期メソッドを使ってライフサイクルイベントを定義する
+    public override async Task Initialize()
+    {
+        await Task.Delay(100);
+    }
+}
+```
+
+非同期メソッドを使うには、以下の手順で`Scripting Define Symbols`を追加します。
+
+* Player Settings > Other Settingsを開く
+* Scripting Define Symbolsに`UDS_USE_ASYNC_METHODS`を追加
+
+`Scripting Define Symbols`は全てのプラットフォームに対して設定する必要がある点に注意してください。
+
 
 ### 背景を非表示にする
 デフォルトではデバッグメニューの背景として、半透明の黒い **GUI** が表示されます。  

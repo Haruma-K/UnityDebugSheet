@@ -1,18 +1,22 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.UI;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 {
     public sealed class MultiPickerCell : Cell<MultiPickerCellModel>
     {
         [SerializeField] private CanvasGroup _contentsCanvasGroup;
-        
+
         public CellIcon icon;
         public CellTexts cellTexts;
         public Button button;
@@ -22,7 +26,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         protected override void SetModel(MultiPickerCellModel model)
         {
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
-            
+
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
@@ -47,17 +51,33 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         {
             void OnLoadPickingPage(MultiPickingPage page)
             {
+#if UDS_USE_ASYNC_METHODS
+                Task OnWillPushEnter()
+#else
                 IEnumerator OnWillPushEnter()
+#endif
                 {
                     _pickingPage = page;
+#if UDS_USE_ASYNC_METHODS
+                    return Task.CompletedTask;
+#else
                     yield break;
+#endif
                 }
 
+#if UDS_USE_ASYNC_METHODS
+                Task OnWillPopExit()
+#else
                 IEnumerator OnWillPopExit()
+#endif
                 {
                     cellTexts.SubText = GetSubText(model);
                     model.InvokeConfirmed();
+#if UDS_USE_ASYNC_METHODS
+                    return Task.CompletedTask;
+#else
                     yield break;
+#endif
                 }
 
                 void OnDidPopExit()
@@ -115,7 +135,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         public Color SubTextColor { get; set; } = Color.gray;
 
         public CellIconModel Icon { get; } = new CellIconModel();
-        
+
         public bool Interactable { get; set; } = true;
 
         public IReadOnlyList<string> Options => _options;

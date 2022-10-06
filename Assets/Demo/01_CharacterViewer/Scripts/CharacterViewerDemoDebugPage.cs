@@ -1,5 +1,4 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
-using System.Collections;
 using Demo._01_CharacterViewer.Scripts.Viewer;
 using Demo._99_Shared.Scripts;
 using Demo._99_Shared.Scripts.DebugTools;
@@ -7,6 +6,11 @@ using IngameDebugConsole;
 using Tayx.Graphy;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace Demo._01_CharacterViewer.Scripts
 {
@@ -30,7 +34,11 @@ namespace Demo._01_CharacterViewer.Scripts
             _debugLogManager = debugLogManager;
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             // Character Viewer
             var characterViewerButtonModel = new ButtonCellModel(false);
@@ -50,15 +58,27 @@ namespace Demo._01_CharacterViewer.Scripts
             debugToolsButtonModel.Clicked += OnDebugToolsButtonClicked;
             AddButton(debugToolsButtonModel);
 
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Cleanup()
+#else
         public override IEnumerator Cleanup()
+#endif
         {
             _characterViewerButtonModel.Clicked -= OnCharacterViewerButtonClicked;
             _debugToolsButtonModel.Clicked -= OnDebugToolsButtonClicked;
 
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         private void OnDebugToolsButtonClicked()

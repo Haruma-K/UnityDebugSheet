@@ -1,10 +1,14 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+#endif
 
 namespace Demo._03_CustomCells.Scripts
 {
@@ -29,7 +33,11 @@ namespace Demo._03_CustomCells.Scripts
             _cellCount = cellCount;
         }
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             for (var i = 0; i < _cellCount; i++)
             {
@@ -41,8 +49,12 @@ namespace Demo._03_CustomCells.Scripts
             }
 
             Reload();
-            
+
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         public void ChangeData()

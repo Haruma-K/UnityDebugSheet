@@ -36,6 +36,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Exclude from the release builds](#exclude-from-the-release-builds)
   - [Custom Cells](#custom-cells)
 - [Advanced Usage](#advanced-usage)
+  - [Use async methods instead of coroutines](#use-async-methods-instead-of-coroutines)
   - [Hide Backdrop](#hide-backdrop)
   - [Don't close the debug menu when the backdrop is clicked](#dont-close-the-debug-menu-when-the-backdrop-is-clicked)
   - [Change the Show/Hide animations](#change-the-showhide-animations)
@@ -437,6 +438,32 @@ All that remains is to add this cell to the page.
 Please refer to [the demo scene of the custom cells](Assets/Demo/03_CustomCells/Scenes/CustomCellsDemo.unity) for the actual implementation.
 
 ## Advanced Usage
+
+### Use async methods instead of coroutines
+You can also use asynchronous methods instead of coroutines to define lifecycle events of debug page, as shown below.
+
+```cs
+using UnityDebugSheet.Runtime.Core.Scripts;
+using System.Threading.Tasks;
+
+public class SomePage : DebugPageBase
+{
+    protected override string Title => "Some Page";
+
+    // Using asynchronous methods to define lifecycle events
+    public override async Task Initialize()
+    {
+        await Task.Delay(100);
+    }
+}
+```
+
+To use asynchronous methods, add `Scripting Define Symbols` in the following steps.
+
+* Player Settings > Other Settings
+* Add `UDS_USE_ASYNC_METHODS` to `Scripting Define Symbols`.
+
+Note that `Scripting Define Symbols` needs to be set for all platforms.
 
 ### Hide Backdrop
 In default, the black GUI is displayed as the backdrop of the debug menu.
