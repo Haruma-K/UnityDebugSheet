@@ -435,6 +435,33 @@ public sealed class CustomTextCellModel : CellModel
 
 ## 応用的な使い方
 
+### コルーチンの代わりに非同期メソッドを使う
+デバッグページを作る際、以下のようにコルーチンの代わりに非同期メソッドを使用してライフサイクルイベントを定義することもできます。
+
+```cs
+using UnityDebugSheet.Runtime.Core.Scripts;
+using System.Threading.Tasks;
+
+public class SomePage : DebugPageBase
+{
+    protected override string Title => "Some Page";
+
+    // 非同期メソッドを使ってライフサイクルイベントを定義する
+    public override async Task Initialize()
+    {
+        await Task.Delay(100);
+    }
+}
+```
+
+非同期メソッドを使うには、以下の手順で`Scripting Define Symbols`を追加します。
+
+* Player Settings > Other Settingsを開く
+* Scripting Define Symbolsに`UDS_USE_ASYNC_METHODS`を追加
+
+`Scripting Define Symbols`は全てのプラットフォームに対して設定する必要がある点に注意してください。
+
+
 ### 背景を非表示にする
 デフォルトではデバッグメニューの背景として、半透明の黒い **GUI** が表示されます。  
 これを非表示にするには、**DebugSheetCanvas > Backdrop** の **GameObject** を非アクティブにします。

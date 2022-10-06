@@ -438,6 +438,32 @@ Please refer to [the demo scene of the custom cells](Assets/Demo/03_CustomCells/
 
 ## Advanced Usage
 
+### Use async methods instead of coroutines
+You can also use asynchronous methods instead of coroutines to define lifecycle events of debug page, as shown below.
+
+```cs
+using UnityDebugSheet.Runtime.Core.Scripts;
+using System.Threading.Tasks;
+
+public class SomePage : DebugPageBase
+{
+    protected override string Title => "Some Page";
+
+    // Using asynchronous methods to define lifecycle events
+    public override async Task Initialize()
+    {
+        await Task.Delay(100);
+    }
+}
+```
+
+To use asynchronous methods, add `Scripting Define Symbols` in the following steps.
+
+* Player Settings > Other Settings
+* Add `UDS_USE_ASYNC_METHODS` to `Scripting Define Symbols`.
+
+Note that `Scripting Define Symbols` needs to be set for all platforms.
+
 ### Hide Backdrop
 In default, the black GUI is displayed as the backdrop of the debug menu.
 You can hide it if you want by deactivating the **GameObject** of **DebugSheetCanvas > Backdrop**.
