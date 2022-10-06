@@ -36,6 +36,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Exclude from the release builds](#exclude-from-the-release-builds)
   - [Custom Cells](#custom-cells)
 - [Advanced Usage](#advanced-usage)
+  - [Use async methods instead of coroutines](#use-async-methods-instead-of-coroutines)
   - [Hide Backdrop](#hide-backdrop)
   - [Don't close the debug menu when the backdrop is clicked](#dont-close-the-debug-menu-when-the-backdrop-is-clicked)
   - [Change the Show/Hide animations](#change-the-showhide-animations)
