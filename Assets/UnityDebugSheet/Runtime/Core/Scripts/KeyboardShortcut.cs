@@ -69,7 +69,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         private bool GetControlKey()
         {
-#if UNITY_EDITOR_WIN
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_LINUX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX
             return InputAdapter.GetKey(KeyCode.LeftControl) || InputAdapter.GetKey(KeyCode.RightControl);
 #else
             return InputAdapter.GetKey(KeyCode.LeftCommand) || InputAdapter.GetKey(KeyCode.RightCommand);
