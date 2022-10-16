@@ -12,7 +12,8 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "UDS_GRAPHY_SUPPORT"
+        "UDS_GRAPHY_SUPPORT",
+        "!EXCLUDE_UNITY_DEBUG_SHEET"
     ],
     "versionDefines": [
         {

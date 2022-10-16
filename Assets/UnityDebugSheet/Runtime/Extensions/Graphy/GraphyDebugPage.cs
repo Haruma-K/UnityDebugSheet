@@ -13,8 +13,9 @@ namespace UnityDebugSheet.Runtime.Extensions.Graphy
     {
         private GraphyManager _graphyManager;
         private EnumPickerCellModel _fpsStatePickerModel;
-
         private EnumPickerCellModel _ramStatePickerModel;
+        private EnumPickerCellModel _audioStatePickerModel;
+        private EnumPickerCellModel _advancedStatePickerModel;
         protected override string Title => "Debug Tools";
 
         public void Setup(GraphyManager graphyManager)
@@ -42,6 +43,19 @@ namespace UnityDebugSheet.Runtime.Extensions.Graphy
             ramStatePickerModel.ActiveValueChanged += OnRAMStatePickerValueChanged;
             AddEnumPicker(ramStatePickerModel);
 
+            // Audio
+            var audioStatePickerModel = new EnumPickerCellModel(_graphyManager.AudioModuleState);
+            _audioStatePickerModel = audioStatePickerModel;
+            audioStatePickerModel.Text = "Audio";
+            audioStatePickerModel.ActiveValueChanged += OnAudioStatePickerValueChanged;
+            AddEnumPicker(audioStatePickerModel);
+
+            // Advanced
+            var advancedStatePickerModel = new EnumPickerCellModel(_graphyManager.AdvancedModuleState);
+            _advancedStatePickerModel = advancedStatePickerModel;
+            advancedStatePickerModel.Text = "Advanced";
+            advancedStatePickerModel.ActiveValueChanged += OnAdvancedStatePickerValueChanged;
+            AddEnumPicker(advancedStatePickerModel);
 
             Reload();
 
@@ -60,6 +74,8 @@ namespace UnityDebugSheet.Runtime.Extensions.Graphy
         {
             _fpsStatePickerModel.ActiveValueChanged -= OnFPSStatePickerValueChanged;
             _ramStatePickerModel.ActiveValueChanged -= OnRAMStatePickerValueChanged;
+            _audioStatePickerModel.ActiveValueChanged -= OnAudioStatePickerValueChanged;
+            _advancedStatePickerModel.ActiveValueChanged -= OnAdvancedStatePickerValueChanged;
 
 #if UDS_USE_ASYNC_METHODS
             return Task.CompletedTask;
@@ -78,6 +94,18 @@ namespace UnityDebugSheet.Runtime.Extensions.Graphy
         {
             var state = (GraphyManager.ModuleState)value;
             _graphyManager.RamModuleState = state;
+        }
+
+        private void OnAudioStatePickerValueChanged(Enum value)
+        {
+            var state = (GraphyManager.ModuleState)value;
+            _graphyManager.AudioModuleState = state;
+        }
+
+        private void OnAdvancedStatePickerValueChanged(Enum value)
+        {
+            var state = (GraphyManager.ModuleState)value;
+            _graphyManager.AdvancedModuleState = state;
         }
     }
 }
