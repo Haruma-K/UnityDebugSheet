@@ -72,6 +72,7 @@ namespace UnityDebugSheet.Runtime.Extensions.IngameDebugConsole
         {
             _consoleStatePickerModel.ActiveValueChanged -= OnConsoleStatePickerValueChanged;
             _ingameDebugConsoleController.StateChanged -= OnIngameDebugConsoleStateChanged;
+            _ingameDebugConsoleController.Dispose();
 
 #if UDS_USE_ASYNC_METHODS
             return Task.CompletedTask;
