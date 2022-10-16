@@ -84,7 +84,7 @@ namespace Demo._01_CharacterViewer.Scripts
         private void OnDebugToolsButtonClicked()
         {
             DebugSheet.Of(transform)
-                .PushPage<DebugToolsPage>(true, onLoad: x => x.Setup(_graphyManager, _debugLogManager));
+                .PushPage<DebugToolsPage>(true, onLoad: x => x.Setup(_graphyManager));
         }
 
         private void OnCharacterViewerButtonClicked()
