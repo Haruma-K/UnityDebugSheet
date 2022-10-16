@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.tayx.graphy": "https://github.com/Tayx94/graphy.git",
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.15.17",
     "com.unity.device-simulator": "3.0.3-preview",
     "com.unity.ide.rider": "2.0.7",

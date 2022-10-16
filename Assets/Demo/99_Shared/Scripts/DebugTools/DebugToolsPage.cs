@@ -4,6 +4,7 @@ using IngameDebugConsole;
 using Tayx.Graphy;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+using UnityDebugSheet.Runtime.Extensions.Unity;
 using UnityEngine;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
@@ -63,6 +64,10 @@ namespace Demo._99_Shared.Scripts.DebugTools
             consoleStatePickerModel.ActiveValueChanged += OnConsoleStatePickerValueChanged;
             _debugConsoleController.StateChanged += OnDebugConsoleStateChanged;
             AddEnumPicker(consoleStatePickerModel);
+
+            // System Info
+            AddPageLinkButton<SystemInfoDebugPage>("System Info",
+                icon: Resources.Load<Sprite>(AssetKeys.Resources.Icon.Settings));
 
             Reload();
 

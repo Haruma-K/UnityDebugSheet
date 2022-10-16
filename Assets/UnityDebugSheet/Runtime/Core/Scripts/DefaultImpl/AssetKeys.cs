@@ -17,6 +17,8 @@
         public const string MultiPickerCell = "MultiPickerCell";
 
         public const string EnumMultiPickerCell = "EnumMultiPickerCell";
+        
+        public const string SearchFieldCell = "SearchFieldCell";
 
         public const string PickerOption = "PickerOptionCell";
     }

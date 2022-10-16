@@ -15,12 +15,25 @@ namespace UnityDebugSheet.Runtime.Foundation
         [SerializeField] [Tooltip("If set to true, the text will actually be overwritten in EditMode.")]
         private bool _applyInEditMode = true;
 
+        private string _textValue;
+
         protected override void Awake()
         {
             base.Awake();
             if (!Application.isPlaying)
-                // Get when this component is attached.
+            {
                 _text = GetComponent<Text>();
+                _textValue = _text.text;
+            }
+        }
+
+        private void Update()
+        {
+            if (_text.text == _textValue) 
+                return;
+            
+            _textValue = _text.text;
+            Apply();
         }
 
         protected override void OnRectTransformDimensionsChange()
