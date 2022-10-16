@@ -10,7 +10,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "!EXCLUDE_UNITY_DEBUG_SHEET"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }
