@@ -44,7 +44,6 @@ namespace Demo._99_Shared.Scripts.DebugTools
             _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
             _linkButtonId = _initialPage.AddPageLinkButton<DebugToolsPage>("Debug Tools",
                 icon: DemoSprites.Icon.Tools,
-                onLoad: page => page.Setup(graphyManager),
                 priority: int.MaxValue);
             _initialPage.Reload();
         }
