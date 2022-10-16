@@ -5,6 +5,9 @@ using System.Reflection;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#endif
 
 namespace UnityDebugSheet.Runtime.Extensions.Unity
 {
@@ -14,26 +17,34 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
         private readonly Dictionary<string, string> _propertyValues = new Dictionary<string, string>();
         protected override string Title => "System Info";
 
+#if UDS_USE_ASYNC_METHODS
+        public override Task Initialize()
+#else
         public override IEnumerator Initialize()
+#endif
         {
             AddSearchField(submitted: ReloadAllItems);
-            
+
             var props = typeof(SystemInfo).GetProperties(BindingFlags.Public | BindingFlags.Static);
             foreach (var prop in props)
             {
                 if (prop.GetCustomAttribute<ObsoleteAttribute>() != null)
                     continue;
-                
+
                 var value = prop.GetValue(null);
                 if (value == null)
                     continue;
-                
+
                 _propertyValues.Add(prop.Name, value.ToString());
             }
 
             ReloadAllItems(null);
 
+#if UDS_USE_ASYNC_METHODS
+            return Task.CompletedTask;
+#else
             yield break;
+#endif
         }
 
         private void ReloadAllItems(string searchString)

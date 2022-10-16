@@ -12,7 +12,8 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "UDS_INGAMEDEBUGCOSOLE_SUPPORT"
+        "UDS_INGAMEDEBUGCOSOLE_SUPPORT",
+        "!EXCLUDE_UNITY_DEBUG_SHEET"
     ],
     "versionDefines": [
         {
