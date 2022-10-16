@@ -302,6 +302,7 @@ In default, you can use the following cells.
 | Enum Picker | AddEnumPicker | Used to select one of the elements of the enum. |
 | Multi Picker | AddMultiPicker | Used to select more than one from multiple options. |
 | Enum Multi Picker | AddEnumMultiPicker | Used to select more than one from the elements of the enum. |
+| Search Field | AddSearchField | Used to display the search field. |
 | Page Link Button | AddPageLinkButton | Used to transition to the other debug pages when clicked. |
 
 You can check the behavior of each cell by playing the [Default Cells Demo Scene](Assets/Demo/02_DefaultCells/Scenes/DefaultCellsDemo.unity).
@@ -527,6 +528,22 @@ Unity Debug Sheet consists of uGUI, so you can freely customize the look by adju
 
 The design of each cell can be freely customized by creating a custom cell.
 See the Custom Cells section for more information on this.
+
+### Display the system information of Unity
+Yuo can display the system information of Unity easily by this package.
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_01.png" alt="System Info">
+</p>
+
+Following features are now available.
+
+1. Information provided by Unity's SystemInfo class
+
+Usage is as follows.
+
+1. （If you use your own assembly）Add [UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) to the referenced assemblies.
+2. Write as `DebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` to add page link cell.
 
 ## Licenses
 This software is released under the MIT License.
