@@ -530,6 +530,8 @@ Unity Debug Sheet consists of uGUI, so you can freely customize the look by adju
 The design of each cell can be freely customized by creating a custom cell.
 See the Custom Cells section for more information on this.
 
+## Extension Packages
+
 ### Display the system information of Unity
 Yuo can display the system information of Unity easily by this package.
 
