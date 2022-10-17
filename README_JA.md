@@ -44,6 +44,8 @@
   - [セーフエリア内で動作させる](#%E3%82%BB%E3%83%BC%E3%83%95%E3%82%A8%E3%83%AA%E3%82%A2%E5%86%85%E3%81%A7%E5%8B%95%E4%BD%9C%E3%81%95%E3%81%9B%E3%82%8B)
   - [最小・最大サイズの調整](#%E6%9C%80%E5%B0%8F%E3%83%BB%E6%9C%80%E5%A4%A7%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E8%AA%BF%E6%95%B4)
   - [デザインをカスタムする](#%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%82%92%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%81%99%E3%82%8B)
+- [拡張パッケージ](#%E6%8B%A1%E5%BC%B5%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8)
+  - [Unityのシステム情報を表示する](#unity%E3%81%AE%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B)
 - [ライセンス](#%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9)
 
 </details>
@@ -298,6 +300,7 @@ drawerController.SetStateWithAnimation(targetState);
 | Enum Picker | AddEnumPicker | Enumの要素から一つを選択するために使用します。 |
 | Multi Picker | AddMultiPicker | 複数の選択肢から複数を選択するために使用します。 |
 | Enum Multi Picker | AddEnumMultiPicker | Enumの要素から複数を選択するために使用します。 |
+| Search Field | AddSearchField | 検索フィールドを表示するために使用します。 |
 | Page Link Button | AddPageLinkButton | 押下した時に他のデバッグページへの遷移を行うために使用します。 |
 
 なお[デフォルトセルのデモシーン](Assets/Demo/02_DefaultCells/Scenes/DefaultCellsDemo.unity)を再生すると、これらのセルの挙動を確認することができます。
@@ -525,6 +528,25 @@ Unity Debug Sheet は uGUI で構成されているので、プロパティを�
 
 各セルのデザインはカスタムセルを作成することで自由に作成できます。  
 これについての詳細はカスタムセルの項目を参照してください。
+
+## 拡張パッケージ
+Unity Debug Sheet はどんなアプリケーションでも汎用的に使う機能を拡張パッケージとして提供しています。
+
+### Unityのシステム情報を表示する
+Unityのシステム情報を表示する拡張パッケージです。
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_01.png" alt="System Info">
+</p>
+
+表示できる情報は以下の通りです。
+
+1. Unity の SystemInfo クラスで提供される情報
+
+使用方法は以下の通りです。
+
+1. （独自のアセンブリで使用する場合）[UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) を参照アセンブリに加える
+2. `DebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` のようにしてページへのリンクセルを追加する
 
 ## ライセンス
 本ソフトウェアはMITライセンスで公開しています。ライセンスの範囲内で自由に使っていただけますが、使用の際は以下の著作権表示とライセンス表示が必須となります。

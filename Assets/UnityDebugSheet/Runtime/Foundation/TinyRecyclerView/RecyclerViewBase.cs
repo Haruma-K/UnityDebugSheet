@@ -121,7 +121,7 @@ namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
             {
                 if (!_cellManager.Contains(dataIndex))
                     CreateCell(dataIndex);
-                
+
                 visibleDataIndices.Add(dataIndex);
 
                 cellIndexInGroup++;
@@ -129,7 +129,7 @@ namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
                 {
                     // Calculate the next cell position.
                     position += GetCellSize(dataIndex) + spacing;
-                    
+
                     // If the next cell is out of the drawing area, break.
                     if (position > viewportPosMax)
                         break;
@@ -190,6 +190,19 @@ namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
             UpdateContents();
         }
 
+        /// <summary>
+        ///     Get the instance of the cell at the specified data index.
+        /// </summary>
+        /// <param name="dataIndex"></param>
+        /// <returns>GameObject if exits, null if not.</returns>
+        public GameObject GetCellIfExists(int dataIndex)
+        {
+            if (!_cellManager.Contains(dataIndex))
+                return null;
+
+            return _cellManager.GetCell(dataIndex).gameObject;
+        }
+
         protected virtual void Cleanup()
         {
             foreach (var dataIndex in _cellManager.DataIndices)
@@ -197,6 +210,7 @@ namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
                 var cellTrans = _cellManager.GetCell(dataIndex);
                 CellProvider.ReleaseCell(cellTrans.gameObject);
             }
+
             _cellManager.ClearCells();
         }
 

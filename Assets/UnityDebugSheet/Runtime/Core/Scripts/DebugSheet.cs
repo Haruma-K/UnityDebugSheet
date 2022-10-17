@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
 using UnityDebugSheet.Runtime.Foundation.Drawer;
 using UnityDebugSheet.Runtime.Foundation.Gestures.Flicks;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
@@ -30,6 +31,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private PageContainer _pageContainer;
         [SerializeField] [HideInInspector] private GameObject _pagePrefab;
         [SerializeField] private InputBasedFlickEvent _flickEvent;
+        [SerializeField] private BalloonButton _balloonButton;
+        [SerializeField] private Canvas _canvas;
         private float _dpi;
         private bool _isInitialized;
         private PreloadedAssetLoader _preloadedAssetLoader;
@@ -51,6 +54,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public KeyboardShortcut KeyboardShortcut => _keyboardShortcut;
 
+        public BalloonButton BalloonButton => _balloonButton;
+
         private void Awake()
         {
             var dpi = Screen.dpi;
@@ -60,6 +65,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
             _backButton.interactable = false;
             SetBackButtonVisibility(0.0f);
+            _balloonButton.Initialize(_canvas);
 
             if (_singleton)
             {

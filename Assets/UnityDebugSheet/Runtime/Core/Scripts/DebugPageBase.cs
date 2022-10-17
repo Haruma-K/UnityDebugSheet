@@ -14,6 +14,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
     public abstract class DebugPageBase : Page, IRecyclerViewCellProvider, IRecyclerViewDataProvider
     {
         private readonly PriorityList<int> _itemIds = new PriorityList<int>();
+        private readonly Dictionary<int, int> _itemIdToDataIndexMap = new Dictionary<int, int>();
         private readonly List<ItemInfo> _itemInfos = new List<ItemInfo>();
         private readonly Dictionary<int, string> _objIdToPrefabKeyMap = new Dictionary<int, string>();
 
@@ -94,6 +95,19 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         }
 
         /// <summary>
+        ///     Get the instance of the cell at the specified item id.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <returns>GameObject if exits, null if not.</returns>
+        public GameObject GetCellIfExists(int itemId)
+        {
+            if (!_itemIdToDataIndexMap.TryGetValue(itemId, out var dataIndex))
+                return null;
+
+            return RecyclerView.GetCellIfExists(dataIndex);
+        }
+
+        /// <summary>
         ///     Add a item.
         /// </summary>
         /// <remarks>
@@ -113,6 +127,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                 : 0;
 
             _itemInfos.Insert(index, new ItemInfo(itemId, prefabKey, model));
+            _itemIdToDataIndexMap[itemId] = index;
             RecyclerView.DataCount++;
             return itemId;
         }
@@ -128,6 +143,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         {
             var info = _itemInfos.Find(x => x.ItemId == itemId);
             _itemIds.Remove(info.ItemId);
+            _itemIdToDataIndexMap.Remove(info.ItemId);
             _itemInfos.Remove(info);
             RecyclerView.DataCount--;
         }
@@ -139,6 +155,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         {
             _itemIds.Clear();
             _itemInfos.Clear();
+            _itemIdToDataIndexMap.Clear();
             RecyclerView.DataCount = 0;
         }
 
@@ -378,6 +395,22 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             if (toggled != null) pickerOptionModel.Toggled += toggled;
 
             return AddPickerOption(pickerOptionModel, priority);
+        }
+
+        public int AddSearchField(string placeholder = null, Action<string> valueChanged = null,
+            Action<string> submitted = null, int priority = 0)
+        {
+            var searchFieldCellModel = new SearchFieldCellModel();
+            if (!string.IsNullOrEmpty(placeholder)) searchFieldCellModel.Placeholder = placeholder;
+            if (valueChanged != null) searchFieldCellModel.ValueChanged += valueChanged;
+            if (submitted != null) searchFieldCellModel.Submitted += submitted;
+
+            return AddSearchField(searchFieldCellModel, priority);
+        }
+
+        public int AddSearchField(SearchFieldCellModel model, int priority = 0)
+        {
+            return AddItem(AssetKeys.SearchFieldCell, model, priority);
         }
 
         public int AddPickerOption(PickerOptionCellModel model, int priority = 0)
