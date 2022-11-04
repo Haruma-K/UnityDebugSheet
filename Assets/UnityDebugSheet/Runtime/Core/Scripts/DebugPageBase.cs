@@ -54,6 +54,13 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _prefabContainer = GetComponent<PrefabContainer>();
         }
 
+        protected virtual void Start()
+        {
+            // Add padding for the safe area.
+            var canvasScaleFactor = GetComponentInParent<Canvas>().scaleFactor;
+            _recyclerView.AfterPadding += (int)(Screen.safeArea.y / canvasScaleFactor);
+        }
+
         protected virtual void OnDestroy()
         {
             foreach (var pool in _prefabPools.Values)
