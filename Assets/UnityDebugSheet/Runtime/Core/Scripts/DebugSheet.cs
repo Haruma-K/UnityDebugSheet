@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
 using UnityDebugSheet.Runtime.Foundation.Drawer;
 using UnityDebugSheet.Runtime.Foundation.Gestures.Flicks;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
@@ -225,33 +224,53 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return GetOrCreateInitialPage<DebugPage>(titleOverride, onLoad);
         }
 
+        public AsyncProcessHandle PushPage(Type pageType, DebugPageBase prefab, bool playAnimation,
+            string titleOverride = null,
+            Action<DebugPageBase> onLoad = null)
+        {
+            if (!_preloadedAssetLoader.PreloadedObjects.ContainsValue(prefab.gameObject))
+                _preloadedAssetLoader.AddObject(prefab.gameObject);
+
+            return PushPage(pageType, prefab.gameObject.name, playAnimation, titleOverride, onLoad);
+        }
+
         public AsyncProcessHandle PushPage<TPage>(TPage prefab, bool playAnimation, string titleOverride = null,
             Action<TPage> onLoad = null) where TPage : DebugPageBase
         {
             if (!_preloadedAssetLoader.PreloadedObjects.ContainsValue(prefab.gameObject))
                 _preloadedAssetLoader.AddObject(prefab.gameObject);
 
-            return PushPage(prefab.gameObject.name, playAnimation, titleOverride, onLoad);
+            return PushPage(typeof(TPage), prefab.gameObject.name, playAnimation, titleOverride,
+                x => onLoad?.Invoke((TPage)x));
+        }
+
+        public AsyncProcessHandle PushPage(Type pageType, bool playAnimation, string titleOverride = null,
+            Action<DebugPageBase> onLoad = null)
+        {
+            return PushPage(pageType, _pagePrefab.gameObject.name, playAnimation, titleOverride, onLoad);
         }
 
         public AsyncProcessHandle PushPage<TPage>(bool playAnimation, string titleOverride = null,
             Action<TPage> onLoad = null) where TPage : DebugPageBase
         {
-            return PushPage(_pagePrefab.gameObject.name, playAnimation, titleOverride, onLoad);
+            return PushPage(typeof(TPage), _pagePrefab.gameObject.name, playAnimation, titleOverride,
+                x => onLoad?.Invoke((TPage)x));
         }
 
-        private AsyncProcessHandle PushPage<TPage>(string prefabName, bool playAnimation, string titleOverride = null,
-            Action<TPage> onLoad = null) where TPage : DebugPageBase
+        private AsyncProcessHandle PushPage(Type pageType, string prefabName, bool playAnimation,
+            string titleOverride = null,
+            Action<DebugPageBase> onLoad = null)
         {
-            return _pageContainer.Push<TPage>(prefabName, playAnimation, onLoad: x =>
+            return _pageContainer.Push(pageType, prefabName, playAnimation, onLoad: x =>
             {
+                var debugPage = (DebugPageBase)x;
                 if (titleOverride != null)
-                    x.SetTitle(titleOverride);
+                    debugPage.SetTitle(titleOverride);
 
                 var prefabContainer = x.GetComponent<PrefabContainer>();
                 prefabContainer.Prefabs.AddRange(_cellPrefabs);
 
-                onLoad?.Invoke(x);
+                onLoad?.Invoke(debugPage);
             }, loadAsync: false);
         }
 
