@@ -21,5 +21,7 @@
         public const string SearchFieldCell = "SearchFieldCell";
 
         public const string PickerOption = "PickerOptionCell";
+
+        public const string PageLinkButtonCell = "PageLinkButtonCell";
     }
 }

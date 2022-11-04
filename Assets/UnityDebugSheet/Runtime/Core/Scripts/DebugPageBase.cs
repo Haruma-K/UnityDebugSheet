@@ -419,7 +419,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         }
 
         public int AddPageLinkButton(Type pageType, string text, string subText = null, Color? textColor = null,
-            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<DebugPageBase> onLoad = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
+            Action<DebugPageBase> onLoad = null,
             int priority = 0)
         {
             var textModel = new CellTextsModel();
@@ -447,69 +448,23 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             if (iconColor != null) iconModel.Color = iconColor.Value;
             return AddPageLinkButton(textModel, iconModel, onLoad, priority);
         }
-        
+
         public int AddPageLinkButton(Type pageType, CellTextsModel textModel, CellIconModel iconModel = null,
             Action<DebugPageBase> onLoad = null, int priority = 0)
         {
-            var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
-            var useIcon = iconModel != null && iconModel.Sprite != null;
-            var useSubTextOrIcon = useSubText || useIcon;
-            var buttonModel = new ButtonCellModel(useSubTextOrIcon);
-            if (textModel != null)
-            {
-                buttonModel.CellTexts.Text = textModel.Text;
-                buttonModel.CellTexts.TextColor = textModel.TextColor;
-                buttonModel.CellTexts.SubText = textModel.SubText;
-                buttonModel.CellTexts.SubTextColor = textModel.SubTextColor;
-            }
-            else
-            {
-                buttonModel.CellTexts.Text = pageType.Name;
-            }
-
-            if (iconModel != null)
-            {
-                buttonModel.Icon.Sprite = iconModel.Sprite;
-                buttonModel.Icon.Color = iconModel.Color;
-            }
-
-            buttonModel.Clicked += () => DebugSheet.Of(transform).PushPage(pageType, true, onLoad: onLoad);
-            buttonModel.ShowArrow = true;
-            return AddButton(buttonModel, priority);
+            return AddPageLinkButton(pageType, null, textModel, iconModel, onLoad, priority);
         }
 
         public int AddPageLinkButton<TPage>(CellTextsModel textModel, CellIconModel iconModel = null,
             Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
         {
-            var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
-            var useIcon = iconModel != null && iconModel.Sprite != null;
-            var useSubTextOrIcon = useSubText || useIcon;
-            var buttonModel = new ButtonCellModel(useSubTextOrIcon);
-            if (textModel != null)
-            {
-                buttonModel.CellTexts.Text = textModel.Text;
-                buttonModel.CellTexts.TextColor = textModel.TextColor;
-                buttonModel.CellTexts.SubText = textModel.SubText;
-                buttonModel.CellTexts.SubTextColor = textModel.SubTextColor;
-            }
-            else
-            {
-                buttonModel.CellTexts.Text = nameof(TPage);
-            }
-
-            if (iconModel != null)
-            {
-                buttonModel.Icon.Sprite = iconModel.Sprite;
-                buttonModel.Icon.Color = iconModel.Color;
-            }
-
-            buttonModel.Clicked += () => DebugSheet.Of(transform).PushPage<TPage>(true, onLoad: onLoad);
-            buttonModel.ShowArrow = true;
-            return AddButton(buttonModel, priority);
+            return AddPageLinkButton(null, textModel, iconModel, onLoad, priority);
         }
-        
-        public int AddPageLinkButton(Type pageType, DebugPageBase prefab, string text, string subText = null, Color? textColor = null,
-            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, Action<DebugPageBase> onLoad = null,
+
+        public int AddPageLinkButton(Type pageType, DebugPageBase prefab, string text, string subText = null,
+            Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
+            Action<DebugPageBase> onLoad = null,
             int priority = 0)
         {
             var textModel = new CellTextsModel();
@@ -537,14 +492,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             if (iconColor != null) iconModel.Color = iconColor.Value;
             return AddPageLinkButton(prefab, textModel, iconModel, onLoad, priority);
         }
-        
-        public int AddPageLinkButton(Type pageType, DebugPageBase prefab, CellTextsModel textModel, CellIconModel iconModel = null,
+
+        public int AddPageLinkButton(Type pageType, DebugPageBase prefab, CellTextsModel textModel,
+            CellIconModel iconModel = null,
             Action<DebugPageBase> onLoad = null, int priority = 0)
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
             var useIcon = iconModel != null && iconModel.Sprite != null;
             var useSubTextOrIcon = useSubText || useIcon;
-            var buttonModel = new ButtonCellModel(useSubTextOrIcon);
+            var buttonModel = new PageLinkButtonCellModel(useSubTextOrIcon);
             if (textModel != null)
             {
                 buttonModel.CellTexts.Text = textModel.Text;
@@ -563,9 +519,11 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                 buttonModel.Icon.Color = iconModel.Color;
             }
 
-            buttonModel.Clicked += () => DebugSheet.Of(transform).PushPage(pageType, prefab, true, onLoad: onLoad);
+            buttonModel.PageType = pageType;
+            buttonModel.Prefab = prefab;
+            buttonModel.OnLoad += onLoad;
             buttonModel.ShowArrow = true;
-            return AddButton(buttonModel, priority);
+            return AddPageLinkButton(buttonModel, priority);
         }
 
         public int AddPageLinkButton<TPage>(TPage prefab, CellTextsModel textModel, CellIconModel iconModel = null,
@@ -574,7 +532,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
             var useIcon = iconModel != null && iconModel.Sprite != null;
             var useSubTextOrIcon = useSubText || useIcon;
-            var buttonModel = new ButtonCellModel(useSubTextOrIcon);
+            var buttonModel = new PageLinkButtonCellModel(useSubTextOrIcon);
             if (textModel != null)
             {
                 buttonModel.CellTexts.Text = textModel.Text;
@@ -593,10 +551,18 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                 buttonModel.Icon.Color = iconModel.Color;
             }
 
-            buttonModel.Clicked += () => DebugSheet.Of(transform).PushPage(prefab, true, onLoad: onLoad);
+            buttonModel.PageType = typeof(TPage);
+            buttonModel.Prefab = prefab;
+            buttonModel.OnLoad += x => onLoad?.Invoke((TPage)x);
             buttonModel.ShowArrow = true;
-            return AddButton(buttonModel, priority);
+            return AddPageLinkButton(buttonModel, priority);
         }
+
+        public int AddPageLinkButton(PageLinkButtonCellModel model, int priority = 0)
+        {
+            return AddItem(AssetKeys.PageLinkButtonCell, model, priority);
+        }
+
 
         public sealed class ItemInfo
         {
