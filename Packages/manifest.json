@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.yasirkula.ingamedebugconsole": "https://github.com/yasirkula/UnityIngameDebugConsole.git#v1.5.8",
     "com.tayx.graphy": "https://github.com/Tayx94/graphy.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.15.17",

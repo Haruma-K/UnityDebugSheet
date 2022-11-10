@@ -45,6 +45,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Customize the look](#customize-the-look)
 - [Extension Packages](#extension-packages)
   - [Display the system information of Unity](#display-the-system-information-of-unity)
+  - [In-game Debug Console](#in-game-debug-console)
 - [Licenses](#licenses)
 
 </details>
@@ -546,8 +547,23 @@ Following features are now available.
 
 Usage is as follows.
 
-1. （If you use your own assembly）Add [UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) to the referenced assemblies.
+1. (Only if you use your own assembly) Add [UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) to the referenced assemblies.
 2. Write as `DebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` to add page link cell.
+
+### In-game Debug Console
+This is an extension package that links the **Unity Debug Sheet** with [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) that is the OSS for displaying the console at runtime.  
+By this package, you can easily add a debug menu to display the console.
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_02.gif" alt="In-game Debug Console">
+</p>
+
+Usage is as follows.
+
+1. Install [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole). (There are several ways to install.)
+2. (Only if you install 1. not via Package Manager) Add `UDS_INGAMEDEBUGCOSOLE_SUPPORT` to Scripting Define Symbols.
+3. (Only if you use your own assembly) Add [UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) to the referenced assemblies.
+4. Write as `DebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` to add page link cell.
 
 ## Licenses
 This software is released under the MIT License.

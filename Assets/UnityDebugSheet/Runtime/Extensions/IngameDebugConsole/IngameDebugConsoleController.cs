@@ -2,12 +2,12 @@
 using System;
 using IngameDebugConsole;
 
-namespace Demo._99_Shared.Scripts.DebugTools
+namespace UnityDebugSheet.Runtime.Extensions.InGameDebugConsole
 {
     /// <summary>
     ///     Controls the <see cref="IngameDebugConsole" />, which is used to display debug logs.
     /// </summary>
-    public sealed class DebugConsoleController : IDisposable
+    public sealed class IngameDebugConsoleController : IDisposable
     {
         public delegate void StateChangedDelegate(State state, bool changedByController);
 
@@ -22,7 +22,7 @@ namespace Demo._99_Shared.Scripts.DebugTools
 
         private bool _isChangingState;
 
-        public DebugConsoleController(DebugLogManager debugLogManager)
+        public IngameDebugConsoleController(DebugLogManager debugLogManager)
         {
             _debugLogManager = debugLogManager;
             _debugLogManager.OnLogWindowShown += OnLogWindowShown;
