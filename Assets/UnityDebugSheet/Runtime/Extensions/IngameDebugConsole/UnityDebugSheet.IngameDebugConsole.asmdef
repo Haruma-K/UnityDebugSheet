@@ -1,0 +1,26 @@
+{
+    "name": "UnityDebugSheet.IngameDebugConsole",
+    "rootNamespace": "",
+    "references": [
+        "GUID:58c518d4346be9042bfa20894cfca1d3",
+        "GUID:3de88c88fbbb8f944b9210d496af9762"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UDS_INGAMEDEBUGCOSOLE_SUPPORT",
+        "!EXCLUDE_UNITY_DEBUG_SHEET"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.yasirkula.ingamedebugconsole",
+            "expression": "",
+            "define": "UDS_INGAMEDEBUGCOSOLE_SUPPORT"
+        }
+    ],
+    "noEngineReferences": false
+}
