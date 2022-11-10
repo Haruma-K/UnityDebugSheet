@@ -45,6 +45,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Customize the look](#customize-the-look)
 - [Extension Packages](#extension-packages)
   - [Display the system information of Unity](#display-the-system-information-of-unity)
+  - [In-game Debug Console](#in-game-debug-console)
 - [Licenses](#licenses)
 
 </details>
