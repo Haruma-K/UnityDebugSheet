@@ -548,6 +548,21 @@ Unityのシステム情報を表示する拡張パッケージです。
 1. （独自のアセンブリで使用する場合）[UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) を参照アセンブリに加える
 2. `DebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` のようにしてページへのリンクセルを追加する
 
+### In-game Debug Console
+ランタイムでコンソールを表示するためのOSS [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) と **Unity Debug Sheet** を連携する拡張パッケージです。  
+これを導入するとコンソールを表示するデバッグメニューを簡単に追加することができます。
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_02.gif" alt="In-game Debug Console">
+</p>
+
+使用方法は以下の通りです。
+
+1. [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) をインストールする（複数のインストール方法があります）
+2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_INGAMEDEBUGCOSOLE_SUPPORT` を追加する
+3. （独自のアセンブリで使用する場合）[UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) を参照アセンブリに加える
+4. `DebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
+
 ## ライセンス
 本ソフトウェアはMITライセンスで公開しています。ライセンスの範囲内で自由に使っていただけますが、使用の際は以下の著作権表示とライセンス表示が必須となります。
 
