@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 #else
 using System.Collections;
+using Demo._99_Shared.Scripts;
 #endif
 
 namespace Demo._03_CustomCells.Scripts
@@ -16,13 +17,12 @@ namespace Demo._03_CustomCells.Scripts
         [SerializeField] private Button _refreshButton;
 
         private CustomCellsDemoDebugPage _demoDebugPage;
-        private DebugPageBase _initialPage;
-        private int _pageLinkButtonId;
+        private PageItemDisposer _itemDisposer;
 
         private void Start()
         {
-            _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
-            _pageLinkButtonId = _initialPage.AddPageLinkButton<CustomCellsDemoDebugPage>("Custom Cells Demo",
+            var initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
+            var pageLinkButtonId = initialPage.AddPageLinkButton<CustomCellsDemoDebugPage>("Custom Cells Demo",
                 onLoad: page =>
                 {
                     page.Setup(30);
@@ -30,6 +30,9 @@ namespace Demo._03_CustomCells.Scripts
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);
             _refreshButton.interactable = false;
+            
+            _itemDisposer = new PageItemDisposer(initialPage);
+            _itemDisposer.AddItemId(pageLinkButtonId);
         }
 
         private void OnEnable()
@@ -44,8 +47,7 @@ namespace Demo._03_CustomCells.Scripts
 
         private void OnDestroy()
         {
-            if (_initialPage != null)
-                _initialPage.RemoveItem(_pageLinkButtonId);
+            _itemDisposer?.Dispose();
         }
 
         private void OnRefreshButtonClicked()

@@ -1,15 +1,15 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#else
+using System.Collections;
+using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-#if UDS_USE_ASYNC_METHODS
-using System.Threading.Tasks;
-
-#else
-using System.Collections;
 #endif
 
 namespace Demo._02_DefaultCells.Scripts
@@ -24,20 +24,22 @@ namespace Demo._02_DefaultCells.Scripts
         [SerializeField] private Button _removeLastCellButton;
 
         private DefaultCellsDemoDebugPage _demoDebugPage;
-        private DebugPageBase _initialPage;
-        private int _linkButtonId = -1;
+        private PageItemDisposer _itemDisposer;
 
         private void Start()
         {
             SetAllButtonsInteractable(false);
 
-            _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
-            _linkButtonId = _initialPage.AddPageLinkButton<DefaultCellsDemoDebugPage>("Default Cells Demo",
+            var initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
+            var linkButtonId = initialPage.AddPageLinkButton<DefaultCellsDemoDebugPage>("Default Cells Demo",
                 onLoad: page =>
                 {
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);
+
+            _itemDisposer = new PageItemDisposer(initialPage);
+            _itemDisposer.AddItemId(linkButtonId);
         }
 
         private void OnEnable()
@@ -62,10 +64,7 @@ namespace Demo._02_DefaultCells.Scripts
 
         private void OnDestroy()
         {
-            if (_linkButtonId != -1 && _initialPage != null)
-            {
-                _initialPage.RemoveItem(_linkButtonId);
-            }
+            _itemDisposer.Dispose();
         }
 
         private void OnDidPushEnter()
