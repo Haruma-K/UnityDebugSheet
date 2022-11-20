@@ -65,8 +65,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         protected virtual void LateUpdate()
         {
-            var reloadAutomatically = true; //TODO: 設定から取る
-            if (_addedOrRemovedInThisFrame && reloadAutomatically)
+            if (_addedOrRemovedInThisFrame)
                 Reload();
 
             _addedOrRemovedInThisFrame = false;
