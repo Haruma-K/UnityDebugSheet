@@ -18,8 +18,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         protected override void SetModel(PageLinkButtonCellModel model)
         {
-            if (model.PageType == null)
-                throw new Exception($"{nameof(PageLinkButtonCellModel)}.PageType cannot be null.");
+            var pageType = model.PageType ?? typeof(DebugPage);
 
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
 
@@ -39,9 +38,11 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             button.onClick.AddListener(() =>
             {
                 if (model.Prefab == null)
-                    DebugSheet.Of(transform).PushPage(model.PageType, true, onLoad: model.InvokeOnLoad);
+                    DebugSheet.Of(transform).PushPage(pageType, true, onLoad: model.InvokeOnLoad,
+                        titleOverride: model.PageTitleOverride);
                 else
-                    DebugSheet.Of(transform).PushPage(model.PageType, model.Prefab, true, onLoad: model.InvokeOnLoad);
+                    DebugSheet.Of(transform).PushPage(pageType, model.Prefab, true, onLoad: model.InvokeOnLoad,
+                        titleOverride: model.PageTitleOverride);
             });
 
             // Height
@@ -60,6 +61,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             UseSubTextOrIcon = useSubTextOrIcon;
         }
 
+        public string PageTitleOverride { get; set; }
 
         public CellIconModel Icon { get; } = new CellIconModel();
 
