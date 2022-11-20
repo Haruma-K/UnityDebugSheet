@@ -27,7 +27,6 @@ namespace Demo._01_CharacterViewer.Scripts
                 icon: DemoSprites.Icon.CharacterViewer,
                 onLoad: page => page.Setup(_spawner, _standController),
                 priority: 0);
-            _initialPage.Reload();
         }
 
         private void OnDestroy()
@@ -35,7 +34,6 @@ namespace Demo._01_CharacterViewer.Scripts
             if (_linkButtonId != -1 && _initialPage != null)
             {
                 _initialPage.RemoveItem(_linkButtonId);
-                _initialPage.Reload();
             }
         }
     }

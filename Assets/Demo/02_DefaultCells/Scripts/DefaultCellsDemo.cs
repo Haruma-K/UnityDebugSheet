@@ -38,7 +38,6 @@ namespace Demo._02_DefaultCells.Scripts
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);
-            _initialPage.Reload();
         }
 
         private void OnEnable()
@@ -66,7 +65,6 @@ namespace Demo._02_DefaultCells.Scripts
             if (_linkButtonId != -1 && _initialPage != null)
             {
                 _initialPage.RemoveItem(_linkButtonId);
-                _initialPage.Reload();
             }
         }
 
@@ -105,7 +103,6 @@ namespace Demo._02_DefaultCells.Scripts
             Assert.IsNotNull(_demoDebugPage);
 
             _demoDebugPage.ClearItems();
-            _demoDebugPage.Reload();
         }
 
         private void OnAddDefaultCellsButtonClicked()
@@ -113,7 +110,6 @@ namespace Demo._02_DefaultCells.Scripts
             Assert.IsNotNull(_demoDebugPage);
 
             _demoDebugPage.AddDefaultCells();
-            _demoDebugPage.Reload();
         }
 
         private void OnAddLabelCellAtFirstButtonClicked()
@@ -123,7 +119,6 @@ namespace Demo._02_DefaultCells.Scripts
             var model = new LabelCellModel(false);
             model.CellTexts.Text = "Additional Label";
             _demoDebugPage.AddLabel(model, -1);
-            _demoDebugPage.Reload();
         }
 
         private void OnAddLabelCellAtLastButtonClicked()
@@ -133,7 +128,6 @@ namespace Demo._02_DefaultCells.Scripts
             var model = new LabelCellModel(false);
             model.CellTexts.Text = "Additional Label";
             _demoDebugPage.AddLabel(model);
-            _demoDebugPage.Reload();
         }
 
         private void OnRemoveFirstCellButtonClicked()
@@ -142,7 +136,6 @@ namespace Demo._02_DefaultCells.Scripts
 
             var firstItemId = _demoDebugPage.ItemInfos[0].ItemId;
             _demoDebugPage.RemoveItem(firstItemId);
-            _demoDebugPage.Reload();
         }
 
         private void OnRemoveLastCellButtonClicked()
@@ -151,7 +144,6 @@ namespace Demo._02_DefaultCells.Scripts
 
             var lastItemId = _demoDebugPage.ItemInfos[_demoDebugPage.ItemInfos.Count - 1].ItemId;
             _demoDebugPage.RemoveItem(lastItemId);
-            _demoDebugPage.Reload();
         }
     }
 }

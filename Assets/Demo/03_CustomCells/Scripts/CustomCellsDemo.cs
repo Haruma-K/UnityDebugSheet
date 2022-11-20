@@ -29,7 +29,6 @@ namespace Demo._03_CustomCells.Scripts
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);
-            _initialPage.Reload();
             _refreshButton.interactable = false;
         }
 

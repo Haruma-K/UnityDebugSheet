@@ -26,6 +26,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         private GameObject _poolRoot;
         private PrefabContainer _prefabContainer;
         private RecyclerView _recyclerView;
+        private bool _addedOrRemovedInThisFrame;
 
         protected abstract string Title { get; }
 
@@ -59,6 +60,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             // Add padding for the safe area.
             var canvasScaleFactor = GetComponentInParent<Canvas>().scaleFactor;
             _recyclerView.AfterPadding += (int)(Screen.safeArea.y / canvasScaleFactor);
+        }
+
+        protected virtual void LateUpdate()
+        {
+            var reloadAutomatically = true; //TODO: 設定から取る
+            if (_addedOrRemovedInThisFrame && reloadAutomatically)
+                Reload();
+
+            _addedOrRemovedInThisFrame = false;
         }
 
         protected virtual void OnDestroy()
@@ -136,6 +146,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _itemInfos.Insert(index, new ItemInfo(itemId, prefabKey, model));
             _itemIdToDataIndexMap[itemId] = index;
             RecyclerView.DataCount++;
+            _addedOrRemovedInThisFrame = true;
             return itemId;
         }
 
@@ -153,6 +164,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _itemIdToDataIndexMap.Remove(info.ItemId);
             _itemInfos.Remove(info);
             RecyclerView.DataCount--;
+            _addedOrRemovedInThisFrame = true;
         }
 
         /// <summary>
@@ -164,6 +176,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _itemInfos.Clear();
             _itemIdToDataIndexMap.Clear();
             RecyclerView.DataCount = 0;
+            _addedOrRemovedInThisFrame = true;
         }
 
         /// <summary>
