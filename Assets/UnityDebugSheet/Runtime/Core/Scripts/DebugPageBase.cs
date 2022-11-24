@@ -127,9 +127,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// <summary>
         ///     Add a item.
         /// </summary>
-        /// <remarks>
-        ///     You need to call <see cref="Reload" /> after this.
-        /// </remarks>
         /// <param name="prefabKey"></param>
         /// <param name="model"></param>
         /// <param name="priority"></param>
@@ -153,9 +150,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// <summary>
         ///     Remove a item.
         /// </summary>
-        /// <remarks>
-        ///     You need to call <see cref="Reload" /> after this.
-        /// </remarks>
         /// <param name="itemId"></param>
         public void RemoveItem(int itemId)
         {
