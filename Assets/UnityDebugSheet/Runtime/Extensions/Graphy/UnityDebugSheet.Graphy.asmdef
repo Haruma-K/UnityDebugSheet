@@ -1,0 +1,26 @@
+{
+    "name": "UnityDebugSheet.Graphy",
+    "rootNamespace": "",
+    "references": [
+        "GUID:18e5109d897e1b244ab2dfeaf5482c7b",
+        "GUID:58c518d4346be9042bfa20894cfca1d3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UDS_GRAPHY_SUPPORT",
+        "!EXCLUDE_UNITY_DEBUG_SHEET"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.tayx.graphy",
+            "expression": "",
+            "define": "UDS_GRAPHY_SUPPORT"
+        }
+    ],
+    "noEngineReferences": false
+}
