@@ -1,14 +1,13 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#endif
+using System.Collections;
+using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.UI;
-#if UDS_USE_ASYNC_METHODS
-using System.Threading.Tasks;
-#else
-using System.Collections;
-using Demo._99_Shared.Scripts;
-#endif
 
 namespace Demo._03_CustomCells.Scripts
 {
@@ -30,7 +29,7 @@ namespace Demo._03_CustomCells.Scripts
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);
             _refreshButton.interactable = false;
-            
+
             _itemDisposer = new PageItemDisposer(initialPage);
             _itemDisposer.AddItemId(pageLinkButtonId);
         }

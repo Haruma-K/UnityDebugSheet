@@ -1,7 +1,7 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
-#else
+#endif
 using System.Collections;
 using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
@@ -10,7 +10,6 @@ using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-#endif
 
 namespace Demo._02_DefaultCells.Scripts
 {
