@@ -556,6 +556,21 @@ Unityのシステム情報を表示する拡張パッケージです。
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) を参照アセンブリに加える
 4. `DebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
 
+### Graphy
+FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com/Tayx94/graphy) と **Unity Debug Sheet** を連携する拡張パッケージです。  
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_03.gif" alt="Graphy">
+</p>
+
+使用方法は以下の通りです。
+
+1. [**Graphy**](https://github.com/Tayx94/graphy) をインストールする（複数のインストール方法があります）
+2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_GRAPHY_SUPPORT` を追加して Unity を再起動する
+3. （独自のアセンブリで使用する場合）[UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) を参照アセンブリに加える
+4. `DebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
+
+
 ## ライセンス
 本ソフトウェアはMITライセンスで公開しています。ライセンスの範囲内で自由に使っていただけますが、使用の際は以下の著作権表示とライセンス表示が必須となります。
 

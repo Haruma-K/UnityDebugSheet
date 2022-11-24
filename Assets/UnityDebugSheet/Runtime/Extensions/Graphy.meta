@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole.meta
-guid: 1c9a9067d5b5945a6a35cb5aaf1de7cb
-========
 guid: cf62b09d8f43344b48743215320d0fe4
->>>>>>>> feature/graphy:Assets/UnityDebugSheet/Runtime/Extensions/Graphy.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
