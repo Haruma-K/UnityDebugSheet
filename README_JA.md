@@ -202,9 +202,6 @@ public sealed class ExampleDebugPage : DebugPageBase
         // Add a button to this page.
         AddButton("Example Button", clicked: () => { Debug.Log("Clicked"); });
 
-        // Shen you added any item, call Reload(). 
-        Reload();
-
         yield break;
     }
 }
@@ -227,9 +224,6 @@ public sealed class DebugSheetController : MonoBehaviour
 
         // Add a link transition to the ExampleDebugPage.
         rootPage.AddPageLinkButton<ExampleDebugPage>(nameof(ExampleDebugPage));
-
-        // You must call Reload() after adding cells.
-        rootPage.Reload();
     }
 }
 ```
@@ -336,8 +330,6 @@ public sealed class ExampleDebugPage : DebugPageBase
         // Keep the index of the cell and the CellModel.
         _buttonCellIndex = AddButton(buttonCellModel);
         _buttonCellModel = buttonCellModel;
-
-        Reload();
         
         yield break;
     }
