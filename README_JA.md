@@ -47,6 +47,7 @@
 - [拡張パッケージ](#%E6%8B%A1%E5%BC%B5%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8)
   - [Unityのシステム情報を表示する](#unity%E3%81%AE%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B)
   - [In-game Debug Console](#in-game-debug-console)
+  - [Graphy](#graphy)
 - [ライセンス](#%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9)
 
 </details>
@@ -202,9 +203,6 @@ public sealed class ExampleDebugPage : DebugPageBase
         // Add a button to this page.
         AddButton("Example Button", clicked: () => { Debug.Log("Clicked"); });
 
-        // Shen you added any item, call Reload(). 
-        Reload();
-
         yield break;
     }
 }
@@ -227,9 +225,6 @@ public sealed class DebugSheetController : MonoBehaviour
 
         // Add a link transition to the ExampleDebugPage.
         rootPage.AddPageLinkButton<ExampleDebugPage>(nameof(ExampleDebugPage));
-
-        // You must call Reload() after adding cells.
-        rootPage.Reload();
     }
 }
 ```
@@ -336,8 +331,6 @@ public sealed class ExampleDebugPage : DebugPageBase
         // Keep the index of the cell and the CellModel.
         _buttonCellIndex = AddButton(buttonCellModel);
         _buttonCellModel = buttonCellModel;
-
-        Reload();
         
         yield break;
     }
@@ -563,6 +556,21 @@ Unityのシステム情報を表示する拡張パッケージです。
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_INGAMEDEBUGCOSOLE_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) を参照アセンブリに加える
 4. `DebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
+
+### Graphy
+FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com/Tayx94/graphy) と **Unity Debug Sheet** を連携する拡張パッケージです。  
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_03.gif" alt="Graphy">
+</p>
+
+使用方法は以下の通りです。
+
+1. [**Graphy**](https://github.com/Tayx94/graphy) をインストールする（複数のインストール方法があります）
+2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_GRAPHY_SUPPORT` を追加して Unity を再起動する
+3. （独自のアセンブリで使用する場合）[UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) を参照アセンブリに加える
+4. `DebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
+
 
 ## ライセンス
 本ソフトウェアはMITライセンスで公開しています。ライセンスの範囲内で自由に使っていただけますが、使用の際は以下の著作権表示とライセンス表示が必須となります。

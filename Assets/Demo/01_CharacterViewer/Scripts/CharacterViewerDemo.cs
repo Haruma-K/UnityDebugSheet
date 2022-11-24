@@ -11,9 +11,7 @@ namespace Demo._01_CharacterViewer.Scripts
     {
         [SerializeField] private CharacterSpawner _spawner;
         [SerializeField] private StandController _standController;
-        private DebugPageBase _initialPage;
-
-        private int _linkButtonId = -1;
+        private PageItemDisposer _itemDisposer;
 
         private void Start()
         {
@@ -22,21 +20,19 @@ namespace Demo._01_CharacterViewer.Scripts
 
             _spawner.Initialize();
 
-            _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
-            _linkButtonId = _initialPage.AddPageLinkButton<CharacterViewerPage>("Character Viewer",
+            var initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
+            var linkButtonId = initialPage.AddPageLinkButton<CharacterViewerPage>("Character Viewer",
                 icon: DemoSprites.Icon.CharacterViewer,
                 onLoad: page => page.Setup(_spawner, _standController),
                 priority: 0);
-            _initialPage.Reload();
+
+            _itemDisposer = new PageItemDisposer(initialPage);
+            _itemDisposer.AddItemId(linkButtonId);
         }
 
         private void OnDestroy()
         {
-            if (_linkButtonId != -1 && _initialPage != null)
-            {
-                _initialPage.RemoveItem(_linkButtonId);
-                _initialPage.Reload();
-            }
+            _itemDisposer?.Dispose();
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
+#if UDS_USE_ASYNC_METHODS
+using System.Threading.Tasks;
+#endif
+using System.Collections;
+using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.UI;
-#if UDS_USE_ASYNC_METHODS
-using System.Threading.Tasks;
-#else
-using System.Collections;
-#endif
 
 namespace Demo._03_CustomCells.Scripts
 {
@@ -16,21 +16,22 @@ namespace Demo._03_CustomCells.Scripts
         [SerializeField] private Button _refreshButton;
 
         private CustomCellsDemoDebugPage _demoDebugPage;
-        private DebugPageBase _initialPage;
-        private int _pageLinkButtonId;
+        private PageItemDisposer _itemDisposer;
 
         private void Start()
         {
-            _initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
-            _pageLinkButtonId = _initialPage.AddPageLinkButton<CustomCellsDemoDebugPage>("Custom Cells Demo",
+            var initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
+            var pageLinkButtonId = initialPage.AddPageLinkButton<CustomCellsDemoDebugPage>("Custom Cells Demo",
                 onLoad: page =>
                 {
                     page.Setup(30);
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);
-            _initialPage.Reload();
             _refreshButton.interactable = false;
+
+            _itemDisposer = new PageItemDisposer(initialPage);
+            _itemDisposer.AddItemId(pageLinkButtonId);
         }
 
         private void OnEnable()
@@ -45,8 +46,7 @@ namespace Demo._03_CustomCells.Scripts
 
         private void OnDestroy()
         {
-            if (_initialPage != null)
-                _initialPage.RemoveItem(_pageLinkButtonId);
+            _itemDisposer?.Dispose();
         }
 
         private void OnRefreshButtonClicked()
