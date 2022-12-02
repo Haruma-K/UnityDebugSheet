@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts
 {
+    [DefaultExecutionOrder(int.MinValue)]
     public sealed class DebugSheet : MonoBehaviour, IPageContainerCallbackReceiver
     {
         private const float ThresholdInch = 0.24f;
