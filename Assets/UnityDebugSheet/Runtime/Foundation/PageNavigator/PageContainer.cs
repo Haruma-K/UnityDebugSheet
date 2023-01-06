@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 {
+    [AddComponentMenu("Scripts/Page Container (Unity Debug Sheet)")]
     [RequireComponent(typeof(RectMask2D))]
     public sealed class PageContainer : MonoBehaviour
     {
