@@ -49,7 +49,11 @@ namespace Demo._99_Shared.Scripts
                 throw new ObjectDisposedException(nameof(PageItemDisposer));
 
             foreach (var itemId in _itemIds)
+            {
+                if (Page == null)
+                    return;
                 Page.RemoveItem(itemId);
+            }
         }
     }
 }
