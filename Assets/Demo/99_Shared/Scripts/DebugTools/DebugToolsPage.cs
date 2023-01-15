@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Demo._99_Shared.Scripts.DebugTools
 {
-    public sealed class DebugToolsPage : DebugPageBase
+    public sealed class DebugToolsPage : DefaultDebugPageBase
     {
         protected override string Title => "Debug Tools";
 

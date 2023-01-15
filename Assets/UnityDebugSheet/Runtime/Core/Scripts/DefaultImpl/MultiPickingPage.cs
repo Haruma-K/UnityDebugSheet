@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 {
-    public sealed class MultiPickingPage : DebugPageBase
+    public sealed class MultiPickingPage : DefaultDebugPageBase
     {
         private readonly List<int> _activeOptionIndices = new List<int>();
 

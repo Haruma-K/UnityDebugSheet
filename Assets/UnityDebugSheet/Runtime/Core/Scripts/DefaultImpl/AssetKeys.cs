@@ -6,6 +6,8 @@
 
         public const string ButtonCell = "ButtonCell";
 
+        public const string ButtonCollectionCell = "ButtonCollectionCell";
+
         public const string SliderCell = "SliderCell";
 
         public const string SwitchCell = "SwitchCell";

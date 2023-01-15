@@ -12,7 +12,7 @@ using System.Collections;
 
 namespace Demo._03_CustomCells.Scripts
 {
-    public sealed class CustomCellsDemoDebugPage : DebugPageBase
+    public sealed class CustomCellsDemoDebugPage : DefaultDebugPageBase
     {
         private const string CustomTextCellKey = "CustomTextCell";
         private const string SourceCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

@@ -64,7 +64,7 @@ namespace UnityDebugSheet.Runtime.Foundation
 
             var text = _text.text;
 
-            if (rectTransform.rect.width == 0 || rectTransform.rect.height == 0)
+            if (rectTransform.rect.width <= 0 || rectTransform.rect.height <= 0)
                 // Do nothing because the layout seems not to have been built yet.
                 return;
 

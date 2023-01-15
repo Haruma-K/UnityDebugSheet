@@ -186,7 +186,7 @@ AddSlider(0.5f, 0.0f, 1.0f, "Example Slider", valueChanged: x => Debug.Log($"Val
 
 ### デバッグページを作成する
 次にデバッグ用のページを作成します。  
-ページは以下のように `DebugPageBase` を継承することで作成します。  
+ページは以下のように `DefaultDebugPageBase` を継承することで作成します。  
 以下では、押下したときに **Clicked** とログ出力されるボタンを一つだけ持つページを作成しています。
 
 ```cs
@@ -194,7 +194,7 @@ using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
 
-public sealed class ExampleDebugPage : DebugPageBase
+public sealed class ExampleDebugPage : DefaultDebugPageBase
 {
     protected override string Title { get; } = "Example Debug Page";
 
@@ -298,6 +298,7 @@ drawerController.SetStateWithAnimation(targetState);
 | Enum Multi Picker | AddEnumMultiPicker | Enumの要素から複数を選択するために使用します。 |
 | Search Field | AddSearchField | 検索フィールドを表示するために使用します。 |
 | Page Link Button | AddPageLinkButton | 押下した時に他のデバッグページへの遷移を行うために使用します。 |
+| Button Collection | AddButtonCollection | 小さいボタンを多数表示したい場合に使用します。 |
 
 なお[デフォルトセルのデモシーン](Assets/Demo/02_DefaultCells/Scenes/DefaultCellsDemo.unity)を再生すると、これらのセルの挙動を確認することができます。
 
@@ -314,7 +315,7 @@ using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 
-public sealed class ExampleDebugPage : DebugPageBase
+public sealed class ExampleDebugPage : DefaultDebugPageBase
 {
     private int _buttonCellIndex;
     private ButtonCellModel _buttonCellModel;
@@ -440,7 +441,7 @@ public sealed class CustomTextCellModel : CellModel
 using UnityDebugSheet.Runtime.Core.Scripts;
 using System.Threading.Tasks;
 
-public class SomePage : DebugPageBase
+public class SomePage : DefaultDebugPageBase
 {
     protected override string Title => "Some Page";
 
@@ -540,7 +541,7 @@ Unityのシステム情報を表示する拡張パッケージです。
 使用方法は以下の通りです。
 
 1. （独自のアセンブリで使用する場合）[UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) を参照アセンブリに加える
-2. `DebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` のようにしてページへのリンクセルを追加する
+2. `DefaultDebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` のようにしてページへのリンクセルを追加する
 
 ### In-game Debug Console
 ランタイムでコンソールを表示するためのOSS [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) と **Unity Debug Sheet** を連携する拡張パッケージです。  
@@ -555,7 +556,7 @@ Unityのシステム情報を表示する拡張パッケージです。
 1. [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) をインストールする（複数のインストール方法があります）
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_INGAMEDEBUGCOSOLE_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) を参照アセンブリに加える
-4. `DebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
+4. `DefaultDebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
 
 ### Graphy
 FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com/Tayx94/graphy) と **Unity Debug Sheet** を連携する拡張パッケージです。  
@@ -569,7 +570,7 @@ FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com
 1. [**Graphy**](https://github.com/Tayx94/graphy) をインストールする（複数のインストール方法があります）
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_GRAPHY_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) を参照アセンブリに加える
-4. `DebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
+4. `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
 
 
 ## ライセンス

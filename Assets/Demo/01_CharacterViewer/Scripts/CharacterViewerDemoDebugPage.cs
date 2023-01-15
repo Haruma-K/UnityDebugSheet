@@ -14,7 +14,7 @@ using System.Collections;
 
 namespace Demo._01_CharacterViewer.Scripts
 {
-    public sealed class CharacterViewerDemoDebugPage : DebugPageBase
+    public sealed class CharacterViewerDemoDebugPage : DefaultDebugPageBase
     {
         private CharacterSpawner _characterSpawner;
         private ButtonCellModel _characterViewerButtonModel;
