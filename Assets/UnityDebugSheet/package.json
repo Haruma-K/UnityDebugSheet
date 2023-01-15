@@ -1,7 +1,7 @@
 {
   "name": "com.harumak.unitydebugsheet",
   "displayName": "Unity Debug Sheet",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "unity": "2020.3",
   "license": "MIT",
   "dependencies": {
