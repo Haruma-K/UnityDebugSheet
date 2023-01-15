@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace UnityDebugSheet.Runtime.Extensions.Unity
 {
-    public sealed class SystemInfoDebugPage : DebugPageBase
+    public sealed class SystemInfoDebugPage : DefaultDebugPageBase
     {
         private readonly List<int> _propertyCellIds = new List<int>();
         private readonly Dictionary<string, string> _propertyValues = new Dictionary<string, string>();

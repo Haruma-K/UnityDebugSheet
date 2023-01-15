@@ -12,7 +12,7 @@ using System.Collections;
 
 namespace Demo._01_CharacterViewer.Scripts.Viewer
 {
-    public sealed class CharacterViewerPage : DebugPageBase
+    public sealed class CharacterViewerPage : DefaultDebugPageBase
     {
         private SwitchCellModel _autoRotateSwitchModel;
         private CharacterSpawner _characterSpawner;

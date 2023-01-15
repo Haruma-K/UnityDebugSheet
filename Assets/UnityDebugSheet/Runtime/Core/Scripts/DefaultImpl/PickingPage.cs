@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
 {
-    public sealed class PickingPage : DebugPageBase
+    public sealed class PickingPage : DefaultDebugPageBase
     {
         private readonly List<PickerOptionCellModel> _optionDataList = new List<PickerOptionCellModel>();
 

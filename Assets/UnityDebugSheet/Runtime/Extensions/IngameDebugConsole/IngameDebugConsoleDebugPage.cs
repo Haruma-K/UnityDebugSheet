@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace UnityDebugSheet.Runtime.Extensions.IngameDebugConsole
 {
-    public class IngameDebugConsoleDebugPage : DebugPageBase
+    public class IngameDebugConsoleDebugPage : DefaultDebugPageBase
     {
         protected override string Title => "In-Game Debug Console";
 

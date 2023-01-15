@@ -211,16 +211,16 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// <param name="titleOverride"></param>
         /// <param name="onLoad"></param>
         /// <returns></returns>
-        public DebugPageBase GetOrCreateInitialPage<TInitialPage>(string titleOverride = null,
+        public TInitialPage GetOrCreateInitialPage<TInitialPage>(string titleOverride = null,
             Action<TInitialPage> onLoad = null) where TInitialPage : DebugPageBase
         {
             if (_isInitialized)
-                return InitialDebugPage;
+                return (TInitialPage)InitialDebugPage;
 
             return Initialize(titleOverride, onLoad);
         }
 
-        public DebugPageBase GetOrCreateInitialPage(string titleOverride = null, Action<DebugPage> onLoad = null)
+        public DebugPage GetOrCreateInitialPage(string titleOverride = null, Action<DebugPage> onLoad = null)
         {
             return GetOrCreateInitialPage<DebugPage>(titleOverride, onLoad);
         }

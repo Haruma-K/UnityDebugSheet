@@ -14,7 +14,7 @@ namespace Demo._99_Shared.Scripts.DebugTools
         public GraphyManager graphyManager;
         public DebugLogManager debugLogManager;
 
-        private DebugPageBase _initialPage;
+        private DefaultDebugPageBase _initialPage;
         private int _linkButtonId = -1;
 
         public static DebugTools Instance

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace UnityDebugSheet.Runtime.Extensions.Graphy
 {
-    public sealed class GraphyDebugPage : DebugPageBase
+    public sealed class GraphyDebugPage : DefaultDebugPageBase
     {
         private GraphyManager _graphyManager;
         private EnumPickerCellModel _fpsStatePickerModel;
