@@ -320,7 +320,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                 return;
 
             // Determines whether flicking is valid or not by the global control mode.
-            var startPosXInch = flick.StartScreenPosition.x / _dpi;
+            var startPosXInch = flick.TouchStartScreenPosition.x / _dpi;
             var totalInch = Screen.width / _dpi;
             var leftSafeAreaInch = Screen.safeArea.xMin / _dpi;
             var isLeftEdge = startPosXInch <= ThresholdInch + leftSafeAreaInch;
