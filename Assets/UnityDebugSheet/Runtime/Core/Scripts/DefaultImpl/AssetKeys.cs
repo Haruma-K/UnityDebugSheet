@@ -6,6 +6,8 @@
 
         public const string ButtonCell = "ButtonCell";
 
+        public const string ButtonCollectionCell = "ButtonCollectionCell";
+
         public const string SliderCell = "SliderCell";
 
         public const string SwitchCell = "SwitchCell";
@@ -21,5 +23,7 @@
         public const string SearchFieldCell = "SearchFieldCell";
 
         public const string PickerOption = "PickerOptionCell";
+
+        public const string PageLinkButtonCell = "PageLinkButtonCell";
     }
 }

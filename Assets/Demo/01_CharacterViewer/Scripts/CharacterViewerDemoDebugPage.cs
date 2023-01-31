@@ -14,7 +14,7 @@ using System.Collections;
 
 namespace Demo._01_CharacterViewer.Scripts
 {
-    public sealed class CharacterViewerDemoDebugPage : DebugPageBase
+    public sealed class CharacterViewerDemoDebugPage : DefaultDebugPageBase
     {
         private CharacterSpawner _characterSpawner;
         private ButtonCellModel _characterViewerButtonModel;
@@ -84,7 +84,7 @@ namespace Demo._01_CharacterViewer.Scripts
         private void OnDebugToolsButtonClicked()
         {
             DebugSheet.Of(transform)
-                .PushPage<DebugToolsPage>(true, onLoad: x => x.Setup(_graphyManager, _debugLogManager));
+                .PushPage<DebugToolsPage>(true);
         }
 
         private void OnCharacterViewerButtonClicked()

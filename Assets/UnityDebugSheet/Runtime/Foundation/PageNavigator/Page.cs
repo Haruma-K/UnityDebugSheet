@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 {
+    [AddComponentMenu("Scripts/Page (Unity Debug Sheet)")]
     [DisallowMultipleComponent]
     public class Page : MonoBehaviour, IPageLifecycleEvent
     {

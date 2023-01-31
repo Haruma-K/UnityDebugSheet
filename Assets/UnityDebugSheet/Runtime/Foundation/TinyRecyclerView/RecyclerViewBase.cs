@@ -19,8 +19,8 @@ namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
 
         public IRecyclerViewCellProvider CellProvider { get; set; }
         public IRecyclerViewDataProvider DataProvider { get; set; }
-        public int BeforePadding { get; private set; }
-        public int AfterPadding { get; private set; }
+        public int BeforePadding { get; set; }
+        public int AfterPadding { get; set; }
         public int DataCount { get; set; }
 
         public abstract float Spacing { get; }
@@ -43,10 +43,10 @@ namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
             var content = _scrollRect.content;
             _cellManager = new CellManager(content);
 
-            BeforePadding = _scrollDirection == ScrollDirection.Horizontal
+            BeforePadding += _scrollDirection == ScrollDirection.Horizontal
                 ? LayoutGroup.padding.left
                 : LayoutGroup.padding.top;
-            AfterPadding = _scrollDirection == ScrollDirection.Horizontal
+            AfterPadding += _scrollDirection == ScrollDirection.Horizontal
                 ? LayoutGroup.padding.right
                 : LayoutGroup.padding.bottom;
 

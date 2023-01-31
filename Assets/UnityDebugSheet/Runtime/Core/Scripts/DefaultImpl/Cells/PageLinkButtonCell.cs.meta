@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/UnityDebugSheet/Runtime/Core/Scripts/DefaultImpl/Cells/PageLinkButtonCell.cs.meta
+guid: 4fece93e37e96423d809d4229fa8b9ce
+========
+guid: 215533da5d6294eb199a467c112eb490
+>>>>>>>> feature/graphy:Assets/UnityDebugSheet/Runtime/Extensions/Graphy/GraphyDebugPage.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

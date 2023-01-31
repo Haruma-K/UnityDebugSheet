@@ -1,19 +1,19 @@
 ﻿#if !EXCLUDE_UNITY_DEBUG_SHEET
 
 using System;
+using System.Collections;
 using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
-#else
-using System.Collections;
 #endif
 
 namespace Demo._02_DefaultCells.Scripts
 {
-    public sealed class DefaultCellsDemoDebugPage : DebugPageBase
+    public sealed class DefaultCellsDemoDebugPage : DefaultDebugPageBase
     {
         protected override string Title => "DemoPage";
 
@@ -194,6 +194,19 @@ namespace Demo._02_DefaultCells.Scripts
             enumMultiPickerData1.ActiveValueChanged +=
                 value => Debug.Log($"Selected Option Changed: {(ExampleEnum)value}");
             AddEnumMultiPicker(enumMultiPickerData1);
+
+            // Button Collection
+            var buttonCollectionData = new ButtonCollectionCellModel();
+            for (var i = 0; i < 9; i++)
+            {
+                var index = i;
+                var collectionButtonData = new CollectionButtonModel();
+                collectionButtonData.Text = $"Collection Button {index}";
+                collectionButtonData.Clicked += () => Debug.Log($"Collection Button Clicked {index}");
+                buttonCollectionData.Buttons.Add(collectionButtonData);
+            }
+
+            AddButtonCollection(buttonCollectionData);
         }
 
         [Flags]

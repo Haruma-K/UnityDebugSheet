@@ -45,6 +45,8 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Customize the look](#customize-the-look)
 - [Extension Packages](#extension-packages)
   - [Display the system information of Unity](#display-the-system-information-of-unity)
+  - [In-game Debug Console](#in-game-debug-console)
+  - [Graphy](#graphy)
 - [Licenses](#licenses)
 
 </details>
@@ -187,7 +189,7 @@ And if **EventSystem** not exists, create it.
 
 ### Create the debug page
 Next, create a page for debugging.
-Create the page by inheriting from `DebugPageBase` as shown below.  
+Create the page by inheriting from `DefaultDebugPageBase` as shown below.  
 The following is an example page with a single button that logs **Clicked** when clicked.
 
 ```cs
@@ -195,7 +197,7 @@ using System.Collections;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEngine;
 
-public sealed class ExampleDebugPage : DebugPageBase
+public sealed class ExampleDebugPage : DefaultDebugPageBase
 {
     protected override string Title { get; } = "Example Debug Page";
 
@@ -203,9 +205,6 @@ public sealed class ExampleDebugPage : DebugPageBase
     {
         // Add a button to this page.
         AddButton("Example Button", clicked: () => { Debug.Log("Clicked"); });
-
-        // Shen you added any item, call Reload(). 
-        Reload();
 
         yield break;
     }
@@ -229,9 +228,6 @@ public sealed class DebugSheetController : MonoBehaviour
 
         // Add a link transition to the ExampleDebugPage.
         rootPage.AddPageLinkButton<ExampleDebugPage>(nameof(ExampleDebugPage));
-
-        // You must call Reload() after adding cells.
-        rootPage.Reload();
     }
 }
 ```
@@ -306,6 +302,7 @@ In default, you can use the following cells.
 | Enum Multi Picker | AddEnumMultiPicker | Used to select more than one from the elements of the enum. |
 | Search Field | AddSearchField | Used to display the search field. |
 | Page Link Button | AddPageLinkButton | Used to transition to the other debug pages when clicked. |
+| Button Collection | AddButtonCollection | Use when you want to display many small buttons. |
 
 You can check the behavior of each cell by playing the [Default Cells Demo Scene](Assets/Demo/02_DefaultCells/Scenes/DefaultCellsDemo.unity).
 You can also create your own cells.
@@ -322,7 +319,7 @@ using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 
-public sealed class ExampleDebugPage : DebugPageBase
+public sealed class ExampleDebugPage : DefaultDebugPageBase
 {
     private int _buttonCellIndex;
     private ButtonCellModel _buttonCellModel;
@@ -339,8 +336,6 @@ public sealed class ExampleDebugPage : DebugPageBase
         // Keep the index of the cell and the CellModel.
         _buttonCellIndex = AddButton(buttonCellModel);
         _buttonCellModel = buttonCellModel;
-
-        Reload();
         
         yield break;
     }
@@ -449,7 +444,7 @@ You can also use asynchronous methods instead of coroutines to define lifecycle 
 using UnityDebugSheet.Runtime.Core.Scripts;
 using System.Threading.Tasks;
 
-public class SomePage : DebugPageBase
+public class SomePage : DefaultDebugPageBase
 {
     protected override string Title => "Some Page";
 
@@ -546,8 +541,37 @@ Following features are now available.
 
 Usage is as follows.
 
-1. （If you use your own assembly）Add [UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) to the referenced assemblies.
-2. Write as `DebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` to add page link cell.
+1. (Only if you use your own assembly) Add [UnityDebugSheet.Unity](Assets/UnityDebugSheet/Runtime/Extensions/Unity/UnityDebugSheet.Unity.asmdef) to the referenced assemblies.
+2. Write as `DefaultDebugPageBase.AddPageLinkButton<SystemInfoDebugPage>("System Info")` to add page link cell.
+
+### In-game Debug Console
+This is an extension package that links the **Unity Debug Sheet** with [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) that is the OSS for displaying the console at runtime.  
+By this package, you can easily add a debug menu to display the console.
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_02.gif" alt="In-game Debug Console">
+</p>
+
+Usage is as follows.
+
+1. Install [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole). (There are several ways to install.)
+2. (Only if you install 1. not via Package Manager) Add `UDS_INGAMEDEBUGCOSOLE_SUPPORT` to Scripting Define Symbols and restart Unity.
+3. (Only if you use your own assembly) Add [UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) to the referenced assemblies.
+4. Write as `DefaultDebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` to add page link cell.
+
+### Graphy
+This is an extension package that links the **Unity Debug Sheet** with [**Graphy**](https://github.com/Tayx94/graphy) that is the OSS to display FPS, Memory, etc...  
+
+<p align="center">
+  <img width="60%" src="Documentation/extensions_03.gif" alt="Graphy">
+</p>
+
+Usage is as follows.
+
+1. Install [**Graphy**](https://github.com/Tayx94/graphy). (There are several ways to install.)
+2. (Only if you install 1. not via Package Manager) Add `UDS_GRAPHY_SUPPORT` to Scripting Define Symbols and restart Unity.
+3. (Only if you use your own assembly) Add [UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) to the referenced assemblies.
+4. Write as `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.Setup(GraphyManager.Instance));` to add page link cell.
 
 ## Licenses
 This software is released under the MIT License.
