@@ -12,6 +12,8 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
         private readonly List<(Vector2 screenPosition, float deltaTime)> _positions =
             new List<(Vector2 screenPosition, float deltaTime)>(MaxListSize + 1);
 
+        private Vector2 _touchStartScreenPosition = Vector2.zero;
+
         protected float Dpi { get; private set; }
 
         protected virtual void Start()
@@ -49,10 +51,15 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
         private void Begin()
         {
             _positions.Clear();
+            _touchStartScreenPosition = Vector2.zero;
         }
 
         private void Move(Vector2 screenPosition)
         {
+            if (_positions.Count == 0)
+            {
+                _touchStartScreenPosition = screenPosition;
+            }
             _positions.Add((screenPosition, Time.deltaTime));
             if (_positions.Count > MaxListSize)
                 _positions.RemoveAt(0);
@@ -78,7 +85,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
             // If the delta inch per second is greater than the threshold, it's a flick.
             if (deltaInchPerSec.magnitude < FlickDistanceThresholdInchPerSec)
                 return;
-            var flick = new Flick(startScreenPos, endScreenPos, deltaPosInch);
+            var flick = new Flick(_touchStartScreenPosition, startScreenPos, endScreenPos, deltaPosInch);
             Flicked(flick);
         }
 
