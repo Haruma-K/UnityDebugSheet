@@ -240,7 +240,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public int AddPageLinkButton(string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, string titleOverride = null,
-            Action<DebugPageBase> onLoad = null, int priority = 0)
+            Action<DebugPage> onLoad = null, int priority = 0)
         {
             return AddPageLinkButton<DebugPage>(text, subText, textColor, subTextColor, icon, iconColor,
                 titleOverride, onLoad, priority);
