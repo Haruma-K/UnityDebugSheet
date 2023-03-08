@@ -241,15 +241,23 @@ public sealed class DebugSheetController : MonoBehaviour
   <img width="80%" src="Documentation/quickstart_02.png" alt="Open/Close the debug menu">
 </p>
 
-また、この挙動は **Debug Sheet** の **Global Control Mode** から変更することができます。  
+また、この挙動は **Debug Sheet** の **Flick To Open** から変更することができます。  
 画面の左右どちらかだけを有効にしたり、フリックによる操作を無効にしたりできます。
 
 <p align="center">
-  <img width="80%" src="Documentation/quickstart_03.png" alt="Global Control Mode">
+  <img width="80%" src="Documentation/quickstart_03.png" alt="Flick To Open">
 </p>
 
 > **Warning**
 > Unityエディタでは、実機の解像度が擬似的にシミュレーションされるため、必ずしもこの範囲が6mmにはなりません。後述のキーボードショットカットによる操作も併用することをお勧めします。
+
+また、ボタンを使って開閉することもできます。  
+これを行うには、**Debug Sheet** の **Click To Open** からクリックするエリアの設定を行います。  
+その下の **Click Count To Open** には、何回連続でクリックをしたら開くかを設定できます。
+
+<p align="center">
+  <img width="80%" src="Documentation/quickstart_03_02.png" alt="Click To Open">
+</p>
 
 キーボードを使って開閉することもできます。  
 デフォルトでは、**Control (Mac の場合はCommand) + Shift + D** でデバッグメニューをトグルします。  
