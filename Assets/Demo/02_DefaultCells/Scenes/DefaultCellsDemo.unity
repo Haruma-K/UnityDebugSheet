@@ -1261,8 +1261,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 407859272}
   m_HandleRect: {fileID: 407859271}
   m_Direction: 2
-  m_Value: 0.99999475
-  m_Size: 0.8024207
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1854,9 +1854,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 418175455097742125, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 418175455097742125, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418175455097742125, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 418175455097742125, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418175455097742125, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 418175455097742125, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418175455097742125, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 478013941774560328, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 706.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 478013941774560328, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 478013941774560328, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1873,6 +1905,14 @@ PrefabInstance:
     - target: {fileID: 478013942322499445, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
       propertyPath: m_ReferenceResolution.y
       value: 1334
+      objectReference: {fileID: 0}
+    - target: {fileID: 478013942322499446, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: _clickToOpen
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 478013942322499446, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: _globalControlMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 478013942322499447, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
       propertyPath: m_Pivot.x
@@ -1961,6 +2001,30 @@ PrefabInstance:
     - target: {fileID: 478013942322499451, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
       propertyPath: m_Name
       value: DemoDebugSheetCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1020768378305263932, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4797886417630140071, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4797886417630140071, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4797886417630140071, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4797886417630140071, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7450584914127796283, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb8b80e814ae04f3ab9eb27737cf302c, type: 3}
@@ -2319,8 +2383,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1948059643}
   m_HandleRect: {fileID: 1948059642}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.9999998
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

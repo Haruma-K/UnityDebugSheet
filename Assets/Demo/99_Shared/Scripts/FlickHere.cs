@@ -18,11 +18,11 @@ namespace Demo._99_Shared.Scripts
             var debugSheet = DebugSheet.Instance;
             if (debugSheet != null)
             {
-                var globalControlMode = debugSheet.GlobalControlMode;
-                _leftGUI.gameObject.SetActive(globalControlMode == GlobalControlMode.FlickEdge
-                                              || globalControlMode == GlobalControlMode.FlickLeftEdge);
-                _rightGUI.gameObject.SetActive(globalControlMode == GlobalControlMode.FlickEdge
-                                               || globalControlMode == GlobalControlMode.FlickRightEdge);
+                var flickToOpen = debugSheet.FlickToOpen;
+                _leftGUI.gameObject.SetActive(flickToOpen == FlickToOpenMode.Edge
+                                              || flickToOpen == FlickToOpenMode.LeftEdge);
+                _rightGUI.gameObject.SetActive(flickToOpen == FlickToOpenMode.Edge
+                                               || flickToOpen == FlickToOpenMode.RightEdge);
             }
 
             var canvas = GetComponentInParent<Canvas>();
