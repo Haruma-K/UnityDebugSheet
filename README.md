@@ -244,16 +244,24 @@ In the demo scene, the red band is displayed in this area to visualize flickable
   <img width="80%" src="Documentation/quickstart_02.png" alt="Open/Close the debug menu">
 </p>
 
-This behavior can be changed from the **Global Control Mode** on the **Debug Sheet** component.  
+This behavior can be changed from the **Flick To Open** on the **Debug Sheet** component.  
 You can enable only the left or right side of the screen, or disable flick operation.
 
 <p align="center">
-  <img width="80%" src="Documentation/quickstart_03.png" alt="Global Control Mode">
+  <img width="80%" src="Documentation/quickstart_03.png" alt="Flick To Open">
 </p>
 
 > **Warning**
 > In the Unity editor, this range is not necessarily 6mm because it simulate the resolution of the actual device.
 > It is recommended to also use the operation with keyboard shortcuts described below.
+
+You can also open and close the debug menu by pressing the button.
+To do this, set the click area from **Click To Open** on the **Debug Sheet** component.
+You can set the number of times you need to click in a row to open it in **Click Count To Open**.
+
+<p align="center">
+  <img width="80%" src="Documentation/quickstart_03_02.png" alt="Click To Open">
+</p>
 
 You can use keyboard shortcuts to open and close the debug menu.
 In default, **Control (Command on Mac) + Shift + D** toggles the debug menu.

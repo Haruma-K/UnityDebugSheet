@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Foundation.Drawer;
 using UnityDebugSheet.Runtime.Foundation.Gestures.Flicks;
+using UnityDebugSheet.Runtime.Foundation.Gestures.MultiClicks;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts
@@ -19,7 +21,12 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             new Dictionary<int, DebugSheet>();
 
         [SerializeField] private bool _singleton = true;
-        [SerializeField] private GlobalControlMode _globalControlMode = GlobalControlMode.FlickEdge;
+
+        [FormerlySerializedAs("_globalControlMode")] [SerializeField]
+        private FlickToOpenMode _flickToOpen = FlickToOpenMode.Edge;
+
+        [SerializeField] private ClickToOpenMode _clickToOpen = ClickToOpenMode.Off;
+        [SerializeField] private int _clickCountToOpen = 3;
         [SerializeField] private KeyboardShortcut _keyboardShortcut = new KeyboardShortcut();
         [SerializeField] private List<GameObject> _cellPrefabs = new List<GameObject>();
         [SerializeField] private StatefulDrawer _drawer;
@@ -33,6 +40,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private InputBasedFlickEvent _flickEvent;
         [SerializeField] private BalloonButton _balloonButton;
         [SerializeField] private Canvas _canvas;
+        [SerializeField] private MultiClickEventDispatcher _openButton;
         private float _dpi;
         private bool _isInitialized;
         private PreloadedAssetLoader _preloadedAssetLoader;
@@ -46,10 +54,22 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public IReadOnlyList<Page> Pages => _pageContainer.Pages;
         public IList<GameObject> CellPrefabs => _cellPrefabs;
 
-        public GlobalControlMode GlobalControlMode
+        public FlickToOpenMode FlickToOpen
         {
-            get => _globalControlMode;
-            set => _globalControlMode = value;
+            get => _flickToOpen;
+            set => _flickToOpen = value;
+        }
+
+        public ClickToOpenMode ClickToOpen
+        {
+            get => _clickToOpen;
+            set => _clickToOpen = value;
+        }
+
+        public int ClickCountToOpen
+        {
+            get => _clickCountToOpen;
+            set => _clickCountToOpen = value;
         }
 
         public KeyboardShortcut KeyboardShortcut => _keyboardShortcut;
@@ -97,6 +117,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         private void OnEnable()
         {
             _flickEvent.flicked.AddListener(OnFlicked);
+            SetupMultiClickEventDispatcher();
             _backButton.onClick.AddListener(OnBackButtonClicked);
             _closeButton.onClick.AddListener(OnCloseButtonClicked);
         }
@@ -106,6 +127,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _backButton.onClick.RemoveListener(OnBackButtonClicked);
             _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
             _flickEvent.flicked.RemoveListener(OnFlicked);
+            CleanupMultiClickEventDispatcher();
         }
 
         private void OnDestroy()
@@ -331,7 +353,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         private void OnFlicked(Flick flick)
         {
-            if (_globalControlMode == GlobalControlMode.None)
+            if (_flickToOpen == FlickToOpenMode.Off)
                 return;
 
             // If it is horizontal flick, ignore it.
@@ -347,18 +369,18 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var rightSafeAreaInch = (Screen.width - Screen.safeArea.xMax) / _dpi;
             var isRightEdge = startPosXInch >= totalInch - (ThresholdInch + rightSafeAreaInch);
             var isValid = false;
-            switch (_globalControlMode)
+            switch (_flickToOpen)
             {
-                case GlobalControlMode.FlickEdge:
+                case FlickToOpenMode.Edge:
                     isValid = isLeftEdge || isRightEdge;
                     break;
-                case GlobalControlMode.FlickLeftEdge:
+                case FlickToOpenMode.LeftEdge:
                     isValid = isLeftEdge;
                     break;
-                case GlobalControlMode.FlickRightEdge:
+                case FlickToOpenMode.RightEdge:
                     isValid = isRightEdge;
                     break;
-                case GlobalControlMode.None:
+                case FlickToOpenMode.Off:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -370,6 +392,30 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             // Apply the flick.
             var isUp = flick.DeltaInchPosition.y >= 0;
             var state = isUp ? _drawer.GetUpperState() : _drawer.GetLowerState();
+            _drawerController.SetStateWithAnimation(state);
+        }
+
+        private void SetupMultiClickEventDispatcher()
+        {
+            var shouldActivate = _clickToOpen != ClickToOpenMode.Off;
+            _openButton.gameObject.SetActive(shouldActivate);
+            _openButton.onMultiClicked.AddListener(OnOpenButtonMultiClicked);
+            _openButton.clickCountThreshold = _clickCountToOpen;
+            var rectTrans = (RectTransform)_openButton.transform;
+            _clickToOpen.ApplyToRectTransform(rectTrans);
+        }
+
+        private void CleanupMultiClickEventDispatcher()
+        {
+            _openButton.onMultiClicked.RemoveListener(OnOpenButtonMultiClicked);
+        }
+
+        private void OnOpenButtonMultiClicked()
+        {
+            if (_clickToOpen == ClickToOpenMode.Off)
+                return;
+
+            var state = _drawer.GetNearestState() == DrawerState.Max ? DrawerState.Min : DrawerState.Max;
             _drawerController.SetStateWithAnimation(state);
         }
     }
