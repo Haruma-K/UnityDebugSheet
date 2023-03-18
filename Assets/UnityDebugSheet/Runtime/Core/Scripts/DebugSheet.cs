@@ -51,7 +51,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public DebugPageBase CurrentDebugPage { get; private set; }
         public DebugPageBase EnteringDebugPage { get; private set; }
         public DebugPageBase ExitingDebugPage { get; private set; }
-        public IReadOnlyList<Page> Pages => _pageContainer.Pages;
+        public IReadOnlyDictionary<string, Page> Pages => _pageContainer.Pages;
         public IList<GameObject> CellPrefabs => _cellPrefabs;
 
         public FlickToOpenMode FlickToOpen
