@@ -90,7 +90,7 @@ namespace Demo._01_CharacterViewer.Scripts
         private void OnCharacterViewerButtonClicked()
         {
             DebugSheet.Of(transform)
-                .PushPage<CharacterViewerPage>(true, onLoad: x => x.Setup(_characterSpawner, _standController));
+                .PushPage<CharacterViewerPage>(true, onLoad: x => x.page.Setup(_characterSpawner, _standController));
         }
     }
 }

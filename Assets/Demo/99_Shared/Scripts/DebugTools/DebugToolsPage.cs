@@ -1,10 +1,8 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
-using System;
 using System.Collections;
 using IngameDebugConsole;
 using Tayx.Graphy;
 using UnityDebugSheet.Runtime.Core.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityDebugSheet.Runtime.Extensions.Graphy;
 using UnityDebugSheet.Runtime.Extensions.IngameDebugConsole;
 using UnityDebugSheet.Runtime.Extensions.Unity;
@@ -28,12 +26,12 @@ namespace Demo._99_Shared.Scripts.DebugTools
             // Graphy
             AddPageLinkButton<GraphyDebugPage>("Graphy",
                 icon: Resources.Load<Sprite>(AssetKeys.Resources.Icon.FPS),
-                onLoad: x => x.Setup(GraphyManager.Instance));
+                onLoad: x => x.page.Setup(GraphyManager.Instance));
             
             // In-Game Debug Console
             AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console",
                 icon: Resources.Load<Sprite>(AssetKeys.Resources.Icon.Console),
-                onLoad: x => x.Setup(DebugLogManager.Instance));
+                onLoad: x => x.page.Setup(DebugLogManager.Instance));
 
             // System Info
             AddPageLinkButton<SystemInfoDebugPage>("System Info",

@@ -23,7 +23,7 @@ namespace Demo._01_CharacterViewer.Scripts
             var initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
             var linkButtonId = initialPage.AddPageLinkButton<CharacterViewerPage>("Character Viewer",
                 icon: DemoSprites.Icon.CharacterViewer,
-                onLoad: page => page.Setup(_spawner, _standController),
+                onLoad: x => { x.page.Setup(_spawner, _standController); },
                 priority: 0);
 
             _itemDisposer = new PageItemDisposer(initialPage);
