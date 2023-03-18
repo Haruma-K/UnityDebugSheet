@@ -138,6 +138,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         void IPageContainerCallbackReceiver.BeforePush(Page enterPage, Page exitPage)
         {
+            _backButton.interactable = false;
             EnteringDebugPage = enterPage.GetComponent<DebugPageBase>();
             ExitingDebugPage = exitPage == null ? null : exitPage.GetComponent<DebugPageBase>();
             _enterTitleText.text = EnteringDebugPage.GetTitle();
@@ -156,6 +157,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         void IPageContainerCallbackReceiver.BeforePop(Page enterPage, Page exitPage)
         {
+            _backButton.interactable = false;
             EnteringDebugPage = enterPage.GetComponent<DebugPageBase>();
             ExitingDebugPage = exitPage.GetComponent<DebugPageBase>();
             _enterTitleText.text = EnteringDebugPage.GetTitle();
