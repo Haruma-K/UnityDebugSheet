@@ -281,16 +281,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         }
 
         private AsyncProcessHandle PushPage(Type pageType, string prefabName, bool playAnimation,
-            string titleOverride = null,
-            Action<DebugPageBase> onLoad = null)
+            string titleOverride = null, Action<DebugPageBase> onLoad = null)
         {
             return _pageContainer.Push(pageType, prefabName, playAnimation, onLoad: x =>
             {
-                var debugPage = (DebugPageBase)x;
+                var debugPage = (DebugPageBase)x.page;
                 if (titleOverride != null)
                     debugPage.SetTitle(titleOverride);
 
-                var prefabContainer = x.GetComponent<PrefabContainer>();
+                var prefabContainer = debugPage.GetComponent<PrefabContainer>();
                 prefabContainer.Prefabs.AddRange(_cellPrefabs);
 
                 onLoad?.Invoke(debugPage);
