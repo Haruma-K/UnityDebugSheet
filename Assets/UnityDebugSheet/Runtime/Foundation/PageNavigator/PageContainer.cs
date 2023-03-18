@@ -379,8 +379,13 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             var exitPageId = _orderedPageIds[_orderedPageIds.Count - 1];
             var exitPage = _pages[exitPageId];
             var unusedPageIds = new List<string>();
+            var unusedPages = new List<Page>();
             for (var i = _orderedPageIds.Count - 1; i >= _orderedPageIds.Count - popCount; i--)
+            {
+                var unusedPageId = _orderedPageIds[i];
                 unusedPageIds.Add(_orderedPageIds[i]);
+                unusedPages.Add(_pages[unusedPageId]);
+            }
 
             var enterPageIndex = _orderedPageIds.Count - popCount - 1;
             var enterPageId = enterPageIndex < 0 ? null : _orderedPageIds[enterPageIndex];
@@ -414,8 +419,13 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
                     yield return coroutineHandle;
 
             // End Transition
-            for (var i = 0; i < popCount; i++)
+            for (var i = 0; i < unusedPageIds.Count; i++)
+            {
+                var unusedPageId = unusedPageIds[i];
+                _pages.Remove(unusedPageId);
                 _orderedPageIds.RemoveAt(_orderedPageIds.Count - 1);
+            }
+            
             IsInTransition = false;
 
             // Postprocess
@@ -431,14 +441,14 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             while (!beforeReleaseHandle.IsTerminated)
                 yield return null;
 
-            foreach (var unusedPageId in unusedPageIds)
+            for (var i = 0; i < unusedPageIds.Count; i++)
             {
-                var unusedPage = _pages[unusedPageId];
+                var unusedPageId = unusedPageIds[i];
+                var unusedPage = unusedPages[i];
                 var loadHandle = _assetLoadHandles[unusedPageId];
                 Destroy(unusedPage.gameObject);
                 AssetLoader.Release(loadHandle);
                 _assetLoadHandles.Remove(unusedPageId);
-                _pages.Remove(unusedPageId);
             }
 
             _isActivePageStacked = true;
