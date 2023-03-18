@@ -47,6 +47,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public static DebugSheet Instance { get; private set; }
 
+        public string InitialPageId { get; private set; }
         public DebugPageBase InitialDebugPage { get; private set; }
         public DebugPageBase CurrentDebugPage { get; private set; }
         public DebugPageBase EnteringDebugPage { get; private set; }
@@ -207,7 +208,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             return null;
         }
 
-        public TInitialPage Initialize<TInitialPage>(string titleOverride = null, Action<TInitialPage> onLoad = null)
+        public TInitialPage Initialize<TInitialPage>(string titleOverride = null,
+            Action<(string pageId, TInitialPage page)> onLoad = null, string pageId = null)
             where TInitialPage : DebugPageBase
         {
             if (_isInitialized)
@@ -223,69 +225,68 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
             PushPage<TInitialPage>(false, titleOverride, x =>
             {
-                InitialDebugPage = x;
-                onLoad?.Invoke(x);
-            });
+                InitialPageId = x.pageId;
+                InitialDebugPage = x.page;
+                onLoad?.Invoke((x.pageId, x.page));
+            }, pageId);
             _isInitialized = true;
             return (TInitialPage)InitialDebugPage;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="titleOverride"></param>
-        /// <param name="onLoad"></param>
-        /// <returns></returns>
         public TInitialPage GetOrCreateInitialPage<TInitialPage>(string titleOverride = null,
-            Action<TInitialPage> onLoad = null) where TInitialPage : DebugPageBase
+            Action<(string pageId, TInitialPage page)> onLoad = null, string pageId = null)
+            where TInitialPage : DebugPageBase
         {
             if (_isInitialized)
                 return (TInitialPage)InitialDebugPage;
 
-            return Initialize(titleOverride, onLoad);
+            return Initialize(titleOverride, onLoad, pageId);
         }
 
-        public DebugPage GetOrCreateInitialPage(string titleOverride = null, Action<DebugPage> onLoad = null)
+        public DebugPage GetOrCreateInitialPage(string titleOverride = null, string pageId = null,
+            Action<(string pageId, DebugPage page)> onLoad = null)
         {
-            return GetOrCreateInitialPage<DebugPage>(titleOverride, onLoad);
+            return GetOrCreateInitialPage(titleOverride, onLoad, pageId);
         }
 
         public AsyncProcessHandle PushPage(Type pageType, DebugPageBase prefab, bool playAnimation,
-            string titleOverride = null,
-            Action<DebugPageBase> onLoad = null)
+            string titleOverride = null, Action<(string pageId, DebugPageBase page)> onLoad = null,
+            string pageId = null)
         {
             if (!_preloadedAssetLoader.PreloadedObjects.ContainsValue(prefab.gameObject))
                 _preloadedAssetLoader.AddObject(prefab.gameObject);
 
-            return PushPage(pageType, prefab.gameObject.name, playAnimation, titleOverride, onLoad);
+            return PushPage(pageType, prefab.gameObject.name, playAnimation, titleOverride, onLoad, pageId);
         }
 
         public AsyncProcessHandle PushPage<TPage>(TPage prefab, bool playAnimation, string titleOverride = null,
-            Action<TPage> onLoad = null) where TPage : DebugPageBase
+            Action<(string pageId, TPage page)> onLoad = null, string pageId = null) where TPage : DebugPageBase
         {
             if (!_preloadedAssetLoader.PreloadedObjects.ContainsValue(prefab.gameObject))
                 _preloadedAssetLoader.AddObject(prefab.gameObject);
 
             return PushPage(typeof(TPage), prefab.gameObject.name, playAnimation, titleOverride,
-                x => onLoad?.Invoke((TPage)x));
+                x => onLoad?.Invoke((pageId, (TPage)x.page)), pageId);
         }
 
         public AsyncProcessHandle PushPage(Type pageType, bool playAnimation, string titleOverride = null,
-            Action<DebugPageBase> onLoad = null)
+            Action<(string pageId, DebugPageBase page)> onLoad = null, string pageId = null)
         {
-            return PushPage(pageType, _pagePrefab.gameObject.name, playAnimation, titleOverride, onLoad);
+            return PushPage(pageType, _pagePrefab.gameObject.name, playAnimation, titleOverride, onLoad, pageId);
         }
 
         public AsyncProcessHandle PushPage<TPage>(bool playAnimation, string titleOverride = null,
-            Action<TPage> onLoad = null) where TPage : DebugPageBase
+            Action<(string pageId, TPage page)> onLoad = null, string pageId = null) where TPage : DebugPageBase
         {
             return PushPage(typeof(TPage), _pagePrefab.gameObject.name, playAnimation, titleOverride,
-                x => onLoad?.Invoke((TPage)x));
+                x => onLoad?.Invoke((x.pageId, (TPage)x.page)), pageId);
         }
 
         private AsyncProcessHandle PushPage(Type pageType, string prefabName, bool playAnimation,
-            string titleOverride = null, Action<DebugPageBase> onLoad = null)
+            string titleOverride = null, Action<(string pageId, DebugPageBase page)> onLoad = null,
+            string pageId = null)
         {
-            return _pageContainer.Push(pageType, prefabName, playAnimation, onLoad: x =>
+            return _pageContainer.Push(pageType, prefabName, playAnimation, pageId: pageId, onLoad: x =>
             {
                 var debugPage = (DebugPageBase)x.page;
                 if (titleOverride != null)
@@ -294,13 +295,18 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                 var prefabContainer = debugPage.GetComponent<PrefabContainer>();
                 prefabContainer.Prefabs.AddRange(_cellPrefabs);
 
-                onLoad?.Invoke(debugPage);
+                onLoad?.Invoke((x.pageId, debugPage));
             }, loadAsync: false);
         }
 
-        public AsyncProcessHandle PopPage(bool playAnimation)
+        public AsyncProcessHandle PopPage(bool playAnimation, int popCount = 1)
         {
-            return _pageContainer.Pop(playAnimation);
+            return _pageContainer.Pop(playAnimation, popCount);
+        }
+
+        public AsyncProcessHandle PopPage(bool playAnimation, string destinationPageId)
+        {
+            return _pageContainer.Pop(playAnimation, destinationPageId);
         }
 
         public void Show()

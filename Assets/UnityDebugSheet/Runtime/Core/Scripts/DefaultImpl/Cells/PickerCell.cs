@@ -101,7 +101,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
                 };
             }
 
-            DebugSheet.Of(transform).PushPage<PickingPage>(true, model.Text, OnLoadPickingPage);
+            DebugSheet.Of(transform).PushPage<PickingPage>(true, model.Text, x => OnLoadPickingPage(x.page));
             model.InvokeClicked();
         }
     }
