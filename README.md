@@ -43,6 +43,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Work within the safe area](#work-within-the-safe-area)
   - [Change the min/max size of the debug menu](#change-the-minmax-size-of-the-debug-menu)
   - [Customize the look](#customize-the-look)
+  - [Pop multiple screens at once](#pop-multiple-screens-at-once)
 - [Extension Packages](#extension-packages)
   - [Display the system information of Unity](#display-the-system-information-of-unity)
   - [In-game Debug Console](#in-game-debug-console)
