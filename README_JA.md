@@ -44,6 +44,7 @@
   - [セーフエリア内で動作させる](#%E3%82%BB%E3%83%BC%E3%83%95%E3%82%A8%E3%83%AA%E3%82%A2%E5%86%85%E3%81%A7%E5%8B%95%E4%BD%9C%E3%81%95%E3%81%9B%E3%82%8B)
   - [最小・最大サイズの調整](#%E6%9C%80%E5%B0%8F%E3%83%BB%E6%9C%80%E5%A4%A7%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E8%AA%BF%E6%95%B4)
   - [デザインをカスタムする](#%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%82%92%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%81%99%E3%82%8B)
+  - [まとめて戻る](#%E3%81%BE%E3%81%A8%E3%82%81%E3%81%A6%E6%88%BB%E3%82%8B)
 - [拡張パッケージ](#%E6%8B%A1%E5%BC%B5%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8)
   - [Unityのシステム情報を表示する](#unity%E3%81%AE%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%83%85%E5%A0%B1%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B)
   - [In-game Debug Console](#in-game-debug-console)
@@ -532,6 +533,35 @@ Unity Debug Sheet は uGUI で構成されているので、プロパティを�
 各セルのデザインはカスタムセルを作成することで自由に作成できます。  
 これについての詳細はカスタムセルの項目を参照してください。
 
+### まとめて戻る
+複数のページをまとめて戻るには、`DebugSheet.PopPage()`の第二引数に戻る画面数を指定します。
+
+```cs
+DebugSheet debugSheet;
+debugSheet.PopPage(true, 2);
+```
+
+また、戻り先の PageID を指定してまとめて戻ることもできます。  
+PageID は、以下のように `PushPage()` の `onLoad` コールバックを使うことで取得できます。
+
+```cs
+DebugSheet debugSheet;
+debugSheet.PushPage<DebugPage>(true, onLoad: x =>
+{
+    var pageId = x.pageId;
+});
+```
+
+また、`PushPage()` の `pageId` 引数を指定することで、任意の ID を指定することもできます。
+
+```cs
+DebugSheet debugSheet;
+debugSheet.PushPage<DebugPage>(true, pageId: "MyPageId");
+```
+
+なお、まとめて戻る際にスキップされるページについては、遷移前後のライフサイクルイベントは呼ばれず、破棄前のイベントだけ呼ばれます。  
+またスキップされるページの遷移アニメーションは再生されません。  
+
 ## 拡張パッケージ
 Unity Debug Sheet はどんなアプリケーションでも汎用的に使う機能を拡張パッケージとして提供しています。
 
@@ -578,7 +608,7 @@ FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com
 1. [**Graphy**](https://github.com/Tayx94/graphy) をインストールする（複数のインストール方法があります）
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_GRAPHY_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) を参照アセンブリに加える
-4. `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
+4. `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.page.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
 
 
 ## ライセンス

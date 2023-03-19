@@ -38,11 +38,12 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             button.onClick.AddListener(() =>
             {
                 if (model.Prefab == null)
-                    DebugSheet.Of(transform).PushPage(pageType, true, onLoad: model.InvokeOnLoad,
-                        titleOverride: model.PageTitleOverride);
+                    DebugSheet.Of(transform).PushPage(pageType, true, onLoad: x => model.InvokeOnLoad(x.pageId, x.page),
+                        titleOverride: model.PageTitleOverride, pageId: model.PageId);
                 else
-                    DebugSheet.Of(transform).PushPage(pageType, model.Prefab, true, onLoad: model.InvokeOnLoad,
-                        titleOverride: model.PageTitleOverride);
+                    DebugSheet.Of(transform).PushPage(pageType, model.Prefab, true,
+                        onLoad: x => model.InvokeOnLoad(x.pageId, x.page),
+                        titleOverride: model.PageTitleOverride, pageId: model.PageId);
             });
 
             // Height
@@ -77,11 +78,13 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         public DebugPageBase Prefab { get; set; }
 
-        public event Action<DebugPageBase> OnLoad;
+        public event Action<(string pageId, DebugPageBase page)> OnLoad;
 
-        internal void InvokeOnLoad(DebugPageBase debugPage)
+        public string PageId { get; set; }
+
+        internal void InvokeOnLoad(string pageId, DebugPageBase debugPage)
         {
-            OnLoad?.Invoke(debugPage);
+            OnLoad?.Invoke((pageId, debugPage));
         }
     }
 }

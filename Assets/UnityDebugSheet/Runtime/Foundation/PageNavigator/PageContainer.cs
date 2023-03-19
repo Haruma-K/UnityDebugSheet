@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
@@ -20,13 +21,15 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 
         [SerializeField] private string _name;
 
-        private readonly Dictionary<int, AssetLoadHandle<GameObject>> _assetLoadHandles
-            = new Dictionary<int, AssetLoadHandle<GameObject>>();
+        private readonly Dictionary<string, AssetLoadHandle<GameObject>> _assetLoadHandles
+            = new Dictionary<string, AssetLoadHandle<GameObject>>();
 
         private readonly List<IPageContainerCallbackReceiver> _callbackReceivers =
             new List<IPageContainerCallbackReceiver>();
 
-        private readonly List<Page> _pages = new List<Page>();
+        private readonly List<string> _orderedPageIds = new List<string>();
+
+        private readonly Dictionary<string, Page> _pages = new Dictionary<string, Page>();
 
         private readonly Dictionary<string, AssetLoadHandle<GameObject>> _preloadedResourceHandles =
             new Dictionary<string, AssetLoadHandle<GameObject>>();
@@ -53,9 +56,14 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         public bool IsInTransition { get; private set; }
 
         /// <summary>
-        ///     Stacked pages.
+        ///     List of PageIDs sorted in the order they are stacked.
         /// </summary>
-        public IReadOnlyList<Page> Pages => _pages;
+        public IReadOnlyList<string> OrderedPageIds => _orderedPageIds;
+
+        /// <summary>
+        ///     Map of PgaeID to Page.
+        /// </summary>
+        public IReadOnlyDictionary<string, Page> Pages => _pages;
 
         public bool Interactable
         {
@@ -77,9 +85,9 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 
         private void OnDestroy()
         {
-            foreach (var page in _pages)
+            foreach (var pageId in _orderedPageIds)
             {
-                var pageId = page.GetInstanceID();
+                var page = _pages[pageId];
                 var assetLoadHandle = _assetLoadHandles[pageId];
 
                 Destroy(page.gameObject);
@@ -87,6 +95,8 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             }
 
             _assetLoadHandles.Clear();
+            _pages.Clear();
+            _orderedPageIds.Clear();
 
             InstanceCacheByName.Remove(_name);
             var keysToRemove = new List<int>();
@@ -168,14 +178,15 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         /// <param name="resourceKey"></param>
         /// <param name="playAnimation"></param>
         /// <param name="stack"></param>
-        /// <param name="onLoad"></param>
+        /// <param name="pageId"></param>
         /// <param name="loadAsync"></param>
+        /// <param name="onLoad"></param>
         /// <returns></returns>
-        public AsyncProcessHandle Push(string resourceKey, bool playAnimation, bool stack = true,
-            Action<Page> onLoad = null, bool loadAsync = true)
+        public AsyncProcessHandle Push(string resourceKey, bool playAnimation, bool stack = true, string pageId = null,
+            bool loadAsync = true, Action<(string pageId, Page page)> onLoad = null)
         {
             return CoroutineManager.Instance.Run(PushRoutine(typeof(Page), resourceKey, playAnimation, stack, onLoad,
-                loadAsync));
+                loadAsync, pageId));
         }
 
         /// <summary>
@@ -185,14 +196,15 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         /// <param name="resourceKey"></param>
         /// <param name="playAnimation"></param>
         /// <param name="stack"></param>
-        /// <param name="onLoad"></param>
+        /// <param name="pageId"></param>
         /// <param name="loadAsync"></param>
+        /// <param name="onLoad"></param>
         /// <returns></returns>
         public AsyncProcessHandle Push(Type pageType, string resourceKey, bool playAnimation, bool stack = true,
-            Action<Page> onLoad = null, bool loadAsync = true)
+            string pageId = null, bool loadAsync = true, Action<(string pageId, Page page)> onLoad = null)
         {
             return CoroutineManager.Instance.Run(PushRoutine(pageType, resourceKey, playAnimation, stack, onLoad,
-                loadAsync));
+                loadAsync, pageId));
         }
 
         /// <summary>
@@ -201,29 +213,57 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         /// <param name="resourceKey"></param>
         /// <param name="playAnimation"></param>
         /// <param name="stack"></param>
-        /// <param name="onLoad"></param>
+        /// <param name="pageId"></param>
         /// <param name="loadAsync"></param>
+        /// <param name="onLoad"></param>
         /// <typeparam name="TPage"></typeparam>
         /// <returns></returns>
         public AsyncProcessHandle Push<TPage>(string resourceKey, bool playAnimation, bool stack = true,
-            Action<TPage> onLoad = null, bool loadAsync = true) where TPage : Page
+            string pageId = null, bool loadAsync = true, Action<(string pageId, Page page)> onLoad = null)
+            where TPage : Page
         {
             return CoroutineManager.Instance.Run(PushRoutine(typeof(TPage), resourceKey, playAnimation, stack,
-                x => onLoad?.Invoke((TPage)x), loadAsync));
+                x => onLoad?.Invoke((x.pageId, (TPage)x.page)), loadAsync, pageId));
+        }
+
+        /// <summary>
+        ///     Push new page.
+        /// </summary>
+        /// <param name="playAnimation"></param>
+        /// <param name="destinationPageId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public AsyncProcessHandle Pop(bool playAnimation, string destinationPageId)
+        {
+            var popCount = 0;
+            for (var i = _orderedPageIds.Count - 1; i >= 0; i--)
+            {
+                var pageId = _orderedPageIds[i];
+                if (pageId == destinationPageId)
+                    break;
+
+                popCount++;
+            }
+
+            if (popCount == _orderedPageIds.Count)
+                throw new Exception($"The page with id '{destinationPageId}' is not found.");
+
+            return CoroutineManager.Instance.Run(PopRoutine(playAnimation, popCount));
         }
 
         /// <summary>
         ///     Pop current page.
         /// </summary>
         /// <param name="playAnimation"></param>
+        /// <param name="popCount"></param>
         /// <returns></returns>
-        public AsyncProcessHandle Pop(bool playAnimation)
+        public AsyncProcessHandle Pop(bool playAnimation, int popCount = 1)
         {
-            return CoroutineManager.Instance.Run(PopRoutine(playAnimation));
+            return CoroutineManager.Instance.Run(PopRoutine(playAnimation, popCount));
         }
 
         private IEnumerator PushRoutine(Type type, string resourceKey, bool playAnimation, bool stack = true,
-            Action<Page> onLoad = null, bool loadAsync = true)
+            Action<(string pageId, Page page)> onLoad = null, bool loadAsync = true, string pageId = null)
         {
             if (resourceKey == null)
                 throw new ArgumentNullException(nameof(resourceKey));
@@ -249,15 +289,16 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
                 page = instance.AddComponent(type);
             var enterPage = (Page)page;
 
-            var pageId = enterPage.GetInstanceID();
+            if (pageId == null)
+                pageId = Guid.NewGuid().ToString();
             _assetLoadHandles.Add(pageId, assetLoadHandle);
-            onLoad?.Invoke(enterPage);
+            onLoad?.Invoke((pageId, enterPage));
             var afterLoadHandle = enterPage.AfterLoad((RectTransform)transform);
             while (!afterLoadHandle.IsTerminated)
                 yield return null;
 
-            var exitPage = _pages.Count == 0 ? null : _pages[_pages.Count - 1];
-            var exitPageId = exitPage == null ? (int?)null : exitPage.GetInstanceID();
+            var exitPageId = _orderedPageIds.Count == 0 ? null : _orderedPageIds[_pages.Count - 1];
+            var exitPage = exitPageId == null ? null : _pages[exitPageId];
 
             // Preprocess
             foreach (var callbackReceiver in _callbackReceivers)
@@ -285,10 +326,14 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
                     yield return coroutineHandle;
 
             // End Transition
-            if (!_isActivePageStacked && exitPageId.HasValue)
-                _pages.RemoveAt(_pages.Count - 1);
+            if (!_isActivePageStacked && exitPage != null)
+            {
+                _pages.Remove(exitPageId);
+                _orderedPageIds.Remove(exitPageId);
+            }
 
-            _pages.Add(enterPage);
+            _pages.Add(pageId, enterPage);
+            _orderedPageIds.Add(pageId);
             IsInTransition = false;
 
             // Postprocess
@@ -301,27 +346,29 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
                 callbackReceiver.AfterPush(enterPage, exitPage);
 
             // Unload Unused Page
-            if (!_isActivePageStacked && exitPageId.HasValue)
+            if (!_isActivePageStacked && exitPage != null)
             {
                 var beforeReleaseHandle = exitPage.BeforeRelease();
                 while (!beforeReleaseHandle.IsTerminated)
                     yield return null;
 
-                var handle = _assetLoadHandles[exitPageId.Value];
+                var handle = _assetLoadHandles[exitPageId];
                 AssetLoader.Release(handle);
 
                 Destroy(exitPage.gameObject);
-                _assetLoadHandles.Remove(exitPageId.Value);
+                _assetLoadHandles.Remove(exitPageId);
             }
 
             _isActivePageStacked = stack;
         }
 
-        private IEnumerator PopRoutine(bool playAnimation)
+        private IEnumerator PopRoutine(bool playAnimation, int popCount = 1)
         {
-            if (_pages.Count == 0)
+            Assert.IsTrue(popCount >= 1);
+
+            if (_pages.Count < popCount)
                 throw new InvalidOperationException(
-                    "Cannot transition because there are no pages loaded on the stack.");
+                    "Cannot transition because the page count is less than the pop count.");
 
             if (IsInTransition)
                 throw new InvalidOperationException(
@@ -329,9 +376,20 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 
             IsInTransition = true;
 
-            var exitPage = _pages[_pages.Count - 1];
-            var exitPageId = exitPage.GetInstanceID();
-            var enterPage = _pages.Count == 1 ? null : _pages[_pages.Count - 2];
+            var exitPageId = _orderedPageIds[_orderedPageIds.Count - 1];
+            var exitPage = _pages[exitPageId];
+            var unusedPageIds = new List<string>();
+            var unusedPages = new List<Page>();
+            for (var i = _orderedPageIds.Count - 1; i >= _orderedPageIds.Count - popCount; i--)
+            {
+                var unusedPageId = _orderedPageIds[i];
+                unusedPageIds.Add(_orderedPageIds[i]);
+                unusedPages.Add(_pages[unusedPageId]);
+            }
+
+            var enterPageIndex = _orderedPageIds.Count - popCount - 1;
+            var enterPageId = enterPageIndex < 0 ? null : _orderedPageIds[enterPageIndex];
+            var enterPage = enterPageId == null ? null : _pages[enterPageId];
 
             // Preprocess
             foreach (var callbackReceiver in _callbackReceivers)
@@ -361,7 +419,13 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
                     yield return coroutineHandle;
 
             // End Transition
-            _pages.RemoveAt(_pages.Count - 1);
+            for (var i = 0; i < unusedPageIds.Count; i++)
+            {
+                var unusedPageId = unusedPageIds[i];
+                _pages.Remove(unusedPageId);
+                _orderedPageIds.RemoveAt(_orderedPageIds.Count - 1);
+            }
+            
             IsInTransition = false;
 
             // Postprocess
@@ -377,10 +441,15 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             while (!beforeReleaseHandle.IsTerminated)
                 yield return null;
 
-            var loadHandle = _assetLoadHandles[exitPageId];
-            Destroy(exitPage.gameObject);
-            AssetLoader.Release(loadHandle);
-            _assetLoadHandles.Remove(exitPageId);
+            for (var i = 0; i < unusedPageIds.Count; i++)
+            {
+                var unusedPageId = unusedPageIds[i];
+                var unusedPage = unusedPages[i];
+                var loadHandle = _assetLoadHandles[unusedPageId];
+                Destroy(unusedPage.gameObject);
+                AssetLoader.Release(loadHandle);
+                _assetLoadHandles.Remove(unusedPageId);
+            }
 
             _isActivePageStacked = true;
         }

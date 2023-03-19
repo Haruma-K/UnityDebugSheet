@@ -240,15 +240,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public int AddPageLinkButton(string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, string titleOverride = null,
-            Action<DebugPage> onLoad = null, int priority = 0)
+            Action<(string pageId, DebugPage page)> onLoad = null, string pageId = null, int priority = 0)
         {
             return AddPageLinkButton<DebugPage>(text, subText, textColor, subTextColor, icon, iconColor,
-                titleOverride, onLoad, priority);
+                titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton(Type pageType, string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, string titleOverride = null,
-            Action<DebugPageBase> onLoad = null, int priority = 0)
+            Action<(string pageId, DebugPageBase page)> onLoad = null, string pageId = null, int priority = 0)
         {
             var textModel = new CellTextsModel();
             textModel.Text = text;
@@ -258,12 +258,13 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var iconModel = new CellIconModel();
             iconModel.Sprite = icon;
             if (iconColor != null) iconModel.Color = iconColor.Value;
-            return AddPageLinkButton(pageType, textModel, iconModel, titleOverride, onLoad, priority);
+            return AddPageLinkButton(pageType, textModel, iconModel, titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton<TPage>(string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, string titleOverride = null,
-            Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
+            Action<(string pageId, TPage page)> onLoad = null, string pageId = null, int priority = 0)
+            where TPage : DebugPageBase
         {
             var textModel = new CellTextsModel();
             textModel.Text = text;
@@ -273,30 +274,35 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var iconModel = new CellIconModel();
             iconModel.Sprite = icon;
             if (iconColor != null) iconModel.Color = iconColor.Value;
-            return AddPageLinkButton(textModel, iconModel, titleOverride, onLoad, priority);
+            return AddPageLinkButton(textModel, iconModel, titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton(CellTextsModel textModel, CellIconModel iconModel = null,
-            string titleOverride = null, Action<DebugPage> onLoad = null, int priority = 0)
+            string titleOverride = null, Action<(string pageId, DebugPage page)> onLoad = null, string pageId = null,
+            int priority = 0)
         {
-            return AddPageLinkButton<DebugPage>(textModel, iconModel, titleOverride, onLoad, priority);
+            return AddPageLinkButton<DebugPage>(textModel, iconModel, titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton(Type pageType, CellTextsModel textModel, CellIconModel iconModel = null,
-            string titleOverride = null, Action<DebugPageBase> onLoad = null, int priority = 0)
+            string titleOverride = null, Action<(string pageId, DebugPageBase page)> onLoad = null,
+            string pageId = null, int priority = 0)
         {
-            return AddPageLinkButton(pageType, null, textModel, iconModel, titleOverride, onLoad, priority);
+            return AddPageLinkButton(pageType, null, textModel, iconModel, titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton<TPage>(CellTextsModel textModel, CellIconModel iconModel = null,
-            string titleOverride = null, Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
+            string titleOverride = null, Action<(string pageId, TPage page)> onLoad = null, string pageId = null,
+            int priority = 0)
+            where TPage : DebugPageBase
         {
-            return AddPageLinkButton(null, textModel, iconModel, titleOverride, onLoad, priority);
+            return AddPageLinkButton(null, textModel, iconModel, titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton(Type pageType, DebugPageBase prefab, string text, string subText = null,
             Color? textColor = null, Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
-            string titleOverride = null, Action<DebugPageBase> onLoad = null, int priority = 0)
+            string titleOverride = null, Action<(string pageId, DebugPageBase page)> onLoad = null,
+            string pageId = null, int priority = 0)
         {
             var textModel = new CellTextsModel();
             textModel.Text = text;
@@ -306,12 +312,13 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var iconModel = new CellIconModel();
             iconModel.Sprite = icon;
             if (iconColor != null) iconModel.Color = iconColor.Value;
-            return AddPageLinkButton(pageType, prefab, textModel, iconModel, titleOverride, onLoad, priority);
+            return AddPageLinkButton(pageType, prefab, textModel, iconModel, titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton<TPage>(TPage prefab, string text, string subText = null, Color? textColor = null,
             Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, string titleOverride = null,
-            Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
+            Action<(string pageId, TPage page)> onLoad = null, string pageId = null, int priority = 0)
+            where TPage : DebugPageBase
         {
             var textModel = new CellTextsModel();
             textModel.Text = text;
@@ -321,12 +328,13 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             var iconModel = new CellIconModel();
             iconModel.Sprite = icon;
             if (iconColor != null) iconModel.Color = iconColor.Value;
-            return AddPageLinkButton(prefab, textModel, iconModel, titleOverride, onLoad, priority);
+            return AddPageLinkButton(prefab, textModel, iconModel, titleOverride, onLoad, pageId, priority);
         }
 
         public int AddPageLinkButton(Type pageType, DebugPageBase prefab, CellTextsModel textModel,
-            CellIconModel iconModel = null, string titleOverride = null, Action<DebugPageBase> onLoad = null,
-            int priority = 0)
+            CellIconModel iconModel = null, string titleOverride = null,
+            Action<(string pageId, DebugPageBase page)> onLoad = null,
+            string pageId = null, int priority = 0)
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
             var useIcon = iconModel != null && iconModel.Sprite != null;
@@ -355,11 +363,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             buttonModel.PageTitleOverride = titleOverride;
             buttonModel.OnLoad += onLoad;
             buttonModel.ShowArrow = true;
+            buttonModel.PageId = pageId;
             return AddPageLinkButton(buttonModel, priority);
         }
 
         public int AddPageLinkButton<TPage>(TPage prefab, CellTextsModel textModel, CellIconModel iconModel = null,
-            string titleOverride = null, Action<TPage> onLoad = null, int priority = 0) where TPage : DebugPageBase
+            string titleOverride = null, Action<(string pageId, TPage page)> onLoad = null, string pageId = null,
+            int priority = 0)
+            where TPage : DebugPageBase
         {
             var useSubText = textModel != null && !string.IsNullOrEmpty(textModel.SubText);
             var useIcon = iconModel != null && iconModel.Sprite != null;
@@ -386,8 +397,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             buttonModel.PageType = typeof(TPage);
             buttonModel.Prefab = prefab;
             buttonModel.PageTitleOverride = titleOverride;
-            buttonModel.OnLoad += x => onLoad?.Invoke((TPage)x);
+            buttonModel.OnLoad += x => onLoad?.Invoke((x.pageId, (TPage)x.page));
             buttonModel.ShowArrow = true;
+            buttonModel.PageId = pageId;
             return AddPageLinkButton(buttonModel, priority);
         }
 

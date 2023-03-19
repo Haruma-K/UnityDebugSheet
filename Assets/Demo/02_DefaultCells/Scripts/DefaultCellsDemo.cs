@@ -31,8 +31,9 @@ namespace Demo._02_DefaultCells.Scripts
 
             var initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
             var linkButtonId = initialPage.AddPageLinkButton<DefaultCellsDemoDebugPage>("Default Cells Demo",
-                onLoad: page =>
+                onLoad: x =>
                 {
+                    var page = x.page;
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
                 }, priority: 0);

@@ -22,8 +22,9 @@ namespace Demo._03_CustomCells.Scripts
         {
             var initialPage = DebugSheet.Instance.GetOrCreateInitialPage();
             var pageLinkButtonId = initialPage.AddPageLinkButton<CustomCellsDemoDebugPage>("Custom Cells Demo",
-                onLoad: page =>
+                onLoad: x =>
                 {
+                    var page = x.page;
                     page.Setup(30);
                     _demoDebugPage = page;
                     page.AddLifecycleEvent(onDidPushEnter: OnDidPushEnter, onWillPopExit: OnWillPopExit);
