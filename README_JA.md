@@ -532,6 +532,35 @@ Unity Debug Sheet は uGUI で構成されているので、プロパティを�
 各セルのデザインはカスタムセルを作成することで自由に作成できます。  
 これについての詳細はカスタムセルの項目を参照してください。
 
+### まとめて戻る
+複数のページをまとめて戻るには、`DebugSheet.PopPage()`の第二引数に戻る画面数を指定します。
+
+```cs
+DebugSheet debugSheet;
+debugSheet.PopPage(true, 2);
+```
+
+また、戻り先の PageID を指定してまとめて戻ることもできます。  
+PageID は、以下のように `PushPage()` の `onLoad` コールバックを使うことで取得できます。
+
+```cs
+DebugSheet debugSheet;
+debugSheet.PushPage<DebugPage>(true, onLoad: x =>
+{
+    var pageId = x.pageId;
+});
+```
+
+また、`PushPage()` の `pageId` 引数を指定することで、任意の ID を指定することもできます。
+
+```cs
+DebugSheet debugSheet;
+debugSheet.PushPage<DebugPage>(true, pageId: "MyPageId");
+```
+
+なお、まとめて戻る際にスキップされるページについては、遷移前後のライフサイクルイベントは呼ばれず、破棄前のイベントだけ呼ばれます。  
+またスキップされるページの遷移アニメーションは再生されません。  
+
 ## 拡張パッケージ
 Unity Debug Sheet はどんなアプリケーションでも汎用的に使う機能を拡張パッケージとして提供しています。
 
@@ -578,7 +607,7 @@ FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com
 1. [**Graphy**](https://github.com/Tayx94/graphy) をインストールする（複数のインストール方法があります）
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_GRAPHY_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) を参照アセンブリに加える
-4. `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
+4. `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.page.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
 
 
 ## ライセンス
