@@ -214,6 +214,7 @@ namespace Demo._02_DefaultCells.Scripts
             floatingButtonPageLinkButtonData.PageTitleOverride = "Floating Button Page";
             floatingButtonPageLinkButtonData.CellTexts.Text = "Floating Button Page";
             floatingButtonPageLinkButtonData.PageType = typeof(FloatingButtonPage);
+            floatingButtonPageLinkButtonData.ShowArrow = true;
 
             floatingButtonPageLinkButtonData.OnLoad += x =>
             {
