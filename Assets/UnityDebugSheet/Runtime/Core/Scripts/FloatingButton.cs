@@ -7,10 +7,10 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 {
     public sealed class FloatingButton : MonoBehaviour
     {
+        [SerializeField] private RectTransform drawerRectTrans;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private RectTransform contentsRectTrans;
         [SerializeField] private CanvasGroup childCanvasGroup;
-
         [SerializeField] private Button button;
         [SerializeField] private Text text;
         [SerializeField] private StatefulDrawerController drawerController;
@@ -32,11 +32,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         private void Start()
         {
             Hide(true);
-
-            // Set position to the bottom of the safe area.
-            var canvasScaleFactor = GetComponentInParent<Canvas>().scaleFactor;
-            var anchoredPosY = Screen.safeArea.y / canvasScaleFactor;
-            contentsRectTrans.anchoredPosition = new Vector2(contentsRectTrans.anchoredPosition.x, anchoredPosY);
         }
 
         private void OnEnable()
@@ -62,6 +57,22 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         {
             if (!force && _isShown)
                 return;
+
+            // Sync transform to drawer.
+            var rectTrans = (RectTransform)transform;
+            rectTrans.anchorMin = drawerRectTrans.anchorMin;
+            rectTrans.anchorMax = drawerRectTrans.anchorMax;
+            rectTrans.pivot = drawerRectTrans.pivot;
+            rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, drawerRectTrans.rect.width);
+            var anchoredPosition = rectTrans.anchoredPosition;
+            anchoredPosition.x = drawerRectTrans.anchoredPosition.x;
+            rectTrans.anchoredPosition = anchoredPosition;
+
+            // Set position to the bottom of the safe area.
+            var canvasScaleFactor = GetComponentInParent<Canvas>().scaleFactor;
+            var anchoredPosY = Screen.safeArea.y / canvasScaleFactor;
+            contentsRectTrans.anchoredPosition = new Vector2(contentsRectTrans.anchoredPosition.x, anchoredPosY);
+
 
             canvasGroup.alpha = 1.0f;
             canvasGroup.interactable = true;
