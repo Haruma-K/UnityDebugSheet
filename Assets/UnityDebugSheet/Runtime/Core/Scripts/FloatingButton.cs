@@ -14,6 +14,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private Button button;
         [SerializeField] private Text text;
         [SerializeField] private StatefulDrawerController drawerController;
+        [SerializeField] private StatefulDrawer drawer;
 
         private bool _isShown;
 
@@ -91,14 +92,24 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             _isShown = false;
         }
 
-        private void DrawerResizingStateChanged(StatefulDrawerController.DrawerResizingState state)
+        private void DrawerResizingStateChanged(StatefulDrawerController.DrawerResizingState resizingState)
         {
-            switch (state)
+            switch (resizingState)
             {
                 case StatefulDrawerController.DrawerResizingState.None:
-                    childCanvasGroup.alpha = 1.0f;
-                    childCanvasGroup.interactable = true;
-                    childCanvasGroup.blocksRaycasts = true;
+                    var drawerState = drawer.GetNearestState();
+                    if (drawerState == DrawerState.Min)
+                    {
+                        childCanvasGroup.alpha = 0.0f;
+                        childCanvasGroup.interactable = false;
+                        childCanvasGroup.blocksRaycasts = false;
+                    }
+                    else
+                    {
+                        childCanvasGroup.alpha = 1.0f;
+                        childCanvasGroup.interactable = true;
+                        childCanvasGroup.blocksRaycasts = true;
+                    }
                     break;
                 case StatefulDrawerController.DrawerResizingState.Animation:
                 case StatefulDrawerController.DrawerResizingState.Dragging:
@@ -107,7 +118,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                     childCanvasGroup.blocksRaycasts = false;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+                    throw new ArgumentOutOfRangeException(nameof(resizingState), resizingState, null);
             }
         }
     }

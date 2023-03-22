@@ -1645,6 +1645,7 @@ MonoBehaviour:
   button: {fileID: 3457076064603688243}
   text: {fileID: 3372193733787960630}
   drawerController: {fileID: 6564643837970611227}
+  drawer: {fileID: 6564643837970611220}
 --- !u!225 &2707922503139840959
 CanvasGroup:
   m_ObjectHideFlags: 0
