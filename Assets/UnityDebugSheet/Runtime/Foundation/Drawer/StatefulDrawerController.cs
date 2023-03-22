@@ -42,11 +42,11 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
                     return;
 
                 _resizingState = value;
-                ResizingStateChanged?.Invoke(_resizingState);
+                OnResizingStateChanged?.Invoke(_resizingState);
             }
         }
 
-        public event Action<DrawerResizingState> ResizingStateChanged;
+        public event Action<DrawerResizingState> OnResizingStateChanged;
         
         private void Start()
         {

@@ -56,7 +56,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         {
             // Add padding for the safe area.
             var canvasScaleFactor = GetComponentInParent<Canvas>().scaleFactor;
-            _recyclerView.AfterPadding += (int)(Screen.safeArea.y / canvasScaleFactor);
+            RecyclerView.AfterPadding += (int)(Screen.safeArea.y / canvasScaleFactor);
         }
 
         protected virtual void LateUpdate()
@@ -174,7 +174,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// </summary>
         public void Reload()
         {
-            _recyclerView.Reload();
+            RecyclerView.Reload();
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// </summary>
         public void RefreshData()
         {
-            _recyclerView.RefreshData();
+            RecyclerView.RefreshData();
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         /// <param name="dataIndex"></param>
         public void RefreshDataAt(int dataIndex)
         {
-            _recyclerView.RefreshDataAt(dataIndex);
+            RecyclerView.RefreshDataAt(dataIndex);
         }
 
         public void SetTitle(string title)

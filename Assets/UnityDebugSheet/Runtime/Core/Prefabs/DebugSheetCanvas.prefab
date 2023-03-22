@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &623461504207090753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9039667654366047134}
+  - component: {fileID: 478015636048313740}
+  m_Layer: 5
+  m_Name: Contents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &9039667654366047134
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623461504207090753}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5972107483719189208}
+  - {fileID: 6286798227969902767}
+  m_Father: {fileID: 5560460599725379441}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &478015636048313740
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623461504207090753}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1007029383957733694
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,12 +311,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6143568903721485067}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 843405489194330178}
-  m_Father: {fileID: 5560460599725379441}
+  m_Father: {fileID: 9039667654366047134}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -471,7 +521,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 60, y: 706.5}
+  m_AnchoredPosition: {x: 96.83035, y: 706.5}
   m_SizeDelta: {x: 750, y: 706.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6564643837970611220
@@ -1216,6 +1266,7 @@ MonoBehaviour:
   _pagePrefab: {fileID: 142348689908593602, guid: 070bba3aeaed22242a4d3a576eba733e, type: 3}
   _flickEvent: {fileID: 3939744926455960819}
   _balloonButton: {fileID: 741955142309139326}
+  _floatingButton: {fileID: 2500328140777886800}
   _canvas: {fileID: 6564643838517370661}
   _openButton: {fileID: 2232382577866478028}
 --- !u!114 &6564643838517370656
@@ -1566,8 +1617,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5972107483719189208}
-  - {fileID: 6286798227969902767}
+  - {fileID: 9039667654366047134}
   m_Father: {fileID: 6564643839269572659}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1589,10 +1639,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 2707922503139840959}
+  contentsRectTrans: {fileID: 9039667654366047134}
+  childCanvasGroup: {fileID: 478015636048313740}
   button: {fileID: 3457076064603688243}
   text: {fileID: 3372193733787960630}
-  animationDuration: 0.25
-  animationType: 20
+  drawerController: {fileID: 6564643837970611227}
 --- !u!225 &2707922503139840959
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1630,11 +1681,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6594064329582996079}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5560460599725379441}
+  m_Father: {fileID: 9039667654366047134}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

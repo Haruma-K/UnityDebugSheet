@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween;
+using UnityDebugSheet.Runtime.Foundation.Drawer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,25 +7,20 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 {
     public sealed class FloatingButton : MonoBehaviour
     {
-        //TODO: SafeArea対応をする必要があるか確認
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private RectTransform contentsRectTrans;
+        [SerializeField] private CanvasGroup childCanvasGroup;
 
-        public CanvasGroup canvasGroup;
-        public Button button;
-        public Text text;
+        [SerializeField] private Button button;
+        [SerializeField] private Text text;
+        [SerializeField] private StatefulDrawerController drawerController;
 
-        [SerializeField] private float animationDuration = 0.25f;
-        [SerializeField] private EaseType animationType = EaseType.ExponentialEaseOut;
+        private bool _isShown;
 
         public bool Interactable
         {
             get => canvasGroup.interactable;
-            set
-            {
-                if (IsAnimating)
-                    throw new InvalidOperationException(
-                        $"Cannot set {nameof(Interactable)} while {GetType()} is animating.");
-                canvasGroup.interactable = value;
-            }
+            set => canvasGroup.interactable = value;
         }
 
         public string Text
@@ -35,108 +29,75 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             set => text.text = value;
         }
 
-        public float AnimationDuration
+        private void Start()
         {
-            get => animationDuration;
-            set => animationDuration = value;
-        }
+            Hide(true);
 
-        public EaseType AnimationType
-        {
-            get => animationType;
-            set => animationType = value;
-        }
-
-        public bool IsAnimating { get; private set; }
-
-        private void Awake()
-        {
-            canvasGroup.alpha = 0.0f;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
+            // Set position to the bottom of the safe area.
+            var canvasScaleFactor = GetComponentInParent<Canvas>().scaleFactor;
+            var anchoredPosY = Screen.safeArea.y / canvasScaleFactor;
+            contentsRectTrans.anchoredPosition = new Vector2(contentsRectTrans.anchoredPosition.x, anchoredPosY);
         }
 
         private void OnEnable()
         {
             button.onClick.AddListener(OnButtonClicked);
+            drawerController.OnResizingStateChanged += DrawerResizingStateChanged;
         }
 
         private void OnDisable()
         {
             button.onClick.RemoveListener(OnButtonClicked);
+            drawerController.OnResizingStateChanged -= DrawerResizingStateChanged;
         }
 
         public event Action OnClicked;
 
         private void OnButtonClicked()
         {
-            if (IsAnimating)
+            OnClicked?.Invoke();
+        }
+
+        public void Show(bool force = false)
+        {
+            if (!force && _isShown)
                 return;
 
-            OnClicked?.Invoke();
-            Hide();
-        }
-
-        public YieldInstruction Show(CompletedDelegate completed = null)
-        {
-            return StartCoroutine(ShowRoutine(completed));
-        }
-
-        public YieldInstruction Hide(CompletedDelegate completed = null)
-        {
-            return StartCoroutine(HideRoutine(completed));
-        }
-
-        private IEnumerator ShowRoutine(CompletedDelegate completed = null)
-        {
-            if (IsAnimating)
-                throw new InvalidOperationException($"{GetType().Name} is already animating.");
-
-            var tween = new FloatTween
-            {
-                Duration = animationDuration,
-                Interpolator = new EasingInterpolator
-                {
-                    EaseType = animationType
-                },
-                From = 0.0f,
-                To = 1.0f
-            };
-
-            IsAnimating = true;
-            canvasGroup.alpha = 0.0f;
-            canvasGroup.interactable = false;
+            canvasGroup.alpha = 1.0f;
+            canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
-            yield return tween.CreateRoutine(x => canvasGroup.alpha = x, completed);
-            canvasGroup.alpha = 1.0f;
-            canvasGroup.interactable = true;
-            IsAnimating = false;
+            _isShown = true;
         }
 
-        private IEnumerator HideRoutine(CompletedDelegate completed = null)
+        public void Hide(bool force = false)
         {
-            if (IsAnimating)
-                throw new InvalidOperationException($"{GetType().Name} is already animating.");
+            if (!force && !_isShown)
+                return;
 
-            var tween = new FloatTween
-            {
-                Duration = animationDuration,
-                Interpolator = new EasingInterpolator
-                {
-                    EaseType = animationType
-                },
-                From = 1.0f,
-                To = 0.0f
-            };
-
-            IsAnimating = true;
-            canvasGroup.alpha = 1.0f;
-            canvasGroup.interactable = true;
-            yield return tween.CreateRoutine(x => canvasGroup.alpha = x, completed);
             canvasGroup.alpha = 0.0f;
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
-            IsAnimating = false;
+            _isShown = false;
+        }
+
+        private void DrawerResizingStateChanged(StatefulDrawerController.DrawerResizingState state)
+        {
+            switch (state)
+            {
+                case StatefulDrawerController.DrawerResizingState.None:
+                    childCanvasGroup.alpha = 1.0f;
+                    childCanvasGroup.interactable = true;
+                    childCanvasGroup.blocksRaycasts = true;
+                    break;
+                case StatefulDrawerController.DrawerResizingState.Animation:
+                case StatefulDrawerController.DrawerResizingState.Dragging:
+                    childCanvasGroup.alpha = 0.0f;
+                    childCanvasGroup.interactable = false;
+                    childCanvasGroup.blocksRaycasts = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
+            }
         }
     }
 }
