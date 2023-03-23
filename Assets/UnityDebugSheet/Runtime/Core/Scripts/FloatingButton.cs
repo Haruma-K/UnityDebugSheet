@@ -16,7 +16,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private StatefulDrawerController drawerController;
         [SerializeField] private StatefulDrawer drawer;
 
-        private bool _isShown;
+        public bool IsShown { get; private set; }
 
         public bool Interactable
         {
@@ -29,6 +29,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             get => text.text;
             set => text.text = value;
         }
+
 
         private void Start()
         {
@@ -56,40 +57,47 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public void Show(bool force = false)
         {
-            if (!force && _isShown)
+            if (!force && IsShown)
                 return;
 
-            // Sync transform to drawer.
+            SetupTransform();
+
+            canvasGroup.alpha = 1.0f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+            IsShown = true;
+        }
+
+        private void SetupTransform()
+        {
             var rectTrans = (RectTransform)transform;
+
+            // 1. Match anchors and pivot to the drawer.
             rectTrans.anchorMin = drawerRectTrans.anchorMin;
             rectTrans.anchorMax = drawerRectTrans.anchorMax;
             rectTrans.pivot = drawerRectTrans.pivot;
+
+            // 2. Set width and position.
             rectTrans.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, drawerRectTrans.rect.width);
             var anchoredPosition = rectTrans.anchoredPosition;
             anchoredPosition.x = drawerRectTrans.anchoredPosition.x;
             rectTrans.anchoredPosition = anchoredPosition;
 
-            // Set position to the bottom of the safe area.
+            // 3. Set bottom position to the bottom of the safe area.
             var canvasScaleFactor = GetComponentInParent<Canvas>().scaleFactor;
             var anchoredPosY = Screen.safeArea.y / canvasScaleFactor;
             contentsRectTrans.anchoredPosition = new Vector2(contentsRectTrans.anchoredPosition.x, anchoredPosY);
-
-
-            canvasGroup.alpha = 1.0f;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-            _isShown = true;
         }
 
         public void Hide(bool force = false)
         {
-            if (!force && !_isShown)
+            if (!force && !IsShown)
                 return;
 
             canvasGroup.alpha = 0.0f;
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
-            _isShown = false;
+            IsShown = false;
         }
 
         private void DrawerResizingStateChanged(StatefulDrawerController.DrawerResizingState resizingState)
@@ -110,6 +118,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                         childCanvasGroup.interactable = true;
                         childCanvasGroup.blocksRaycasts = true;
                     }
+
                     break;
                 case StatefulDrawerController.DrawerResizingState.Animation:
                 case StatefulDrawerController.DrawerResizingState.Dragging:
