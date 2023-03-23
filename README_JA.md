@@ -299,6 +299,7 @@ drawerController.SetStateWithAnimation(targetState);
 | --- | --- | --- |
 | Label | AddLabel | 文字列を表示するために使用します。 |
 | Button | AddButton | 押下した時にアクションを起こすために使用します。 |
+| InputField | AddInputField | 文字を入力するために使用します。 |
 | Switch | AddSwitch | ON・OFFを切り替えるために使用します。 |
 | Slider | AddSlider | 指定した範囲で数値を指定するために使用します。 |
 | Picker | AddPicker | 複数の選択肢から一つを選択するために使用します。 |
@@ -312,6 +313,16 @@ drawerController.SetStateWithAnimation(targetState);
 なお[デフォルトセルのデモシーン](Assets/Demo/02_DefaultCells/Scenes/DefaultCellsDemo.unity)を再生すると、これらのセルの挙動を確認することができます。
 
 また独自のセルを作成することもできます。これについての詳細はカスタムセルの項目を参照してください。
+
+### 使用できるページ一覧
+デフォルトで使用できるページの一覧は以下の通りです。
+
+| ページクラス名 | 説明 |
+| --- | --- |
+| DebugPage | デフォルトセルの追加メソッドを持ったページです。 |
+| FloatingButton | 下部にフローティングボタンを持つページです。ページの入力内容を決定・送信するためのボタンが必要な時に使用します。 |
+| DefaultDebugPageBase | デフォルトセルの追加メソッドを持ったデバッグページの基底クラスです。抽象クラスなので継承して使用します。 |
+| DebugPageBase | デバッグページの基底抽象クラスです。抽象クラスなので継承して使用します。 |
 
 ### セルの内容を更新する
 **CellModel** を使うことで、一度生成したセルの内容を更新することができます。  

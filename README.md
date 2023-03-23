@@ -303,6 +303,7 @@ In default, you can use the following cells.
 | --- | --- | --- |
 | Label | AddLabel | Used to display strings. |
 | Button | AddButton | Used to trigger actions when clicked. |
+| InputField | AddInputField | Used to input text. |
 | Switch | AddSwitch | Used to switch ON and OFF. |
 | Slider | AddSlider | Used to specify a numerical value within a range. |
 | Picker | AddPicker | Used to select one of several options. |
@@ -316,6 +317,16 @@ In default, you can use the following cells.
 You can check the behavior of each cell by playing the [Default Cells Demo Scene](Assets/Demo/02_DefaultCells/Scenes/DefaultCellsDemo.unity).
 You can also create your own cells.
 See the Custom Cells section for more information about this.
+
+### List of Available Pages
+You can use the following pages in default.
+
+| Class Name | Description |
+| --- | --- |
+| DebugPage | Page with methods for adding default cells. |
+| FloatingButton | Page with a floating button at the bottom. If you need to a button, such as a "Submit" button, you can use this page. |
+| DefaultDebugPageBase | Base class for the debug page that has methods for adding default cells. It is an abstract class, so you need to inherit it to use. |
+| DebugPageBase | Base class for the debug page. It is an abstract class, so you need to inherit it to use. |
 
 ### Update the cell contents
 Using **CellModel**, you can update the contents of the cell that has been generated.
