@@ -31,6 +31,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Result](#result)
 - [Basic Usage](#basic-usage)
   - [List of Available Cells](#list-of-available-cells)
+  - [List of Available Pages](#list-of-available-pages)
   - [Update the cell contents](#update-the-cell-contents)
   - [Workflow in multiple scenes](#workflow-in-multiple-scenes)
   - [Exclude from the release builds](#exclude-from-the-release-builds)
