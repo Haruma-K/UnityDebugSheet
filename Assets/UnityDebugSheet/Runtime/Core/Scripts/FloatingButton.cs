@@ -16,6 +16,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] private StatefulDrawerController drawerController;
         [SerializeField] private StatefulDrawer drawer;
 
+        private bool _isPortrait;
+        
         public bool IsShown { get; private set; }
 
         public bool Interactable
@@ -66,6 +68,17 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
             IsShown = true;
+        }
+
+        private void Update()
+        {
+            var isPortrait = Screen.height >= Screen.width;
+#if !UNITY_EDITOR
+            if (_isPortrait == isPortrait)
+                return;
+#endif
+            SetupTransform();
+            _isPortrait = isPortrait;
         }
 
         private void SetupTransform()
