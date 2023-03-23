@@ -19,6 +19,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
         private FloatingButton _floatingButton;
         private bool _popOnButtonClicked;
 
+        protected override void Start()
+        {
+            base.Start();
+
+            // Add padding for the floating button.
+            RecyclerView.AfterPadding += 132;
+        }
+
         public void Setup(string buttonText, Action buttonClicked, bool popOnButtonClicked = true)
         {
             Assert.IsNotNull(buttonClicked);
