@@ -48,15 +48,17 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
             Progress = GetStateProgress(state);
         }
 
-        public YieldInstruction SetStateWithAnimation(DrawerState to, float durationSec, EaseType easeType)
+        public YieldInstruction SetStateWithAnimation(DrawerState to, float durationSec, EaseType easeType,
+            Action completed = null)
         {
-            return PlayProgressAnimation(GetStateProgress(to), durationSec, easeType);
+            return PlayProgressAnimation(GetStateProgress(to), durationSec, easeType, completed: completed);
         }
 
         public YieldInstruction SetStateWithAnimation(DrawerState from, DrawerState to, float durationSec,
-            EaseType easeType)
+            EaseType easeType, Action completed = null)
         {
-            return PlayProgressAnimation(GetStateProgress(from), GetStateProgress(to), durationSec, easeType);
+            return PlayProgressAnimation(GetStateProgress(from), GetStateProgress(to), durationSec, easeType,
+                completed: completed);
         }
 
         /// <summary>

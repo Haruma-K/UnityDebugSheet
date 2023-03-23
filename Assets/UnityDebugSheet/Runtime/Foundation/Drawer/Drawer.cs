@@ -145,26 +145,26 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
         public event Action<float> ProgressUpdated;
 
         public YieldInstruction PlayProgressAnimation(float toProgress, float durationSec, EaseType easeType,
-            GetDeltaTimeDelegate getDeltaTime = null)
+            GetDeltaTimeDelegate getDeltaTime = null, Action completed = null)
         {
-            return PlayProgressAnimation(Progress, toProgress, durationSec, easeType, getDeltaTime);
+            return PlayProgressAnimation(Progress, toProgress, durationSec, easeType, getDeltaTime, completed);
         }
 
         public YieldInstruction PlayProgressAnimation(float fromProgress, float toProgress, float durationSec,
-            EaseType easeType, GetDeltaTimeDelegate getDeltaTime = null)
+            EaseType easeType, GetDeltaTimeDelegate getDeltaTime = null, Action completed = null)
         {
             return PlayProgressAnimation(fromProgress, toProgress, durationSec,
-                new EasingInterpolator { EaseType = easeType }, getDeltaTime);
+                new EasingInterpolator { EaseType = easeType }, getDeltaTime, completed);
         }
 
         public YieldInstruction PlayProgressAnimation(float toProgress, float durationSec,
-            IInterpolator interpolator, GetDeltaTimeDelegate getDeltaTime = null)
+            IInterpolator interpolator, GetDeltaTimeDelegate getDeltaTime = null, Action completed = null)
         {
-            return PlayProgressAnimation(Progress, toProgress, durationSec, interpolator, getDeltaTime);
+            return PlayProgressAnimation(Progress, toProgress, durationSec, interpolator, getDeltaTime, completed);
         }
 
         public YieldInstruction PlayProgressAnimation(float fromProgress, float toProgress, float durationSec,
-            IInterpolator interpolator, GetDeltaTimeDelegate getDeltaTime = null)
+            IInterpolator interpolator, GetDeltaTimeDelegate getDeltaTime = null, Action completed = null)
         {
             if (_progressCoroutine != null)
                 throw new Exception(
@@ -173,6 +173,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
             void Completed()
             {
                 _progressCoroutine = null;
+                completed?.Invoke();
             }
 
             void ValueChanged(float value)

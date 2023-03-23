@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween;
 using UnityEngine;
@@ -9,6 +10,13 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
     [RequireComponent(typeof(StatefulDrawer))]
     public sealed class StatefulDrawerController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
+        public enum DrawerResizingState
+        {
+            None,
+            Dragging,
+            Animation
+        }
+        
         private const int MaxPositionListSize = 3;
         private const float FlickDistanceThresholdInchPerSec = 0.025f;
 
@@ -18,10 +26,28 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
         private readonly List<(Vector2 screenPosition, float deltaTime)> _dragPositions =
             new List<(Vector2 screenPosition, float deltaTime)>(MaxPositionListSize + 1);
 
+        private int _pointerId = -1;
         private Canvas _canvas;
         private StatefulDrawer _drawer;
+        private DrawerResizingState _resizingState = DrawerResizingState.None;
+
         private float Dpi { get; set; }
 
+        public DrawerResizingState ResizingState
+        {
+            get => _resizingState;
+            private set
+            {
+                if (_resizingState == value)
+                    return;
+
+                _resizingState = value;
+                OnResizingStateChanged?.Invoke(_resizingState);
+            }
+        }
+
+        public event Action<DrawerResizingState> OnResizingStateChanged;
+        
         private void Start()
         {
             _drawer = GetComponent<StatefulDrawer>();
@@ -37,11 +63,23 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
 
         void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
         {
+            // If it is already dragging with another finger , ignore it.
+            if (_pointerId != -1)
+                return;
+
+            _pointerId = eventData.pointerId;
+            
             _dragPositions.Clear();
+
+            ResizingState = DrawerResizingState.Dragging;
         }
 
         void IDragHandler.OnDrag(PointerEventData eventData)
         {
+            // If it is the event of another finger , ignore it.
+            if (eventData.pointerId != _pointerId)
+                return;
+            
             var deltaScreenPos = eventData.delta;
             var deltaPos = deltaScreenPos / _canvas.scaleFactor;
             if (_drawer.IsInAnimation)
@@ -63,6 +101,12 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
 
         void IEndDragHandler.OnEndDrag(PointerEventData eventData)
         {
+            // If it is the event of another finger , ignore it.
+            if (eventData.pointerId != _pointerId)
+                return;
+
+            _pointerId = -1;
+            
             if (_drawer.IsInAnimation)
                 _drawer.StopProgressAnimation();
 
@@ -105,7 +149,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
             // Transition to the upper or lower state if flick direction is same as drawer direction.
             var drawerDirectionIsInversed = _drawer.Direction == DrawerDirection.RightToLeft
                                             || _drawer.Direction == DrawerDirection.TopToBottom;
-
+            
             var positiveTransition = drawerDirectionIsInversed ? !positiveFlick : positiveFlick;
             var targetState = positiveTransition ? _drawer.GetUpperState() : _drawer.GetLowerState();
             SetStateWithAnimation(targetState);
@@ -115,7 +159,10 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
         {
             if (_drawer.IsInAnimation)
                 return;
-            _drawer.SetStateWithAnimation(state, _animationDuration, _animationType);
+
+            ResizingState = DrawerResizingState.Animation;
+            _drawer.SetStateWithAnimation(state, _animationDuration, _animationType,
+                () => ResizingState = DrawerResizingState.None);
         }
     }
 }

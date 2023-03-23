@@ -4,9 +4,11 @@ using System;
 using System.Collections;
 using Demo._99_Shared.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
+using UnityEngine.UI;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
 #endif
@@ -90,6 +92,14 @@ namespace Demo._02_DefaultCells.Scripts
             buttonData6.Clicked += () => Debug.Log("Clicked");
             buttonData6.ShowArrow = true;
             AddButton(buttonData6);
+
+            // Input Field
+            var inputFieldData = new InputFieldCellModel(true);
+            inputFieldData.CellTexts.Text = "Input Field";
+            inputFieldData.Placeholder = "Input Here";
+            inputFieldData.ContentType = InputField.ContentType.IntegerNumber;
+            inputFieldData.ValueChanged += x => Debug.Log($"Input Field Value Changed: {x}");
+            AddInputField(inputFieldData);
 
             // Switch
             var toggleData1 = new SwitchCellModel(false);
@@ -207,6 +217,37 @@ namespace Demo._02_DefaultCells.Scripts
             }
 
             AddButtonCollection(buttonCollectionData);
+
+            // Floating Button Page
+            var floatingButtonPageLinkButtonData = new PageLinkButtonCellModel(false);
+            floatingButtonPageLinkButtonData.PageTitleOverride = "Floating Button Page";
+            floatingButtonPageLinkButtonData.CellTexts.Text = "Floating Button Page";
+            floatingButtonPageLinkButtonData.PageType = typeof(FloatingButtonPage);
+            floatingButtonPageLinkButtonData.ShowArrow = true;
+
+            floatingButtonPageLinkButtonData.OnLoad += x =>
+            {
+                var floatingButtonPage = (FloatingButtonPage)x.page;
+                var value1 = 0.5f;
+                var value2 = 0.5f;
+                floatingButtonPage.AddSlider(0.5f, 0.0f, 1.0f, "Value 1", valueChanged: x => value1 = x);
+                floatingButtonPage.AddSlider(0.5f, 0.0f, 1.0f, "Value 2", valueChanged: x => value2 = x);
+                floatingButtonPage.Setup("Execute Some Action", completed =>
+                {
+                    var coroutineRunner = floatingButtonPage;
+                    coroutineRunner.StartCoroutine(FloatingButtonButtonClicked(completed));
+                });
+
+
+                IEnumerator FloatingButtonButtonClicked(Action completed)
+                {
+                    Debug.Log($"Start Action / Value1: {value1} / Value2: {value2}");
+                    yield return new WaitForSeconds(1.0f);
+                    Debug.Log("End Action");
+                    completed();
+                }
+            };
+            AddPageLinkButton(floatingButtonPageLinkButtonData);
         }
 
         [Flags]

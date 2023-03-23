@@ -39,6 +39,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         [SerializeField] [HideInInspector] private GameObject _pagePrefab;
         [SerializeField] private InputBasedFlickEvent _flickEvent;
         [SerializeField] private BalloonButton _balloonButton;
+        [SerializeField] private FloatingButton _floatingButton;
         [SerializeField] private Canvas _canvas;
         [SerializeField] private MultiClickEventDispatcher _openButton;
         private float _dpi;
@@ -76,6 +77,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public KeyboardShortcut KeyboardShortcut => _keyboardShortcut;
 
         public BalloonButton BalloonButton => _balloonButton;
+
+        public FloatingButton FloatingButton => _floatingButton;
 
         private void Awake()
         {
