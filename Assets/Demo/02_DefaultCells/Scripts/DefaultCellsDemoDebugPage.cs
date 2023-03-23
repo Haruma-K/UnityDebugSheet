@@ -8,6 +8,7 @@ using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
+using UnityEngine.UI;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
 #endif
@@ -91,6 +92,14 @@ namespace Demo._02_DefaultCells.Scripts
             buttonData6.Clicked += () => Debug.Log("Clicked");
             buttonData6.ShowArrow = true;
             AddButton(buttonData6);
+
+            // Input Field
+            var inputFieldData = new InputFieldCellModel(true);
+            inputFieldData.CellTexts.Text = "Input Field";
+            inputFieldData.Placeholder = "Input Here";
+            inputFieldData.ContentType = InputField.ContentType.IntegerNumber;
+            inputFieldData.ValueChanged += x => Debug.Log($"Input Field Value Changed: {x}");
+            AddInputField(inputFieldData);
 
             // Switch
             var toggleData1 = new SwitchCellModel(false);

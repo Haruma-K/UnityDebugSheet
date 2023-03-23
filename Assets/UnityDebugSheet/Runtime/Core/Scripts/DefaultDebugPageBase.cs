@@ -4,6 +4,7 @@ using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts
 {
@@ -78,6 +79,32 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         public int AddSwitch(SwitchCellModel model, int priority = 0)
         {
             return AddItem(AssetKeys.SwitchCell, model, priority);
+        }
+
+        public int AddInputField(string text, string subText = null, Color? textColor = null,
+            Color? subTextColor = null, Sprite icon = null, Color? iconColor = null, string value = null,
+            string placeholder = null, InputField.ContentType contentType = InputField.ContentType.Standard,
+            Action<string> valueChanged = null, int priority = 0)
+        {
+            var useSubTextOrIcon = !string.IsNullOrEmpty(subText) || icon != null;
+            var inputFieldCellModel = new InputFieldCellModel(useSubTextOrIcon);
+            inputFieldCellModel.CellTexts.Text = text;
+            inputFieldCellModel.CellTexts.SubText = subText;
+            if (textColor != null) inputFieldCellModel.CellTexts.TextColor = textColor.Value;
+            if (subTextColor != null) inputFieldCellModel.CellTexts.SubTextColor = subTextColor.Value;
+            inputFieldCellModel.Icon.Sprite = icon;
+            if (iconColor != null) inputFieldCellModel.Icon.Color = iconColor.Value;
+            inputFieldCellModel.Placeholder = placeholder;
+            inputFieldCellModel.Value = value;
+            inputFieldCellModel.ContentType = contentType;
+            if (valueChanged != null) inputFieldCellModel.ValueChanged += valueChanged;
+
+            return AddInputField(inputFieldCellModel, priority);
+        }
+
+        public int AddInputField(InputFieldCellModel model, int priority = 0)
+        {
+            return AddItem(AssetKeys.InputFieldCell, model, priority);
         }
 
         public int AddSlider(float value, float minValue, float maxValue, string text, string subText = null,

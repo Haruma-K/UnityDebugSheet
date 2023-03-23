@@ -12,6 +12,8 @@
 
         public const string SwitchCell = "SwitchCell";
 
+        public const string InputFieldCell = "InputFieldCell";
+
         public const string PickerCell = "PickerCell";
 
         public const string EnumPickerCell = "EnumPickerCell";
