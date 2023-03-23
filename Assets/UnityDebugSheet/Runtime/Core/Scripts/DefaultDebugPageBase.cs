@@ -109,7 +109,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public int AddSlider(float value, float minValue, float maxValue, string text, string subText = null,
             Color? textColor = null, Color? subTextColor = null, Sprite icon = null, Color? iconColor = null,
-            bool showValueText = true, string valueTextFormat = null, Action<float> valueChanged = null,
+            bool showValueText = true, string valueTextFormat = null, bool wholeNumbers = false,
+            Action<float> valueChanged = null,
             int priority = 0)
         {
             var useSubTextOrIcon = !string.IsNullOrEmpty(subText) || icon != null;
@@ -123,6 +124,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             sliderCellModel.Value = value;
             sliderCellModel.ShowValueText = showValueText;
             sliderCellModel.ValueTextFormat = valueTextFormat;
+            sliderCellModel.WholeNumbers = wholeNumbers;
             if (valueChanged != null) sliderCellModel.ValueChanged += valueChanged;
 
             return AddSlider(sliderCellModel, priority);

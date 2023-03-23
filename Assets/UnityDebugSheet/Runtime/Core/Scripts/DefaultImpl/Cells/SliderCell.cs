@@ -57,6 +57,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             slider.interactable = model.Interactable;
             slider.onValueChanged.RemoveAllListeners();
             slider.SetValueWithoutNotify(value);
+            slider.wholeNumbers = model.WholeNumbers;
             slider.onValueChanged.AddListener(x =>
             {
                 valueField.SetTextWithoutNotify(x.ToString(valueTextFormat));
@@ -101,6 +102,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         public float MaxValue { get; set; }
 
         public string ValueTextFormat { get; set; }
+
+        public bool WholeNumbers { get; set; }
 
         public bool Interactable { get; set; } = true;
 

@@ -31,14 +31,16 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             placeholder.text = model.Placeholder;
 
             // InputField
+            // ContentType must be set before the value because it seems to reset the value if in the Edit Mode.
+            inputField.contentType = model.ContentType;
             inputField.interactable = model.Interactable;
             inputField.SetTextWithoutNotify(model.Value);
-            inputField.contentType = model.ContentType;
+
             inputField.onValueChanged.RemoveAllListeners();
             inputField.onValueChanged.AddListener(x =>
             {
                 model.Value = x;
-                model.InvokeToggled(x);
+                model.InvokeValueChanged(x);
             });
 
             // Height
@@ -73,7 +75,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         public event Action<string> ValueChanged;
 
-        internal void InvokeToggled(string value)
+        internal void InvokeValueChanged(string value)
         {
             ValueChanged?.Invoke(value);
         }

@@ -29,7 +29,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
 
         public IReadOnlyList<ItemInfo> ItemInfos => _itemInfos;
 
-        private RecyclerView RecyclerView
+        protected RecyclerView RecyclerView
         {
             get
             {
