@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
-using UnityEditor;
 using UnityEngine;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
@@ -136,7 +135,7 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
             var value = propertyInfo.GetValue(TargetObject);
             if (TryGetOverridePropertyDescription(propertyName, value, out var description))
                 return description;
-            
+
             if (!propertyInfo.PropertyType.IsArray)
                 return value?.ToString();
 
@@ -153,7 +152,7 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
             return false;
         }
 
-        protected override string Title => ObjectNames.NicifyVariableName(TargetClassType.Name);
+        protected override string Title => TargetClassType.Name;
 
         public sealed class SubPageInfo
         {

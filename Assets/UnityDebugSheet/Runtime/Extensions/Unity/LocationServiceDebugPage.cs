@@ -7,6 +7,7 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
     public sealed class LocationServiceDebugPage : PropertyListDebugPageBase<LocationService>
     {
         private object _targetObject;
+        protected override string Title => "Location Service";
 
         public override BindingFlags BindingFlags => BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance;
         public override object TargetObject => _targetObject;

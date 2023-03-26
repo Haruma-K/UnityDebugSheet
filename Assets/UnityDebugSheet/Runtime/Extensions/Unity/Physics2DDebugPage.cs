@@ -5,6 +5,8 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
 {
     public sealed class Physics2DDebugPage : PropertyListDebugPageBase<Physics2D>
     {
+        protected override string Title => "Physics 2D";
+
         protected override bool TryGetOverridePropertyDescription(string propertyName, object value,
             out string description)
         {
