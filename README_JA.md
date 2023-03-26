@@ -586,7 +586,17 @@ Unityのシステム情報を表示する拡張パッケージです。
 
 表示できる情報は以下の通りです。
 
-1. Unity の SystemInfo クラスで提供される情報
+| DebugPageのクラス名 | 説明 |
+| --- | --- |
+| SystemInfoDebugPage | SystemInfoクラスの情報を表示します。 |
+| ApplicationDebugPage | Applicationクラスの情報を表示します。 |
+| TimeDebugPage | Timeクラスの情報を表示します。 |
+| QualitySettingsDebugPage | QualitySettingsクラスの情報を表示します。 |
+| ScreenDebugPage | Screenクラスの情報を表示します。 |
+| InputDebugPage | Inputクラスの情報を表示します。 |
+| GraphicsDebugPage | Graphicsクラスの情報を表示します。 |
+| PhysicsDebugPage | Physicsクラスの情報を表示します。 |
+| Physics2DDebugPage | Physics2Dクラスの情報を表示します。 |
 
 使用方法は以下の通りです。
 
