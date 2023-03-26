@@ -59,7 +59,7 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
                     || !_propertyInfos.TryGetValue(targetPropertyName, out var propertyInfo))
                     continue;
 
-                var valueText = propertyInfo.GetValue(null).ToString();
+                var valueText = CreatePropertyDescription(propertyInfo);
                 cellModel.CellTexts.SubText = valueText;
             }
 
@@ -82,7 +82,7 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
 
                 var buttonCellModel = new ButtonCellModel(true);
                 buttonCellModel.CellTexts.Text = propertyName;
-                buttonCellModel.CellTexts.SubText = propertyInfo.GetValue(null).ToString();
+                buttonCellModel.CellTexts.SubText = CreatePropertyDescription(propertyInfo);
                 var itemId = AddButton(buttonCellModel);
                 buttonCellModel.Clicked += () =>
                 {
@@ -101,6 +101,17 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
             }
 
             Reload();
+        }
+
+        private string CreatePropertyDescription(PropertyInfo propertyInfo)
+        {
+            if (!propertyInfo.PropertyType.IsArray)
+                return propertyInfo.GetValue(null).ToString();
+
+            var array = (Array)propertyInfo.GetValue(null);
+            var valueDescriptions = array.Cast<object>().Select(x => x.ToString());
+            var description = string.Join(", ", valueDescriptions);
+            return $"[{description}]";
         }
 
         protected override string Title => ObjectNames.NicifyVariableName(TargetClassType.Name);
