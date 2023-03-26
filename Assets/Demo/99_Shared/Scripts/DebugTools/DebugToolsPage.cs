@@ -37,6 +37,10 @@ namespace Demo._99_Shared.Scripts.DebugTools
             AddPageLinkButton<SystemInfoDebugPage>("System Info",
                 icon: Resources.Load<Sprite>(AssetKeys.Resources.Icon.Settings));
 
+            // Time
+            AddPageLinkButton<TimeDebugPage>("Time",
+                icon: Resources.Load<Sprite>(AssetKeys.Resources.Icon.Settings));
+
             Reload();
 
 #if UDS_USE_ASYNC_METHODS
