@@ -25,11 +25,6 @@ namespace UnityDebugSheet.Runtime.Extensions.Unity
                 {
                     nameof(Input.compass),
                     new SubPageInfo(typeof(CompassDebugPage), x => ((CompassDebugPage)x.page).Setup(Input.compass))
-                },
-                {
-                    nameof(Input.location),
-                    new SubPageInfo(typeof(LocationServiceDebugPage),
-                        x => ((LocationServiceDebugPage)x.page).Setup(Input.location))
                 }
             };
     }
