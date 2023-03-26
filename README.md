@@ -589,7 +589,17 @@ Yuo can display the system information of Unity easily by this package.
 
 Following features are now available.
 
-1. Information provided by Unity's SystemInfo class
+| Class name of DebugPage | Description |
+| --- | --- |
+| SystemInfoDebugPage | Show the information of SystemInfo class. |
+| ApplicationDebugPage | Show the information of Application class. |
+| TimeDebugPage | Show the information of Time class. |
+| QualitySettingsDebugPage | Show the information of QualitySettings class. |
+| ScreenDebugPage | Show the information of Screen class. |
+| InputDebugPage | Show the information of Input class. |
+| GraphicsDebugPage | Show the information of Graphics class. |
+| PhysicsDebugPage | Show the information of Physics class. |
+| Physics2DDebugPage | Show the information of Physics2D class. |
 
 Usage is as follows.
 
