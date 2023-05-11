@@ -92,7 +92,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
             var delta = isHorizontal ? deltaPos.x : deltaPos.y;
             _drawer.Progress += _drawer.GetProgressFromDistance(delta) * (isInverse ? -1.0f : 1.0f);
 
-            _dragPositions.Add((eventData.position, Time.deltaTime));
+            _dragPositions.Add((eventData.position, Time.unscaledDeltaTime));
             if (_dragPositions.Count > MaxPositionListSize)
                 _dragPositions.RemoveAt(0);
 

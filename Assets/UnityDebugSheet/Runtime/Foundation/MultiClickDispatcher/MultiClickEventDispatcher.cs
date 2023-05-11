@@ -20,7 +20,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.MultiClicks
 
         private void Update()
         {
-            _timeFromLastClickSec += Time.deltaTime;
+            _timeFromLastClickSec += Time.unscaledDeltaTime;
             if (_currentClickCount >= 1 && _timeFromLastClickSec >= resetTimeThresholdSec)
                 _currentClickCount = 0;
         }
