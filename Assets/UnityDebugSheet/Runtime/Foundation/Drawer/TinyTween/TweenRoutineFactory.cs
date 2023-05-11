@@ -19,7 +19,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween
                 yield return null;
 
                 if (getDeltaTime == null)
-                    timeSec += Time.deltaTime;
+                    timeSec += Time.unscaledDeltaTime;
                 else
                     timeSec += getDeltaTime.Invoke();
 

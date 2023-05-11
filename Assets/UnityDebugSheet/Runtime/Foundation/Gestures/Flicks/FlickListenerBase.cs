@@ -60,7 +60,7 @@ namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
             {
                 _touchStartScreenPosition = screenPosition;
             }
-            _positions.Add((screenPosition, Time.deltaTime));
+            _positions.Add((screenPosition, Time.unscaledDeltaTime));
             if (_positions.Count > MaxListSize)
                 _positions.RemoveAt(0);
 
