@@ -22,10 +22,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         {
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
 
-            // Slider
-            slider.minValue = model.MinValue;
-            slider.maxValue = model.MaxValue;
-
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
@@ -56,6 +52,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             // Slider
             slider.interactable = model.Interactable;
             slider.onValueChanged.RemoveAllListeners();
+            slider.minValue = model.MinValue;
+            slider.maxValue = model.MaxValue;
             slider.SetValueWithoutNotify(value);
             slider.wholeNumbers = model.WholeNumbers;
             slider.onValueChanged.AddListener(x =>
