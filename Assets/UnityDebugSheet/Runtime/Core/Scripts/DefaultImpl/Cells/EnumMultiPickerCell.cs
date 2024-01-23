@@ -51,6 +51,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
 
+            // Cleanup
+            button.onClick.RemoveAllListeners();
+            
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
@@ -63,7 +66,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
             // Button
             button.interactable = model.Interactable;
-            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => OnClicked(model));
 
             // Reload the picking page if it is already created.

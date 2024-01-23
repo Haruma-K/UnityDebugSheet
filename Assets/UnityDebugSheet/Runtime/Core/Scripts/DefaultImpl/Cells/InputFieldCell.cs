@@ -20,6 +20,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         {
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
 
+            // Cleanup
+            inputField.onValueChanged.RemoveAllListeners();
+            
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
@@ -36,7 +39,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             inputField.interactable = model.Interactable;
             inputField.SetTextWithoutNotify(model.Value);
 
-            inputField.onValueChanged.RemoveAllListeners();
             inputField.onValueChanged.AddListener(x =>
             {
                 model.Value = x;

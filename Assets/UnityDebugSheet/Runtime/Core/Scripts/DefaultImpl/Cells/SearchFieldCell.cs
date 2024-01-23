@@ -11,10 +11,12 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
         protected override void SetModel(SearchFieldCellModel model)
         {
-            _inputField.interactable = model.Interactable;
+            // Cleanup
             _inputField.onValueChanged.RemoveAllListeners();
-            _inputField.onValueChanged.AddListener(model.InvokeValueChanged);
             _inputField.onEndEdit.RemoveAllListeners();
+            
+            _inputField.interactable = model.Interactable;
+            _inputField.onValueChanged.AddListener(model.InvokeValueChanged);
             _inputField.onEndEdit.AddListener(model.InvokeSubmitted);
 
             _placeholderText.text = model.Placeholder;

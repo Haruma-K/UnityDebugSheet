@@ -21,6 +21,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             var pageType = model.PageType ?? typeof(DebugPage);
 
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+            
+            // Cleanup
+            button.onClick.RemoveAllListeners();
 
             // Icon
             icon.Setup(model.Icon);
@@ -34,7 +37,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
             // Button
             button.interactable = model.Interactable;
-            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() =>
             {
                 if (model.Prefab == null)

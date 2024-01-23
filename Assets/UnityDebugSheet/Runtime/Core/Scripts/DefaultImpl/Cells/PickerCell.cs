@@ -25,12 +25,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         protected override void SetModel(PickerCellModel model)
         {
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+            
+            // Cleanup
+            button.onClick.RemoveAllListeners();
 
             // Icon
             icon.Setup(model.Icon);
             icon.gameObject.SetActive(model.Icon.Sprite != null);
 
-            //Texts
+            // Texts
             cellTexts.Text = model.Text;
             var option = model.Options[model.ActiveOptionIndex];
             cellTexts.SubText = option;
@@ -39,7 +42,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
             // Button
             button.interactable = model.Interactable;
-            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => OnClicked(model));
 
             // Refresh the picking page if needed.

@@ -21,6 +21,10 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         protected override void SetModel(SliderCellModel model)
         {
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+            
+            // Cleanup
+            valueField.onValueChanged.RemoveAllListeners();
+            slider.onValueChanged.RemoveAllListeners();
 
             // Icon
             icon.Setup(model.Icon);
@@ -33,7 +37,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
             // TextField
             var valueTextFormat = string.IsNullOrEmpty(model.ValueTextFormat) ? "F2" : model.ValueTextFormat;
-            valueField.onValueChanged.RemoveAllListeners();
             valueField.gameObject.SetActive(model.ShowValueText);
             valueField.SetTextWithoutNotify(value.ToString(valueTextFormat));
             valueField.keyboardType = TouchScreenKeyboardType.DecimalPad;
@@ -51,7 +54,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
 
             // Slider
             slider.interactable = model.Interactable;
-            slider.onValueChanged.RemoveAllListeners();
             slider.minValue = model.MinValue;
             slider.maxValue = model.MaxValue;
             slider.SetValueWithoutNotify(value);

@@ -18,6 +18,9 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
         protected override void SetModel(PickerOptionCellModel model)
         {
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
+            
+            // Cleanup
+            toggle.onValueChanged.RemoveAllListeners();
 
             // Icon
             icon.Setup(model.Icon);
@@ -29,7 +32,6 @@ namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
             // Toggle
             toggle.interactable = model.Interactable;
             toggle.SetIsOnWithoutNotify(model.IsOn);
-            toggle.onValueChanged.RemoveAllListeners();
             toggle.onValueChanged.AddListener(x =>
             {
                 model.IsOn = x;
