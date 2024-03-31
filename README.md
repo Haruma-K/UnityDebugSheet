@@ -36,6 +36,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Workflow in multiple scenes](#workflow-in-multiple-scenes)
   - [Exclude from the release builds](#exclude-from-the-release-builds)
   - [Custom Cells](#custom-cells)
+  - [Extending Built-in Cell Prefabs](#extending-built-in-cell-prefabs)
 - [Advanced Usage](#advanced-usage)
   - [Use async methods instead of coroutines](#use-async-methods-instead-of-coroutines)
   - [Hide Backdrop](#hide-backdrop)
@@ -455,6 +456,13 @@ Next, set this cell to **Cell Prefabs** on the **Debug Sheet**.
 
 All that remains is to add this cell to the page.
 Please refer to [the demo scene of the custom cells](Assets/Demo/03_CustomCells/Scenes/CustomCellsDemo.unity) for the actual implementation.
+
+### Extending Built-in Cell Prefabs
+You can extend built-in cell prefabs such as LabelCell and ButtonCell by following the steps below:
+
+1. Create a Prefab Variant of the built-in Prefab and make any desired modifications.
+2. Ensure the name of this Prefab is the same as the original Prefab.
+3. Set this Prefab in the **Cell Prefabs** of the **Debug Sheet** component.
 
 ## Advanced Usage
 

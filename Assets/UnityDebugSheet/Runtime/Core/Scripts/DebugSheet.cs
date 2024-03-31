@@ -296,7 +296,8 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                     debugPage.SetTitle(titleOverride);
 
                 var prefabContainer = debugPage.GetComponent<PrefabContainer>();
-                prefabContainer.Prefabs.AddRange(_cellPrefabs);
+                foreach (var cellPrefab in _cellPrefabs)
+                    prefabContainer.AddPrefab(cellPrefab);
 
                 onLoad?.Invoke((x.pageId, debugPage));
             }, loadAsync: false);

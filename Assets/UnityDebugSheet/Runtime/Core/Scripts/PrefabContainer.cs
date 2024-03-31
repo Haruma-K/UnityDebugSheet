@@ -1,29 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace UnityDebugSheet.Runtime.Core.Scripts
 {
     public sealed class PrefabContainer : MonoBehaviour
     {
+        // For Inspector
         [SerializeField] private List<GameObject> _prefabs = new List<GameObject>();
 
-        private readonly Dictionary<string, GameObject> _prefabNames = new Dictionary<string, GameObject>();
+        private readonly Dictionary<string, GameObject> _nameToPrefabMap = new Dictionary<string, GameObject>();
 
-        public List<GameObject> Prefabs => _prefabs;
+        private void Awake()
+        {
+            foreach (var prefab in _prefabs)
+                AddPrefab(prefab);
+        }
+
+        public void AddPrefab(GameObject prefab)
+        {
+            // Add prefab to the map.
+            // If the same name prefab is already added, it will be overwritten.
+            _nameToPrefabMap[prefab.name] = prefab;
+        }
 
         public GameObject GetPrefab(string prefabName)
         {
-            if (_prefabNames.TryGetValue(prefabName, out var prefab))
-                return prefab;
+            if (!_nameToPrefabMap.TryGetValue(prefabName, out var prefab))
+                throw new ArgumentException($"Prefab '{prefabName}' is not found.");
 
-            prefab = _prefabs.FirstOrDefault(x => x.name.Equals(prefabName, StringComparison.Ordinal));
-
-            if (prefab == null)
-                throw new ArgumentException($"Prefab \"{prefabName}\" is not found.");
-
-            _prefabNames.Add(prefabName, prefab);
             return prefab;
         }
 
