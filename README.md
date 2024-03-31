@@ -36,6 +36,7 @@ Hierarchical debug menu system for Unity that makes it easy to create intuitive 
   - [Workflow in multiple scenes](#workflow-in-multiple-scenes)
   - [Exclude from the release builds](#exclude-from-the-release-builds)
   - [Custom Cells](#custom-cells)
+  - [Extending Built-in Cell Prefabs](#extending-built-in-cell-prefabs)
 - [Advanced Usage](#advanced-usage)
   - [Use async methods instead of coroutines](#use-async-methods-instead-of-coroutines)
   - [Hide Backdrop](#hide-backdrop)
