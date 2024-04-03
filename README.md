@@ -326,7 +326,7 @@ You can use the following pages in default.
 | Class Name | Description |
 | --- | --- |
 | DebugPage | Page with methods for adding default cells. |
-| FloatingButton | Page with a floating button at the bottom. If you need to a button, such as a "Submit" button, you can use this page. |
+| FloatingButtonPage | Page with a floating button at the bottom. If you need to a button, such as a "Submit" button, you can use this page. |
 | DefaultDebugPageBase | Base class for the debug page that has methods for adding default cells. It is an abstract class, so you need to inherit it to use. |
 | DebugPageBase | Base class for the debug page. It is an abstract class, so you need to inherit it to use. |
 
