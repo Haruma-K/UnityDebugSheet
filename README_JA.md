@@ -322,7 +322,7 @@ drawerController.SetStateWithAnimation(targetState);
 | ページクラス名 | 説明 |
 | --- | --- |
 | DebugPage | デフォルトセルの追加メソッドを持ったページです。 |
-| FloatingButton | 下部にフローティングボタンを持つページです。ページの入力内容を決定・送信するためのボタンが必要な時に使用します。 |
+| FloatingButtonPage | 下部にフローティングボタンを持つページです。ページの入力内容を決定・送信するためのボタンが必要な時に使用します。 |
 | DefaultDebugPageBase | デフォルトセルの追加メソッドを持ったデバッグページの基底クラスです。抽象クラスなので継承して使用します。 |
 | DebugPageBase | デバッグページの基底抽象クラスです。抽象クラスなので継承して使用します。 |
 
