@@ -624,7 +624,7 @@ By this package, you can easily add a debug menu to display the console.
 
 Usage is as follows.
 
-1. Install [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole). (There are several ways to install.)
+1. Install & Setup [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole). (There are several ways to install.)
 2. (Only if you install 1. not via Package Manager) Add `UDS_INGAMEDEBUGCOSOLE_SUPPORT` to Scripting Define Symbols and restart Unity.
 3. (Only if you use your own assembly) Add [UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) to the referenced assemblies.
 4. Write as `DefaultDebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.page.Setup(DebugLogManager.Instance));` to add page link cell.
@@ -638,7 +638,7 @@ This is an extension package that links the **Unity Debug Sheet** with [**Graphy
 
 Usage is as follows.
 
-1. Install [**Graphy**](https://github.com/Tayx94/graphy). (There are several ways to install.)
+1. Install & Setup [**Graphy**](https://github.com/Tayx94/graphy). (There are several ways to install.)
 2. (Only if you install 1. not via Package Manager) Add `UDS_GRAPHY_SUPPORT` to Scripting Define Symbols and restart Unity.
 3. (Only if you use your own assembly) Add [UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) to the referenced assemblies.
 4. Write as `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.page.Setup(GraphyManager.Instance));` to add page link cell.
