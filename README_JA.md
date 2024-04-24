@@ -624,7 +624,7 @@ Unityのシステム情報を表示する拡張パッケージです。
 1. [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) をインストール&セットアップする（複数のインストール方法があります）
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_INGAMEDEBUGCOSOLE_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) を参照アセンブリに加える
-4. `DefaultDebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
+4. `DefaultDebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.page.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
 
 ### Graphy
 FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com/Tayx94/graphy) と **Unity Debug Sheet** を連携する拡張パッケージです。  
