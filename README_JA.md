@@ -621,7 +621,7 @@ Unityのシステム情報を表示する拡張パッケージです。
 
 使用方法は以下の通りです。
 
-1. [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) をインストールする（複数のインストール方法があります）
+1. [**In-game Debug Console**](https://github.com/yasirkula/UnityIngameDebugConsole) をインストール&セットアップする（複数のインストール方法があります）
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_INGAMEDEBUGCOSOLE_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.IngameDebugConsole](Assets/UnityDebugSheet/Runtime/Extensions/IngameDebugConsole/UnityDebugSheet.IngameDebugConsole.asmdef) を参照アセンブリに加える
 4. `DefaultDebugPageBase.AddPageLinkButton<IngameDebugConsoleDebugPage>("In-Game Debug Console", onLoad: x => x.Setup(DebugLogManager.Instance));` のようにしてページへのリンクセルを追加する
@@ -635,7 +635,7 @@ FPSやメモリなどの情報を表示するOSS [**Graphy**](https://github.com
 
 使用方法は以下の通りです。
 
-1. [**Graphy**](https://github.com/Tayx94/graphy) をインストールする（複数のインストール方法があります）
+1. [**Graphy**](https://github.com/Tayx94/graphy) をインストール&セットアップする（複数のインストール方法があります）
 2. （Package Managerを経由しない方法で1.をインストールした場合のみ）Scripting Define Symbols に `UDS_GRAPHY_SUPPORT` を追加して Unity を再起動する
 3. （独自のアセンブリで使用する場合）[UnityDebugSheet.Graphy](Assets/UnityDebugSheet/Runtime/Extensions/Graphy/UnityDebugSheet.Graphy.asmdef) を参照アセンブリに加える
 4. `DefaultDebugPageBase.AddPageLinkButton<GraphyDebugPage>("Graphy", onLoad: x => x.page.Setup(GraphyManager.Instance));` のようにしてページへのリンクセルを追加する
