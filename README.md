@@ -139,7 +139,7 @@ You can install this library by the steps below.
 3. Enter the following URL in the input field and click **Add**.
 
 ```
-https://github.com/Haruma-K/UnityDebugSheet?path=/Assets/UnityDebugSheet
+https://github.com/Haruma-K/UnityDebugSheet.git?path=/Assets/UnityDebugSheet
 ```
 
 <p align="center">
