@@ -1,9 +1,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Drawer.Editor
+namespace UnityDebugSheet.Editor
 {
-    [CustomEditor(typeof(UnityDebugSheet.Runtime.Foundation.Drawer.Drawer), true)]
+    [CustomEditor(typeof(Drawer), true)]
     public class DrawerEditor : UnityEditor.Editor
     {
         private bool _debugFoldout;
@@ -52,7 +52,7 @@ namespace Drawer.Editor
 
         protected virtual void DrawDebugMenu()
         {
-            var component = (UnityDebugSheet.Runtime.Foundation.Drawer.Drawer)target;
+            var component = (Drawer)target;
             using (var ccs = new EditorGUI.ChangeCheckScope())
             {
                 var progress = EditorGUILayout.Slider("Progress", component.Progress, 0.0f, 1.0f);

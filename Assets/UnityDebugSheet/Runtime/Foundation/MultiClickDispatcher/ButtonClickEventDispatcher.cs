@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.MultiClicks
+namespace UnityDebugSheet
 {
     [RequireComponent(typeof(Button))]
     public sealed class ButtonClickEventDispatcher : ClickEventDispatcherBase

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     public sealed class PrefabContainer : MonoBehaviour
     {

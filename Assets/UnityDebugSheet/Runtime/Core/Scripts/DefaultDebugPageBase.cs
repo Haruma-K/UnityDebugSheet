@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     public abstract class DefaultDebugPageBase : DebugPageBase
     {

@@ -1,4 +1,4 @@
-﻿namespace UnityDebugSheet.Runtime.Foundation.ObjectPooling
+﻿namespace UnityDebugSheet
 {
     public interface IPoolableObject
     {

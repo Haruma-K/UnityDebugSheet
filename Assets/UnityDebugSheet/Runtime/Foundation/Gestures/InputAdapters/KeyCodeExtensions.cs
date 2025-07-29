@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters
+namespace UnityDebugSheet
 {
     internal static class KeyCodeExtensions
     {

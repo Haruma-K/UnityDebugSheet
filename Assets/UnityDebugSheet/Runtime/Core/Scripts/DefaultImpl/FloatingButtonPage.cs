@@ -6,7 +6,7 @@ using System.Collections;
 using System;
 using UnityEngine.Assertions;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
+namespace UnityDebugSheet
 {
     public sealed class FloatingButtonPage : DefaultDebugPageBase
     {

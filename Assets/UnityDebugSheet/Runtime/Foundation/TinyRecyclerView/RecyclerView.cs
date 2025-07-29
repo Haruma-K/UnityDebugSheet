@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
+namespace UnityDebugSheet.TinyRecyclerView
 {
     public sealed class RecyclerView : RecyclerViewBase
     {

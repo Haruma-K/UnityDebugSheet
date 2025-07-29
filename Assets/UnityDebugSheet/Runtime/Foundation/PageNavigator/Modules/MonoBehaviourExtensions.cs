@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules
+namespace UnityDebugSheet
 {
     internal static class MonoBehaviourExtensions
     {

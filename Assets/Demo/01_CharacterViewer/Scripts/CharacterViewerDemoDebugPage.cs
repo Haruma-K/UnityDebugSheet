@@ -4,8 +4,7 @@ using Demo._99_Shared.Scripts;
 using Demo._99_Shared.Scripts.DebugTools;
 using IngameDebugConsole;
 using Tayx.Graphy;
-using UnityDebugSheet.Runtime.Core.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+using UnityDebugSheet;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
 #else

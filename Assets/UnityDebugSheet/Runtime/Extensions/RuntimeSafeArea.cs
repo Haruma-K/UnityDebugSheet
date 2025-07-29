@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Extensions
+namespace UnityDebugSheet
 {
     public sealed class RuntimeSafeArea : MonoBehaviour
     {

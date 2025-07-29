@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace UnityDebugSheet.Runtime.Foundation.ObjectPooling
+namespace UnityDebugSheet
 {
     internal class AsyncPooledObject<T>
     {

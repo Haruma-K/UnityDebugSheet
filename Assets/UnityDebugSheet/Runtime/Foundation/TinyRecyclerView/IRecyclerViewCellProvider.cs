@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
+namespace UnityDebugSheet.TinyRecyclerView
 {
     public interface IRecyclerViewCellProvider
     {

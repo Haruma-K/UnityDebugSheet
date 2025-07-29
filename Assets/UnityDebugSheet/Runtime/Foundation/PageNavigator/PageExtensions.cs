@@ -6,7 +6,7 @@ using System.Collections;
 #endif
 using System;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public static class PageExtensions
     {

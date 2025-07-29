@@ -1,4 +1,4 @@
-﻿namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+﻿namespace UnityDebugSheet
 {
     public enum PageTransitionAnimationType
     {

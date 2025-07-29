@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.Animation
+namespace UnityDebugSheet
 {
     internal class AnimationPlayer : IUpdatable
     {

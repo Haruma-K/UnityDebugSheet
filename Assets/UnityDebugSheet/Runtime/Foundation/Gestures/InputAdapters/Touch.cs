@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters
+namespace UnityDebugSheet
 {
     public readonly struct Touch
     {

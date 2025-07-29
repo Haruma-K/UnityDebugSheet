@@ -1,6 +1,6 @@
 using System;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public sealed class AnonymousPageContainerCallbackReceiver : IPageContainerCallbackReceiver
     {

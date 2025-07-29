@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.Animation
+namespace UnityDebugSheet
 {
     internal static class AnimationExtensions
     {

@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Foundation.Drawer;
-using UnityDebugSheet.Runtime.Foundation.Gestures.Flicks;
-using UnityDebugSheet.Runtime.Foundation.Gestures.MultiClicks;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -15,7 +9,7 @@ using ObjectId = UnityEngine.EntityId;
 using ObjectId = System.Int32;
 #endif
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     [DefaultExecutionOrder(int.MinValue)]
     public sealed class DebugSheet : MonoBehaviour, IPageContainerCallbackReceiver

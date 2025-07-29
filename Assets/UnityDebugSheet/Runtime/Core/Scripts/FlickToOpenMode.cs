@@ -1,4 +1,4 @@
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     public enum FlickToOpenMode
     {

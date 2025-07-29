@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.Drawer
+namespace UnityDebugSheet
 {
     public class StatefulDrawer : Drawer
     {

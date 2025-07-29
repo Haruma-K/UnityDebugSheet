@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Foundation.ObjectPooling;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
-using UnityDebugSheet.Runtime.Foundation.TinyRecyclerView;
+using UnityDebugSheet.TinyRecyclerView;
 using UnityEngine;
 #if UNITY_6000_5_OR_NEWER
 using ObjectId = UnityEngine.EntityId;
@@ -10,7 +7,7 @@ using ObjectId = UnityEngine.EntityId;
 using ObjectId = System.Int32;
 #endif
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     public abstract class DebugPageBase : Page, IRecyclerViewCellProvider, IRecyclerViewDataProvider
     {

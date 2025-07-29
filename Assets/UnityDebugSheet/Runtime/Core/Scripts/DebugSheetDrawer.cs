@@ -1,7 +1,6 @@
-﻿using UnityDebugSheet.Runtime.Foundation.Drawer;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     public sealed class DebugSheetDrawer : StatefulDrawer
     {

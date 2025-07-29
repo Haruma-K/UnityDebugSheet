@@ -1,7 +1,7 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using Demo._01_CharacterViewer.Scripts.Viewer;
 using Demo._99_Shared.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 using UnityEngine.Assertions;
 

@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     public class BalloonButton : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     internal static class RectTransformExtensions
     {

@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 #endif
 using System.Collections;
 using Demo._99_Shared.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator;
+using UnityDebugSheet;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;

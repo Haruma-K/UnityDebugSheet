@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules
+namespace UnityDebugSheet
 {
     /// <summary>
     ///     The list that will sort the items in order of priority.

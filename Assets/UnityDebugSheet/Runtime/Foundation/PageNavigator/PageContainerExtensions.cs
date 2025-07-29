@@ -1,7 +1,6 @@
 using System;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public static class PageContainerExtensions
     {
