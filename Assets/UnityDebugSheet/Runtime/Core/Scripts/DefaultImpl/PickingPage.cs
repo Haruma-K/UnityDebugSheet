@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
 #else
 using System.Collections;
 #endif
 
-namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
+namespace UnityDebugSheet
 {
     public sealed class PickingPage : DefaultDebugPageBase
     {

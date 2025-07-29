@@ -1,9 +1,8 @@
 ﻿using System;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
+namespace UnityDebugSheet
 {
     public sealed class SliderCell : Cell<SliderCellModel>
     {

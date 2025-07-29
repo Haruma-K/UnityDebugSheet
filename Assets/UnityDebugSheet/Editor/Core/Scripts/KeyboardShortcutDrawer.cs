@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Core.Scripts;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityDebugSheet.Editor.Core.Scripts
+namespace UnityDebugSheet.Editor
 {
     [CustomPropertyDrawer(typeof(KeyboardShortcut))]
     internal class KeyboardShortcutDrawer : PropertyDrawer

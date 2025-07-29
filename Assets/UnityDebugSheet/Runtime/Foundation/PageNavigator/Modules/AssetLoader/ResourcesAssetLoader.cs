@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader
+namespace UnityDebugSheet
 {
     public sealed class ResourcesAssetLoader : IAssetLoader
     {

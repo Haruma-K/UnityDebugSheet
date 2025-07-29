@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.MultiClicks
+namespace UnityDebugSheet
 {
     public sealed class MultiClickEventDispatcher : MonoBehaviour
     {

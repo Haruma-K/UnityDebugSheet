@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Foundation
+namespace UnityDebugSheet
 {
     [ExecuteAlways]
     [RequireComponent(typeof(Text))]

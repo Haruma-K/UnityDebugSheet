@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Object = UnityEngine.Object;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader
+namespace UnityDebugSheet
 {
     /// <summary>
     ///     <see cref="IAssetLoader" /> that allows you to register preloaded assets.

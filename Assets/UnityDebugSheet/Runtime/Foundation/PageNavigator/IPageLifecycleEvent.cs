@@ -3,7 +3,7 @@
 using System.Threading.Tasks;
 #endif
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public interface IPageLifecycleEvent
     {

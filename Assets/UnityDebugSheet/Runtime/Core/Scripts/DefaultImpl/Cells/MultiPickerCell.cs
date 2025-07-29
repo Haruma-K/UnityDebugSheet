@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityEngine;
 using UnityEngine.UI;
 #if UDS_USE_ASYNC_METHODS
@@ -11,7 +9,7 @@ using System.Threading.Tasks;
 using System.Collections;
 #endif
 
-namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
+namespace UnityDebugSheet
 {
     public sealed class MultiPickerCell : Cell<MultiPickerCellModel>
     {

@@ -1,4 +1,4 @@
-namespace UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween
+namespace UnityDebugSheet
 {
     public delegate T LerpDelegate<T>(T a, T b, float t);
 

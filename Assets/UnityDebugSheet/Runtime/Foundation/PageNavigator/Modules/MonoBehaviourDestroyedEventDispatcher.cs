@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules
+namespace UnityDebugSheet
 {
     public class MonoBehaviourDestroyedEventDispatcher : MonoBehaviour
     {

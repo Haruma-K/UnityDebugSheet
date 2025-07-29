@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
+namespace UnityDebugSheet
 {
     public abstract class EventSystemBasedFlickListenerBase : FlickListenerBase, IBeginDragHandler, IDragHandler,
         IEndDragHandler

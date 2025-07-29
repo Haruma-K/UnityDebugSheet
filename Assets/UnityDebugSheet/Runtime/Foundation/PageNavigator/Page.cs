@@ -2,13 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityEngine;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;
 #endif
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     [AddComponentMenu("Scripts/Page (Unity Debug Sheet)")]
     [DisallowMultipleComponent]

@@ -1,9 +1,8 @@
 using System;
-using UnityDebugSheet.Runtime.Foundation.Drawer;
 using UnityEditor;
 using UnityEngine;
 
-namespace Drawer.Editor
+namespace UnityDebugSheet.Editor
 {
     [CustomEditor(typeof(StatefulDrawer), true)]
     public sealed class StatefulDrawerEditor : DrawerEditor

@@ -1,7 +1,7 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
 using System.Collections;
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

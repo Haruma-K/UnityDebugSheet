@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
+namespace UnityDebugSheet.TinyRecyclerView
 {
     [RequireComponent(typeof(ScrollRect))]
     public abstract class RecyclerViewBase : MonoBehaviour

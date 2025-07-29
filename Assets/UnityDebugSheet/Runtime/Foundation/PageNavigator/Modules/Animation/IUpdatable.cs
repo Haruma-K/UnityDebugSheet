@@ -1,4 +1,4 @@
-﻿namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.Animation
+﻿namespace UnityDebugSheet
 {
     internal interface IUpdatable
     {

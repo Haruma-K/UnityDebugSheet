@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     [AddComponentMenu("Scripts/Page Container (Unity Debug Sheet)")]
     [RequireComponent(typeof(RectMask2D))]

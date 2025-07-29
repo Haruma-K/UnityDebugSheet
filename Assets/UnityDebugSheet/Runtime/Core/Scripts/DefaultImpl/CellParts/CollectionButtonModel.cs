@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts
+namespace UnityDebugSheet
 {
     public sealed class CollectionButtonModel
     {

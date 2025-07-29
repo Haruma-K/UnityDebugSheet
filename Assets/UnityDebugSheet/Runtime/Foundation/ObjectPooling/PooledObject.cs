@@ -1,4 +1,4 @@
-﻿namespace UnityDebugSheet.Runtime.Foundation.ObjectPooling
+﻿namespace UnityDebugSheet
 {
     internal class PooledObject<T>
     {

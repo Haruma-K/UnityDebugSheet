@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine.Assertions;
 
-namespace UnityDebugSheet.Runtime.Foundation.ObjectPooling
+namespace UnityDebugSheet
 {
     public class AsyncObjectPool<T>
     {

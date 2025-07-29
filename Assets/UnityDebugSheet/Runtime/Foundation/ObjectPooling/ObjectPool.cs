@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.Assertions;
 
-namespace UnityDebugSheet.Runtime.Foundation.ObjectPooling
+namespace UnityDebugSheet
 {
     public class ObjectPool<T>
     {

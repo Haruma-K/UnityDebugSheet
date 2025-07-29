@@ -1,9 +1,8 @@
 using System;
-using UnityDebugSheet.Runtime.Foundation.Drawer;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     public sealed class FloatingButton : MonoBehaviour
     {

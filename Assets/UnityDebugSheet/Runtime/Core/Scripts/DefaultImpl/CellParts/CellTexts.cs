@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.CellParts
+namespace UnityDebugSheet
 {
     public sealed class CellTexts : MonoBehaviour
     {

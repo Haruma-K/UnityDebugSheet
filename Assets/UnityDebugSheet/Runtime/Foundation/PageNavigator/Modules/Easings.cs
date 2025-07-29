@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules
+namespace UnityDebugSheet
 {
     /// <summary>
     ///     Easing Functions enumeration

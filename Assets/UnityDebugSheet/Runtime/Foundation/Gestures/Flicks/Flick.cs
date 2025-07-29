@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
+namespace UnityDebugSheet
 {
     public readonly struct Flick
     {

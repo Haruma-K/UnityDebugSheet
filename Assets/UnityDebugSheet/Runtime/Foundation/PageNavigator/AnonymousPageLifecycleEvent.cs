@@ -8,7 +8,7 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public sealed class AnonymousPageLifecycleEvent : IPageLifecycleEvent
     {

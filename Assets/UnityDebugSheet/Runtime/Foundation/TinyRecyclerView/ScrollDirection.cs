@@ -1,4 +1,4 @@
-namespace UnityDebugSheet.Runtime.Foundation.TinyRecyclerView
+namespace UnityDebugSheet.TinyRecyclerView
 {
     public enum ScrollDirection
     {
