@@ -15,7 +15,8 @@ namespace UnityDebugSheet.Runtime.Foundation
         [SerializeField] [Tooltip("If set to true, the text will actually be overwritten in EditMode.")]
         private bool _applyInEditMode = true;
 
-        private string _textValue;
+        private string _textValue = string.Empty;
+        private string _originalTextValue = string.Empty;
 
         protected override void Awake()
         {
@@ -24,6 +25,7 @@ namespace UnityDebugSheet.Runtime.Foundation
             {
                 _text = GetComponent<Text>();
                 _textValue = _text.text;
+                _originalTextValue = _text.text;
             }
         }
 
@@ -32,8 +34,9 @@ namespace UnityDebugSheet.Runtime.Foundation
             if (_text.text == _textValue) 
                 return;
             
-            _textValue = _text.text;
+            _originalTextValue = _text.text;
             Apply();
+            _textValue = _text.text;
         }
 
         protected override void OnRectTransformDimensionsChange()
@@ -57,12 +60,12 @@ namespace UnityDebugSheet.Runtime.Foundation
 
             if (!IsActive() || _text == null) return;
 
+            var text = _originalTextValue;
+
             var rectTransform = _text.rectTransform;
             var generator = _text.cachedTextGenerator;
             var settings = _text.GetGenerationSettings(rectTransform.rect.size);
-            generator.Populate(_text.text, settings);
-
-            var text = _text.text;
+            generator.Populate(text, settings);
 
             if (rectTransform.rect.width <= 0 || rectTransform.rect.height <= 0)
                 // Do nothing because the layout seems not to have been built yet.
