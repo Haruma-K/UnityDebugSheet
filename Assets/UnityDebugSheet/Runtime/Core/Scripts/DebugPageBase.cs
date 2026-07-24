@@ -4,6 +4,11 @@ using UnityDebugSheet.Runtime.Foundation.PageNavigator;
 using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
 using UnityDebugSheet.Runtime.Foundation.TinyRecyclerView;
 using UnityEngine;
+#if UNITY_6000_5_OR_NEWER
+using ObjectId = UnityEngine.EntityId;
+#else
+using ObjectId = System.Int32;
+#endif
 
 namespace UnityDebugSheet.Runtime.Core.Scripts
 {
@@ -12,7 +17,7 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
         private readonly PriorityList<int> _itemIds = new PriorityList<int>();
         private readonly Dictionary<int, int> _itemIdToDataIndexMap = new Dictionary<int, int>();
         private readonly List<ItemInfo> _itemInfos = new List<ItemInfo>();
-        private readonly Dictionary<int, string> _objIdToPrefabKeyMap = new Dictionary<int, string>();
+        private readonly Dictionary<ObjectId, string> _objIdToPrefabKeyMap = new Dictionary<ObjectId, string>();
 
         private readonly Dictionary<string, ObjectPool<GameObject>> _prefabPools =
             new Dictionary<string, ObjectPool<GameObject>>();
@@ -73,6 +78,15 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
                 pool.Clear();
         }
 
+        private static ObjectId GetObjectId(Object obj)
+        {
+#if UNITY_6000_5_OR_NEWER
+            return obj.GetEntityId();
+#else
+            return obj.GetInstanceID();
+#endif
+        }
+
         GameObject IRecyclerViewCellProvider.GetCell(int dataIndex)
         {
             var prefabKey = _itemInfos[dataIndex].PrefabKey;
@@ -87,14 +101,14 @@ namespace UnityDebugSheet.Runtime.Core.Scripts
             }
 
             var obj = pool.Use();
-            _objIdToPrefabKeyMap[obj.GetInstanceID()] = prefabKey;
+            _objIdToPrefabKeyMap[GetObjectId(obj)] = prefabKey;
             obj.SetActive(true);
             return obj;
         }
 
         void IRecyclerViewCellProvider.ReleaseCell(GameObject obj)
         {
-            var prefabKey = _objIdToPrefabKeyMap[obj.GetInstanceID()];
+            var prefabKey = _objIdToPrefabKeyMap[GetObjectId(obj)];
             var pool = _prefabPools[prefabKey];
             pool.Release(obj);
             obj.SetActive(false);
