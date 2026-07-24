@@ -104,7 +104,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             _orderedPageIds.Clear();
 
             InstanceCacheByName.Remove(_name);
-            var keysToRemove = new List<int>();
+            var keysToRemove = new List<ObjectId>();
             foreach (var cache in InstanceCacheByTransform)
                 if (Equals(cache.Value))
                     keysToRemove.Add(cache.Key);
