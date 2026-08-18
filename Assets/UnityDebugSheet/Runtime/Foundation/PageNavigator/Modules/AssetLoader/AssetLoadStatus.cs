@@ -1,4 +1,4 @@
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader
+namespace UnityDebugSheet
 {
     public enum AssetLoadStatus
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader
+namespace UnityDebugSheet
 {
     public interface IAssetLoadHandleSetter<T>
     {

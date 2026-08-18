@@ -1,8 +1,7 @@
 using System;
-using UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     [Serializable]
     public sealed class KeyboardShortcut

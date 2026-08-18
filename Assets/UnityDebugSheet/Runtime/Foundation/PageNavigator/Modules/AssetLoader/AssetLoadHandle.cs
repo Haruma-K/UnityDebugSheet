@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Object = UnityEngine.Object;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader
+namespace UnityDebugSheet
 {
     public abstract class AssetLoadHandle
     {

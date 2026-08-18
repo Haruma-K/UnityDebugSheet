@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-namespace UnityDebugSheet.Runtime.Core.Scripts
+namespace UnityDebugSheet
 {
     [RequireComponent(typeof(ScrollView))]
     internal sealed class ScrollViewDragPropagation : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler

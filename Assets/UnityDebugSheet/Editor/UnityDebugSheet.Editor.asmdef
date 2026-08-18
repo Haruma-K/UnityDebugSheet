@@ -1,6 +1,6 @@
 {
     "name": "UnityDebugSheet.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "UnityDebugSheet.Editor",
     "references": [
         "GUID:58c518d4346be9042bfa20894cfca1d3"
     ],

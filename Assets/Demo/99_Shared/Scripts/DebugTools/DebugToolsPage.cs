@@ -2,7 +2,7 @@
 using System.Collections;
 using IngameDebugConsole;
 using Tayx.Graphy;
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityDebugSheet.Runtime.Extensions.Graphy;
 using UnityDebugSheet.Runtime.Extensions.IngameDebugConsole;
 using UnityDebugSheet.Runtime.Extensions.Unity;

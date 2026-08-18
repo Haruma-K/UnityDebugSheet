@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules
+namespace UnityDebugSheet
 {
     internal class CoroutineManager : MonoBehaviour
     {
@@ -20,7 +20,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules
             {
                 if (_instance == null)
                 {
-                    var gameObj = new GameObject($"{nameof(PageNavigator)}.{nameof(CoroutineManager)}");
+                    var gameObj = new GameObject($"PageNavigator.{nameof(CoroutineManager)}");
                     DontDestroyOnLoad(gameObj);
                     _instance = gameObj.AddComponent<CoroutineManager>();
                 }

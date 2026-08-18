@@ -197,7 +197,7 @@ The following is an example page with a single button that logs **Clicked** when
 
 ```cs
 using System.Collections;
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 
 public sealed class ExampleDebugPage : DefaultDebugPageBase
@@ -219,7 +219,7 @@ Next, add a link to transition to the debug page created above.
 Get the root page and add a link button to it as shown below.
 
 ```cs
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 
 public sealed class DebugSheetController : MonoBehaviour
@@ -337,8 +337,7 @@ Please refer to the comments for details.
 
 ```cs
 using System.Collections;
-using UnityDebugSheet.Runtime.Core.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+using UnityDebugSheet;
 using UnityEngine;
 
 public sealed class ExampleDebugPage : DefaultDebugPageBase
@@ -415,7 +414,7 @@ In addition, you can completely exclude the debug menu from your build by doing 
 To create your own cell, first create a component that inherits from **Cell** and a model that inherits from **CellModel** to set data to it.
 
 ```cs
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -463,7 +462,7 @@ Please refer to [the demo scene of the custom cells](Assets/Demo/03_CustomCells/
 You can also use asynchronous methods instead of coroutines to define lifecycle events of debug page, as shown below.
 
 ```cs
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using System.Threading.Tasks;
 
 public class SomePage : DefaultDebugPageBase

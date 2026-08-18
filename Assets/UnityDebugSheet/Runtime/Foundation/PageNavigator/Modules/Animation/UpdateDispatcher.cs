@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.Animation
+namespace UnityDebugSheet
 {
     internal delegate float CalcDeltaTime(float deltaTime);
 

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using IngameDebugConsole;
-using UnityDebugSheet.Runtime.Core.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
 using UnityDebugSheet.Runtime.Extensions.InGameDebugConsole;
 using UnityEngine;
 #if UDS_USE_ASYNC_METHODS

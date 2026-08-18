@@ -3,13 +3,9 @@
 #endif
 //#define IS_SMARTPHONE // For Debug
 
-using UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters;
 using UnityEngine;
-#if IS_SMARTPHONE
-using TouchPhase = UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters.TouchPhase;
-#endif
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
+namespace UnityDebugSheet
 {
     public abstract class InputBasedFlickListenerBase : FlickListenerBase
     {

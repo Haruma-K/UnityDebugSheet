@@ -1,6 +1,6 @@
 using UnityEngine.Events;
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
+namespace UnityDebugSheet
 {
     public sealed class InputBasedFlickEvent : InputBasedFlickListenerBase
     {

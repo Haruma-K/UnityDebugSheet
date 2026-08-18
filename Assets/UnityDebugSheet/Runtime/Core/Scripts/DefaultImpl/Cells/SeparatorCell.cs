@@ -1,4 +1,4 @@
-﻿namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells
+﻿namespace UnityDebugSheet
 {
     public sealed class SeparatorCellModel : CellModel
     {

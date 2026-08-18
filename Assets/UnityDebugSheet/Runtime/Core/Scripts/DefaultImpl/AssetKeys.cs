@@ -1,4 +1,4 @@
-﻿namespace UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl
+﻿namespace UnityDebugSheet
 {
     internal static class AssetKeys
     {

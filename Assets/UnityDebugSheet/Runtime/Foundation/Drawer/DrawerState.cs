@@ -1,4 +1,4 @@
-namespace UnityDebugSheet.Runtime.Foundation.Drawer
+namespace UnityDebugSheet
 {
     public enum DrawerState
     {

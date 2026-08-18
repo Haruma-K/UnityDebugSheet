@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace UnityDebugSheet.Runtime.Foundation.Gestures.Flicks
+namespace UnityDebugSheet
 {
     public abstract class FlickListenerBase : MonoBehaviour
     {

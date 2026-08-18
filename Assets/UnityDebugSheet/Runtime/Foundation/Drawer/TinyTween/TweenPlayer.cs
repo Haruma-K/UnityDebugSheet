@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween
+namespace UnityDebugSheet
 {
     public sealed class TweenPlayer<T>
     {

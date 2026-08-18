@@ -1,8 +1,7 @@
 using System;
-using UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.Drawer
+namespace UnityDebugSheet
 {
     [ExecuteAlways]
     public class Drawer : MonoBehaviour

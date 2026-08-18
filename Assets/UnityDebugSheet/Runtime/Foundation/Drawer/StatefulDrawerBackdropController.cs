@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.Drawer
+namespace UnityDebugSheet
 {
     [RequireComponent(typeof(StatefulDrawer))]
     [RequireComponent(typeof(StatefulDrawerController))]

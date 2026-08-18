@@ -1,7 +1,7 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using System;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine.Assertions;
 
 namespace Demo._99_Shared.Scripts

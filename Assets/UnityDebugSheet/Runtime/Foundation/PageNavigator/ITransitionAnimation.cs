@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
-using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.Animation;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public interface ITransitionAnimation : IAnimation
     {

@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 
-namespace UnityDebugSheet.Runtime.Foundation.Drawer
+namespace UnityDebugSheet
 {
     [RequireComponent(typeof(StatefulDrawer))]
     public sealed class StatefulDrawerController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler

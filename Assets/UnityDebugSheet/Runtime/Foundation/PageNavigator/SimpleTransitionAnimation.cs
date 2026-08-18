@@ -1,7 +1,6 @@
-﻿using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public sealed class SimpleTransitionAnimation : ITransitionAnimation
     {

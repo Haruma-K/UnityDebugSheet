@@ -2,7 +2,7 @@
 using System;
 using IngameDebugConsole;
 using Tayx.Graphy;
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 
 namespace Demo._99_Shared.Scripts.DebugTools

@@ -1,8 +1,7 @@
-﻿using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 #endif
 
-namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
+namespace UnityDebugSheet
 {
     public sealed class PageNavigatorConfig
     {

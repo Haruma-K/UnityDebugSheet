@@ -1,8 +1,7 @@
 #if !EXCLUDE_UNITY_DEBUG_SHEET
 using System.Linq;
 using Demo._99_Shared.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+using UnityDebugSheet;
 using UnityEngine;
 #if UDS_USE_ASYNC_METHODS
 using System.Threading.Tasks;

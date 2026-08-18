@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace UnityDebugSheet.Runtime.Foundation.Drawer.TinyTween
+namespace UnityDebugSheet
 {
     public sealed class FloatTween : Tween<float>
     {
