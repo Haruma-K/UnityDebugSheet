@@ -7,12 +7,16 @@ namespace UnityDebugSheet.Runtime.Foundation.Drawer
     {
         private CanvasGroup _canvasGroup;
         
+        private void Awake()
+        {
+            _canvasGroup = GetComponent<CanvasGroup>();
+        }
+
         protected override void OnStart()
         {
             base.OnStart();
-            _canvasGroup = GetComponent<CanvasGroup>();
         }
-        
+
         protected override void SetProgressInternal(float visibility)
         {
             _canvasGroup.alpha = visibility;
