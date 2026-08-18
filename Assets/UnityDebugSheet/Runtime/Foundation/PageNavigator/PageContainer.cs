@@ -6,6 +6,11 @@ using UnityDebugSheet.Runtime.Foundation.PageNavigator.Modules.AssetLoader;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+#if UNITY_6000_5_OR_NEWER
+using ObjectId = UnityEngine.EntityId;
+#else
+using ObjectId = System.Int32;
+#endif
 
 namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
 {
@@ -13,8 +18,8 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
     [RequireComponent(typeof(RectMask2D))]
     public sealed class PageContainer : MonoBehaviour
     {
-        private static readonly Dictionary<int, PageContainer> InstanceCacheByTransform =
-            new Dictionary<int, PageContainer>();
+        private static readonly Dictionary<ObjectId, PageContainer> InstanceCacheByTransform =
+            new Dictionary<ObjectId, PageContainer>();
 
         private static readonly Dictionary<string, PageContainer> InstanceCacheByName =
             new Dictionary<string, PageContainer>();
@@ -99,7 +104,7 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
             _orderedPageIds.Clear();
 
             InstanceCacheByName.Remove(_name);
-            var keysToRemove = new List<int>();
+            var keysToRemove = new List<ObjectId>();
             foreach (var cache in InstanceCacheByTransform)
                 if (Equals(cache.Value))
                     keysToRemove.Add(cache.Key);
@@ -127,7 +132,11 @@ namespace UnityDebugSheet.Runtime.Foundation.PageNavigator
         /// <returns></returns>
         public static PageContainer Of(RectTransform rectTransform, bool useCache = true)
         {
+#if UNITY_6000_5_OR_NEWER
+            var id = rectTransform.GetEntityId();
+#else
             var id = rectTransform.GetInstanceID();
+#endif
             if (useCache && InstanceCacheByTransform.TryGetValue(id, out var container))
                 return container;
 
