@@ -194,7 +194,7 @@ AddSlider(0.5f, 0.0f, 1.0f, "Example Slider", valueChanged: x => Debug.Log($"Val
 
 ```cs
 using System.Collections;
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 
 public sealed class ExampleDebugPage : DefaultDebugPageBase
@@ -216,7 +216,7 @@ public sealed class ExampleDebugPage : DefaultDebugPageBase
 以下のように、ルートページを取得して、 **ExampleDebugPage** へのリンクボタンを追加します。
 
 ```cs
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 
 public sealed class DebugSheetController : MonoBehaviour
@@ -333,8 +333,7 @@ drawerController.SetStateWithAnimation(targetState);
 
 ```cs
 using System.Collections;
-using UnityDebugSheet.Runtime.Core.Scripts;
-using UnityDebugSheet.Runtime.Core.Scripts.DefaultImpl.Cells;
+using UnityDebugSheet;
 using UnityEngine;
 
 public sealed class ExampleDebugPage : DefaultDebugPageBase
@@ -412,7 +411,7 @@ public sealed class ExampleDebugPage : DefaultDebugPageBase
 独自のセルを作るためには、まず `Cell` を継承したコンポーネントとそれにデータをセットするための `CellModel` を継承したモデルを作成します。
 
 ```cs
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -460,7 +459,7 @@ public sealed class CustomTextCellModel : CellModel
 デバッグページを作る際、以下のようにコルーチンの代わりに非同期メソッドを使用してライフサイクルイベントを定義することもできます。
 
 ```cs
-using UnityDebugSheet.Runtime.Core.Scripts;
+using UnityDebugSheet;
 using System.Threading.Tasks;
 
 public class SomePage : DefaultDebugPageBase

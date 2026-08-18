@@ -4,9 +4,6 @@
 //#define IS_SMARTPHONE // For Debug
 
 using UnityEngine;
-#if IS_SMARTPHONE
-using TouchPhase = UnityDebugSheet.Runtime.Foundation.Gestures.InputAdapters.TouchPhase;
-#endif
 
 namespace UnityDebugSheet
 {
