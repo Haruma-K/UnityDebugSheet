@@ -131,7 +131,7 @@ AddSlider(0.5f, 0.0f, 1.0f, "Example Slider", valueChanged: x => Debug.Log($"Val
 ### 要件
 本ツールは以下の環境に対応しています。
 
-- Unity 2020.3 以上
+- Unity 6.0（6000.0）以上
 
 ### インストール
 インストールは以下の手順で行います。

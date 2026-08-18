@@ -129,7 +129,7 @@ You can see how the debug sheet placed in each scene behaves as singleton.
 ### Requirements
 This tool is compatible with the following environments.
 
-- Unity 2020.3 or later
+- Unity 6.0 (6000.0) or later
 
 ### Installation
 You can install this library by the steps below.
