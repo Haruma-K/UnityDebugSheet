@@ -21,21 +21,23 @@ namespace UnityDebugSheet
         private readonly List<string> _options = new List<string>();
         private readonly List<Enum> _values = new List<Enum>();
 
-        private bool _isInitialized;
+        private Type _enumType;
         private PickingPage _pickingPage;
 
         protected override void SetModel(EnumPickerCellModel model)
         {
-            if (!_isInitialized)
+            var enumType = model.ActiveValue.GetType();
+            if (_enumType != enumType)
             {
-                var enumType = model.ActiveValue.GetType();
+                _options.Clear();
+                _values.Clear();
                 foreach (Enum value in Enum.GetValues(enumType))
                 {
                     _options.Add(value.ToString());
                     _values.Add(value);
                 }
 
-                _isInitialized = true;
+                _enumType = enumType;
             }
 
             _contentsCanvasGroup.alpha = model.Interactable ? 1.0f : 0.3f;
