@@ -214,22 +214,24 @@ namespace UnityDebugSheet
             rectTransform.anchorMin = GetAnchorMin(_direction, rectTransform.anchorMin);
             rectTransform.anchorMax = GetAnchorMax(_direction, rectTransform.anchorMax);
             rectTransform.pivot = GetPivot(_direction, rectTransform.pivot);
-            rectTransform.sizeDelta = GetSizeDelta(rectTransform.sizeDelta, fullSize, safeArea, _size,
-                _moveInsideSafeArea, _direction);
+
+            // Drawerが開く側の辺にanchoredPositionを固定する。以降のサイズ変化はUpdateProgressがsizeDelta側で
+            // 反映するため、開いている間もDrawerの一部が画面の外に出ることはない。
+            var minPos = GetStartPos(fullSize, safeArea, _direction, _moveInsideSafeArea);
+            var anchoredPosition = rectTransform.anchoredPosition;
+            if (_direction == DrawerDirection.LeftToRight || _direction == DrawerDirection.RightToLeft)
+                anchoredPosition.x = minPos;
+            else
+                anchoredPosition.y = minPos;
+            rectTransform.anchoredPosition = anchoredPosition;
         }
 
         private void UpdateProgress(Vector2 fullSize, Rect safeArea)
         {
             var rectTransform = (RectTransform)transform;
-            var minPos = GetStartPos(fullSize, safeArea, _direction, _moveInsideSafeArea);
-            var maxPos = GetEndPos(fullSize, safeArea, _direction);
             var normalizedSize = Mathf.Lerp(0.0f, _size, _progress);
-            var anchoredPosition = rectTransform.anchoredPosition;
-            if (_direction == DrawerDirection.LeftToRight || _direction == DrawerDirection.RightToLeft)
-                anchoredPosition.x = Mathf.Lerp(minPos, maxPos, normalizedSize);
-            else
-                anchoredPosition.y = Mathf.Lerp(minPos, maxPos, normalizedSize);
-            rectTransform.anchoredPosition = anchoredPosition;
+            rectTransform.sizeDelta = GetSizeDelta(rectTransform.sizeDelta, fullSize, safeArea, normalizedSize,
+                _moveInsideSafeArea, _direction);
         }
 
         private static Vector2 GetAnchorMin(DrawerDirection direction, Vector2 source)
@@ -280,19 +282,21 @@ namespace UnityDebugSheet
 
         private static Vector2 GetPivot(DrawerDirection direction, Vector2 source)
         {
+            // pivotをDrawerが開く側の辺に置く。これにより、sizeDeltaは閉じる側の辺ではなく
+            // 開く側の辺を基準にして伸びる。
             switch (direction)
             {
                 case DrawerDirection.LeftToRight:
-                    source.x = 1.0f;
-                    break;
-                case DrawerDirection.RightToLeft:
                     source.x = 0.0f;
                     break;
+                case DrawerDirection.RightToLeft:
+                    source.x = 1.0f;
+                    break;
                 case DrawerDirection.BottomToTop:
-                    source.y = 1.0f;
+                    source.y = 0.0f;
                     break;
                 case DrawerDirection.TopToBottom:
-                    source.y = 0.0f;
+                    source.y = 1.0f;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
